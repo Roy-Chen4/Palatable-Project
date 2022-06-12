@@ -1,1 +1,11 @@
+Week 1
+
+- Formed groups during our first lab, after introductions we set our communication channels, discussed experience
+    and from there decided what roles each member would be best suited for.
+- Talked about possible functionalities listing down a couple of them and created a google doc on what functionalities 
+    we would potentially like to see.
+
+Week 2
+- Worked on what requirements we were going to keep ensuring that our functionalities were achievable.
+
 
