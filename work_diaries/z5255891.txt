@@ -1,1 +1,7 @@
-s
+Week 1
+- Set up Jira and added group members
+- Brainstormed a few functionalities
+
+Week 2
+- Finalised funtionalities and started on user stories after meeting on 12/06
+- Set up meeting for 14/06
