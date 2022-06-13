@@ -7,6 +7,9 @@ Week 1
 
 Week 2
 - Worked on what requirements we were going to keep ensuring that our functionalities were achievable.
-- Set up code base
+- Set up Django and React skeleton
+- Double checked that React component was linked with Django
+- Updated and allocated functionalities to team (to write user stories and acceptance criteria for)
+- Finished writing out user stories, left them in the doc for team to review
 
 
