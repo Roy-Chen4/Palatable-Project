@@ -1,2 +1,4 @@
 Week 1:
   
+Week 2:
+- I have added all the user stories for our login and register functionality
