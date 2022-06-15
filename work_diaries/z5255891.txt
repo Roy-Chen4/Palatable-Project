@@ -6,6 +6,7 @@ Week 2
 - Finalised funtionalities and started on user stories after meeting on 12/06
 - Set up meeting for 14/06
 
-hello world
-
-Hello world
+Week 3
+- Added user stories as issues to Jira
+- Wrote my portion of user stories
+- Connected Jira to Github interface

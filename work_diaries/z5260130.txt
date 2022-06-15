@@ -1,2 +1,10 @@
 Week 1:
   
+Week 2:
+- I have added all the user stories for our login and register functionality
+- I have completed all the acceptance criterias for the login and register functionality
+- I have added the user stories for our random cuisine novelty functionality
+- I have completed all the acceptance criterias for the random cuisine novelty functionality
+
+Week 3:
+- I created a storyboard for the initial user journey
