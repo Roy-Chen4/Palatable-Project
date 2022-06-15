@@ -11,5 +11,6 @@ Week 2
 - Double checked that React component was linked with Django
 - Updated and allocated functionalities to team (to write user stories and acceptance criteria for)
 - Finished writing out user stories, left them in the doc for team to review
+- Helped draft up storyboard, drew mock ups of potential pages at university with group
 
 
