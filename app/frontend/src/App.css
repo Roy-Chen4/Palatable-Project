@@ -43,3 +43,11 @@
   left: 30px;
 }
 
+.register_banner {
+  height: 100%;
+}
+
+.banner {
+  position: absolute;
+  left: -52vmin;
+}
