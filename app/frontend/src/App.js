@@ -53,26 +53,56 @@ function App() {
           <div class = "banner">
               <img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" className="register_banner" alt="loginbanner"/>
             </div>
-          <DialogTitle>
-            Register
-            </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address here. We
-              will send updates occasionally.
-            </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              variant="standard"
-            />
+          <div className='register_ui'>
+            <DialogTitle>
+              <p className='rego_heading'>
+              Become Palatable
+              </p>
+              </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                To subscribe to this website, please enter the required details below. Upon successful 
+                registration you will have full access to recipe exploration and contribution!
+              </DialogContentText>
+              <TextField
+                margin="normal"
+                label="First Name"
+                placeholder='John'
+                sx={{width:"37%", paddingLeft: "10vmin"}}
+              />
+              <TextField
+                margin="normal"
+                label="Last Name"
+                placeholder='Smith'
+                sx={{width:"37%", paddingLeft: "3vmin"}}
+              />
+              <TextField
+                autoFocus
+                margin="normal"
+                id="name"
+                label="Email Address"
+                type="email"
+                // variant="standard"
+                placeholder="example@gmail.com"
+                sx={{width:"77%", paddingLeft: "10vmin"}}
+              />
+              <TextField 
+                margin="normal"
+                label="Password"
+                placeholder='Enter password'
+                sx={{width:"77%", paddingLeft: "10vmin"}}
+              />
+              <TextField
+                margin="normal"
+                label="Confirm Password"
+                placeholder='Enter password'
+                sx={{width:"77%", paddingLeft: "10vmin"}}
+              />
           </DialogContent>
+              </div>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose}>Register</Button>
+            <Button sx={{width:"100px"}} variant="contained" onClick={handleClose}>Cancel</Button>
+            <Button theme={theme} sx={{width:"100px",color:"white"}} variant="contained" onClick={handleClose}>Register</Button>
           </DialogActions>
         </Dialog>
       </header>
