@@ -8,6 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { createTheme} from '@mui/material/styles';
 
 function App() {
   const [open, setOpen] = React.useState(false);
@@ -20,18 +21,34 @@ function App() {
     setOpen(false);
   };
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#C976F6',
+      },
+    },
+    typography: {
+      fontFamily: [
+        'Comic Sans MS, Comic Sans, cursive',
+      ],
+    },
+  });
+
   return (
     <div className="App">
       <header className="App-header">
 
         <img src={logo} className="App-logo" alt="logo" />
-        <Button
-          variant="outlined"
+        <p className="login_reg_button">
+        <Button theme={theme}
+          variant="contained"
           onClick={handleClickOpen}
+          font=""
         >
-          Hello World!
+          Register or log in
         </Button>
-        <Dialog open={open} onClose={handleClose}>
+        </p>
+        <Dialog open={open} onClose={handleClose} fullscren>
           <DialogTitle>Register</DialogTitle>
           <DialogContent>
             <DialogContentText>

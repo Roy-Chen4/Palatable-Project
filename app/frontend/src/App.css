@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.login_reg_button {
+  position: absolute;
+  top: 100px;
+  left: 30px;
+}
+
