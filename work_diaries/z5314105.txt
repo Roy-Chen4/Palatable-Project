@@ -13,3 +13,4 @@ Week 2
 Week 3
 - Added user stories for recipe explorer and contributed
 - Started discussing functionalities for first sprint
+- Added existing solutions section to proposal
