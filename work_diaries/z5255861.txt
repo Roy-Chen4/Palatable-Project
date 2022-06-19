@@ -13,4 +13,9 @@ Week 2
 - Finished writing out user stories, left them in the doc for team to review
 - Helped draft up storyboard, drew mock ups of potential pages at university with group
 
+Week 3
 
+- Set up atomic design
+- Creating route configuration for two page design
+- Finishing Project Proposal
+- Created Logo
