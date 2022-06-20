@@ -1,3 +1,16 @@
 Work Diary
 
 Week 1
+- Groups were formed
+- Jira set up
+- Chosen project and started on functionalities
+
+Week 2
+- Github classroom set up
+- Core functionalities and novelties were finalised
+- Started on user stories
+
+Week 3
+- Added user stories for recipe explorer and contributed
+- Started discussing functionalities for first sprint
+- Added existing solutions section to proposal

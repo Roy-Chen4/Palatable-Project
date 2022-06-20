@@ -9,6 +9,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { createTheme} from '@mui/material/styles';
+import { InputAdornment, Toolbar } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 function App() {
   const [open, setOpen] = React.useState(false);
@@ -41,6 +43,18 @@ function App() {
       <header className="App-header">
 
         <img src={logo} className="App-logo" alt="logo" />
+        <TextField
+          variant='outlined'
+          margin='normal'
+          sx={{position: "absolute", top: "0", left: "0"}}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment>
+                <SearchIcon/>
+              </InputAdornment>
+            )
+          }}
+        />
         <p className="login_reg_button">
         <Button theme={theme}
           variant="contained"
