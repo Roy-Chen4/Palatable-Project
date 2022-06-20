@@ -41,12 +41,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-
+        Palatable
         <img src={logo} className="App-logo" alt="logo" />
         <TextField
           variant='outlined'
           margin='normal'
-          sx={{position: "absolute", top: "0", left: "0"}}
+          sx={{position: "absolute", top: "0", width: "30%", backgroundColor: "white"}}
           InputProps={{
             endAdornment: (
               <InputAdornment>
