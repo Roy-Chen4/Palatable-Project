@@ -10,3 +10,6 @@ Week 3:
 - I created a storyboard for the initial user journey
 - Finished the problem statement including several personas and problems addressed
 - Worked on the register page UI
+- Completed the software architecture
+- Completed analysis of technologies used for our project in the proposal
+- Added a search bar to the home page 
