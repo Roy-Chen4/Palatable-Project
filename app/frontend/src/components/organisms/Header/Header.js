@@ -10,6 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { createTheme} from '@mui/material/styles';
+import { Box } from '@mui/system';
 
 function Header() {
   const [open, setOpen] = React.useState(false);
