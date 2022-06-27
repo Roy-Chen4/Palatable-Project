@@ -51,3 +51,15 @@
 image {
   height: 10vw;
 }
+
+.confirmation_ui {
+  padding: 2vw;
+  text-align: center;
+}
+
+.conf_heading {
+  font-size: 3vw;
+  padding-top: 0px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
