@@ -12,32 +12,48 @@ postgresConnection    = psycopg2.connect(
 # Cursor for connection
 cursor = postgresConnection.cursor()
 
-# Create table statement
-create_table = "create table test (id int primary key, name varchar(30), des varchar(50));"
-cursor.execute(create_table)
+# Recipe id, change this to search other recipes (Currently theres only one: 101)
+recipe_id = 101
 
-# Insert Into
-insert_into = """INSERT INTO test (id, name, des) VALUES (%s,%s,%s)"""
-record = (150, 'Name', 'Text')
-record2 = (151, 'Name1', 'Text2')
-record3 = (152, 'Name2', 'Text3')
-record4 = (153, 'Name3', 'Text4')
-cursor.execute(insert_into, record)
-cursor.execute(insert_into, record2)
-cursor.execute(insert_into, record3)
-cursor.execute(insert_into, record4)
-postgresConnection.commit()
+# Getting recipe name and contributor
+select_from = """
+SELECT r.name, r.type, u.f_name, u.l_name
+FROM recipes r
+JOIN users u ON r.contributor = u.id
+WHERE r.id = %s;
+"""
+cursor.execute(select_from, [recipe_id])
+table = cursor.fetchone()
+if not table:
+    print("Recipe not found")
+else:
+    print(f"Recipe Name: {table[0]}")
+    print(f"Recipe Type: {table[1]}")
+    print(f"Contributed by: {table[2]} {table[3]}")
 
-# Select * From
-select_from = "SELECT * FROM test;"
-cursor.execute(select_from)
-tables = cursor.fetchall()
+    # Getting ingredients
+    select_from = """
+    SELECT i.name, ir.amount, ir.unit 
+    FROM ingre_recipe ir
+    JOIN recipes r ON ir.recipe = r.id
+    JOIN ingredients i ON ir.ingredient = i.id 
+    WHERE r.id = %s;
+    """
+    cursor.execute(select_from, [recipe_id])
+    tables = cursor.fetchall()
+    print('\nIngredients:')
+    for table in tables:
+        print(f'{table[1]} {table[2]} {table[0]}')
 
-# Print entries
-for table in tables:
-    print(table)
-
-# Drop table
-drop_table = "drop table test;"
-cursor.execute(drop_table)
-postgresConnection.commit()
+    # Getting recipe details
+    select_from = """
+    SELECT rd.step_number, rd.description
+    FROM recipe_details rd 
+    JOIN recipes r ON rd.recipe = r.id 
+    WHERE r.id = %s;
+    """
+    cursor.execute(select_from, [recipe_id])
+    tables = cursor.fetchall()
+    print('\nDetails:')
+    for table in tables:
+        print(f'Step {table[0]}: {table[1]}')
