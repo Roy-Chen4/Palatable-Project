@@ -43,10 +43,54 @@ export default function CollapsableDrawer() {
     setRegOpen(false);
   };
 
-  const theme = createTheme({
+  const [confOpen, setConfOpen] = React.useState(false); 
+
+  const handleClickOpenConf = () => {
+	setConfOpen(true);
+  }
+
+  const handleCloseConf = () => {
+	setConfOpen(false);
+  }
+
+  const handleCloseConfreg = () => {
+	setConfOpen(false);
+	setRegOpen(false);
+  }
+
+  const [logOpen, setLogOpen] = React.useState(false); 
+
+  const handleClickOpenLog = () => {
+	setLogOpen(true);
+  }
+
+  const handleCloseLog = () => {
+	setLogOpen(false);
+  }
+
+  const handleCloseRegLog = () => {
+	setLogOpen(false);
+	setRegOpen(false);
+  }
+  
+
+  const ptheme = createTheme({
     palette: {
       primary: {
         main: '#C976F6',
+      },
+    },
+    typography: {
+      fontFamily: [
+        'Comic Sans MS, Comic Sans, cursive',
+      ],
+    },
+  });
+
+  const btheme = createTheme({
+    palette: {
+      primary: {
+        main: '#E8E8E8',
       },
     },
     typography: {
@@ -68,7 +112,7 @@ export default function CollapsableDrawer() {
 				<ChevronLeftIcon />
 			</IconButton>
 			<div className="login_reg_button">
-				<Button theme={theme}
+				<Button theme={ptheme}
 					variant="contained"
 					onClick={handleClickOpen}
 				>
@@ -93,45 +137,133 @@ export default function CollapsableDrawer() {
 						</DialogContentText>
 						<TextField
 							margin="normal"
+							/*
 							label="First Name"
-							placeholder='John'
+							*/
+							placeholder='First Name'
 							sx={{width:"37%", paddingLeft: "10vmin"}}
 						/>
 						<TextField
 							margin="normal"
+							/*
 							label="Last Name"
-							placeholder='Smith'
+							*/
+							placeholder='Last Name'
 							sx={{width:"37%", paddingLeft: "3vmin"}}
 						/>
 						<TextField
 							autoFocus
 							margin="normal"
 							id="name"
+							/*
 							label="Email Address"
+							*/
 							type="email"
 							// variant="standard"
-							placeholder="example@gmail.com"
+							placeholder="Email Address"
 							sx={{width:"77%", paddingLeft: "10vmin"}}
 						/>
 						<TextField 
 							margin="normal"
+							/*
 							label="Password"
+							*/
 							placeholder='Enter password'
 							sx={{width:"77%", paddingLeft: "10vmin"}}
 						/>
 						<TextField
 							margin="normal"
+							/*
 							label="Confirm Password"
-							placeholder='Enter password'
+							*/
+							placeholder='Confirm password'
 							sx={{width:"77%", paddingLeft: "10vmin"}}
 						/>
 				</DialogContent>
 						</div>
 				<DialogActions>
-					<Button sx={{width:"100px"}} variant="contained" onClick={handleClose}>Cancel</Button>
-					<Button theme={theme} sx={{width:"100px",color:"white"}} variant="contained" onClick={handleClose}>Register</Button>
+					<Button onClick={handleClickOpenLog}>Already have an account?</Button>
+					<Button theme={btheme} sx={{width:"100px"}} variant="contained" onClick={handleClose}>Cancel</Button>
+					<Button theme={ptheme} sx={{width:"100px",color:"white"}} variant="contained" onClick={handleClickOpenConf}>Register</Button>
 				</DialogActions>
 			</Dialog>
+
+			<Dialog open={confOpen} onClose={handleCloseConf} fullWidth='true' maxWidth='md'>
+				<div className="confirmation_ui">
+				<DialogTitle>
+					<p1 className='conf_heading'>
+						Account Confirmation
+					</p1>
+				</DialogTitle>
+				<DialogContent>
+				<DialogContentText>
+					Please enter the five letter code that was emailed to you.
+				</DialogContentText>
+				<TextField
+					margin="normal"
+					placeholder='AAAAA'
+					sx={{width:"70%"}}
+				/>
+				</DialogContent>
+				</div>
+				<DialogActions>
+					<Button 
+					onClick={handleCloseConf}
+					variant="contained"
+					theme={btheme}
+					> 
+					Close 
+						</Button>
+					<Button 
+					onClick={handleCloseConfreg}
+					variant="contained"
+					theme={ptheme}
+					sx={{color:"white"}}
+					> 
+					Submit 
+						</Button>
+				</DialogActions>
+			</Dialog>
+
+			<Dialog open={logOpen} onClose={handleCloseConf} fullWidth='true' maxWidth='md'>
+				<div className="confirmation_ui">
+				<DialogTitle>
+					<p1 className='conf_heading'>
+						Log In
+					</p1>
+				</DialogTitle>
+				<DialogContent>
+				<TextField
+					margin="normal"
+					placeholder='Email Address'
+					sx={{width:"70%"}}
+				/>
+				<TextField
+					margin="normal"
+					placeholder='Password'
+					sx={{width:"70%"}}
+				/>
+				</DialogContent>
+				</div>
+				<DialogActions>
+					<Button 
+					onClick={handleCloseLog}
+					variant="contained"
+					theme={btheme}
+					> 
+					Close 
+						</Button>
+					<Button 
+					onClick={handleCloseRegLog}
+					variant="contained"
+					theme={ptheme}
+					sx={{color:"white"}}
+					> 
+					Log In 
+						</Button>
+				</DialogActions>
+			</Dialog>
+
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
