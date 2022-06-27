@@ -8,7 +8,6 @@ function IngredientPage() {
   
     return (
       <div className="IngredientPage">
-        <h1>This is the IngredientPage</h1>
         <div className='TextInput'>
             <TextField
             variant='outlined'

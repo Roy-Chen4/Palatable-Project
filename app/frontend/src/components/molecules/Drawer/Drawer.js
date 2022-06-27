@@ -8,6 +8,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MenuIcon from '@mui/icons-material/Menu';
 import MailIcon from '@mui/icons-material/Mail';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -19,6 +20,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import './Drawer.css'
 
 export default function CollapsableDrawer() {
   const [state, setState] = React.useState(false);
@@ -59,11 +61,11 @@ export default function CollapsableDrawer() {
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
       // onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(false)}
+      // onKeyDown={toggleDrawer(false)}
     >
       <List>
-			<IconButton onClick={toggleDrawer(false)}>
-				{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+			<IconButton className='close-icon' onClick={toggleDrawer(false)}>
+				<ChevronLeftIcon />
 			</IconButton>
 			<div className="login_reg_button">
 				<Button theme={theme}
@@ -147,11 +149,16 @@ export default function CollapsableDrawer() {
   return (
     <div>
 			<React.Fragment key={'left'}>
-				<Button onClick={toggleDrawer(true)}>{'left'}</Button>
+				<div className='menu-icon'>
+					<Button onClick={toggleDrawer(true)}>
+						<MenuIcon />
+					</Button>
+				</div>
 				<Drawer
 					anchor={'left'}
 					open={state}
 					onClose={toggleDrawer(false)}
+					BackdropProps={{style:{opacity:0}}}
 				>
 					{list('left')}
 				</Drawer>
