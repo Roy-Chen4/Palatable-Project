@@ -4,9 +4,18 @@ Week 1
 
 Week 2
 - Finalised funtionalities and started on user stories after meeting on 12/06
-- Set up meeting for 14/06
+- Set up and ran meeting for 14/06
+- Set up and ran meeting for 16/06
 
 Week 3
 - Added user stories as issues to Jira
 - Wrote my portion of user stories
 - Connected Jira to Github interface
+- Wrote parts of introduction and comparing other websites
+- Edited Jira board such that user stories had points and urgency
+- Screenshotted user stories and added them to project proposal
+- Made final edits and formatting changes to project proposal
+- Submitted project proposal
+
+Week 4
+- Set up and ran meeting for 23/06
