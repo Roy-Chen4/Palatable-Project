@@ -1,4 +1,10 @@
-.App {
+img {
+  height: 10vh;
+  justify-content: center;
+  padding-left: 46vw;
+}
+
+/* .App {
     text-align: center;
   }
   
@@ -7,9 +13,11 @@
   pointer-events: none;
 }
 
+
+
 .App-header {
   background-color: #282c34;
-  /* min-height: 15vh; */
+  min-height: 15vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,6 +58,7 @@
   
 image {
   height: 10vw;
+<<<<<<< HEAD
 }
 
 .confirmation_ui {
@@ -63,3 +72,6 @@ image {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
 }
+=======
+} */
+>>>>>>> 7c8c066b0166c8629d20a4069c478332182bf5c1
