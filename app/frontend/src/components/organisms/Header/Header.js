@@ -9,7 +9,7 @@ import AppBar from '@mui/material/AppBar';
 
 
 function Header() {
-  return (
+  return ( 
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ bgcolor: '#282c34'}}>
         <Toolbar>
@@ -20,7 +20,9 @@ function Header() {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           />
-          <img src={logo} className="App-logo" alt="logo"/>
+          <div className='app-logo'>
+            <img src={logo} className="App-logo" alt="logo"/>
+          </div>
         </Toolbar>
       </AppBar>
     </Box>

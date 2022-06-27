@@ -24,7 +24,7 @@ import styled, { css } from 'styled-components'
 // export default Button;
 
 export const Button = styled.button`
-  background-color: white;
+  background-color: #df7b84;
   border-radius: 5px;
   display: flex;
   border-radius: 3px;
@@ -38,7 +38,7 @@ export const Button = styled.button`
   }
 
   ${props => props.loginregister && css`
-    background: purple;
+    background: #df7b84;
     color: white;
   `}
 `; 

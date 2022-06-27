@@ -7,12 +7,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
-import MailIcon from '@mui/icons-material/Mail';
+import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { createTheme} from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -77,14 +76,15 @@ export default function CollapsableDrawer() {
   const ptheme = createTheme({
     palette: {
       primary: {
-        main: '#C976F6',
+        main: '#df7b84',
       },
     },
-    typography: {
-      fontFamily: [
-        'Comic Sans MS, Comic Sans, cursive',
-      ],
-    },
+    // typography: {
+    //   // fontFamily: [
+    //   //   'Comic Sans MS, Comic Sans',
+    //   // ],
+		// 	color: '#df7b84',
+    // },
   });
 
   const btheme = createTheme({
@@ -93,11 +93,12 @@ export default function CollapsableDrawer() {
         main: '#E8E8E8',
       },
     },
-    typography: {
-      fontFamily: [
-        'Comic Sans MS, Comic Sans, cursive',
-      ],
-    },
+    // typography: {
+    //   // fontFamily: [
+    //   //   'Comic Sans MS, Comic Sans',
+    //   // ],
+		// 	color: 'white',
+    // },
   });
 
   const list = (anchor) => (
@@ -115,8 +116,9 @@ export default function CollapsableDrawer() {
 				<Button theme={ptheme}
 					variant="contained"
 					onClick={handleClickOpen}
+					sx={{color:"white"}} 
 				>
-					Register or log in
+					Register/Login
 				</Button>
 			</div>
 
@@ -247,33 +249,38 @@ export default function CollapsableDrawer() {
 				</div>
 				<DialogActions>
 					<Button 
-					onClick={handleCloseLog}
-					variant="contained"
-					theme={btheme}
-					> 
-					Close 
-						</Button>
+						onClick={handleCloseLog}
+						variant="contained"
+						theme={btheme}
+						> 
+						Close 
+					</Button>
 					<Button 
 					onClick={handleCloseRegLog}
 					variant="contained"
 					theme={ptheme}
 					sx={{color:"white"}}
 					> 
-					Log In 
-						</Button>
+						Log In 
+					</Button>
 				</DialogActions>
 			</Dialog>
-
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+				 <ListItem disablePadding>
+					<ListItemButton>
+						<ListItemIcon>
+							<FavoriteBorderOutlinedIcon />
+						</ListItemIcon>
+						<ListItemText primary={'Saved Recipes'} />
+					</ListItemButton>
+				 </ListItem>
+				 <ListItem disablePadding>
+					<ListItemButton>
+						<ListItemIcon>
+							<ForumOutlinedIcon />
+						</ListItemIcon>
+						<ListItemText primary={'Feed'} />
+					</ListItemButton>
+				 </ListItem>
       </List>
     </Box>
   );
@@ -283,7 +290,7 @@ export default function CollapsableDrawer() {
 			<React.Fragment key={'left'}>
 				<div className='menu-icon'>
 					<Button onClick={toggleDrawer(true)}>
-						<MenuIcon />
+						<MenuIcon sx={{color:'#df7b84'}}/>
 					</Button>
 				</div>
 				<Drawer
