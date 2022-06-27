@@ -9,6 +9,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -33,6 +35,12 @@ export default function CollapsableDrawer() {
   };
 
 	const [regOpen, setRegOpen] = React.useState(false);
+	
+	const [confOpen, setConfOpen] = React.useState(false); 
+
+	const [logOpen, setLogOpen] = React.useState(false); 
+
+	const [loggedIn, setLoggedIn] = React.useState(false); 
   
   const handleClickOpen = () => {
     setRegOpen(true);
@@ -42,8 +50,6 @@ export default function CollapsableDrawer() {
     setRegOpen(false);
   };
 
-  const [confOpen, setConfOpen] = React.useState(false); 
-
   const handleClickOpenConf = () => {
 	setConfOpen(true);
   }
@@ -52,12 +58,11 @@ export default function CollapsableDrawer() {
 	setConfOpen(false);
   }
 
-  const handleCloseConfreg = () => {
+  const handleRegister = () => {
 	setConfOpen(false);
 	setRegOpen(false);
+	setLoggedIn(true);
   }
-
-  const [logOpen, setLogOpen] = React.useState(false); 
 
   const handleClickOpenLog = () => {
 	setLogOpen(true);
@@ -67,9 +72,10 @@ export default function CollapsableDrawer() {
 	setLogOpen(false);
   }
 
-  const handleCloseRegLog = () => {
+  const handleLogin = () => {
 	setLogOpen(false);
 	setRegOpen(false);
+	setLoggedIn(true);
   }
   
 
@@ -217,7 +223,7 @@ export default function CollapsableDrawer() {
 					Close 
 						</Button>
 					<Button 
-					onClick={handleCloseConfreg}
+					onClick={handleRegister}
 					variant="contained"
 					theme={ptheme}
 					sx={{color:"white"}}
@@ -256,7 +262,7 @@ export default function CollapsableDrawer() {
 						Close 
 					</Button>
 					<Button 
-					onClick={handleCloseRegLog}
+					onClick={handleLogin}
 					variant="contained"
 					theme={ptheme}
 					sx={{color:"white"}}
@@ -281,6 +287,34 @@ export default function CollapsableDrawer() {
 						<ListItemText primary={'Feed'} />
 					</ListItemButton>
 				 </ListItem>
+					<ListItem 
+						disablePadding
+						sx= {{
+							display:
+								loggedIn ? "flex" : "none",
+						}}
+					>
+						<ListItemButton>
+							<ListItemIcon>
+								<SettingsOutlinedIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Settings'} />
+						</ListItemButton>
+					</ListItem>
+					<ListItem 
+						disablePadding
+						sx= {{
+							display:
+								loggedIn ? "flex" : "none",
+						}}
+					>
+						<ListItemButton>
+							<ListItemIcon>
+								<ExitToAppOutlinedIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Sign Out'} />
+						</ListItemButton>
+					</ListItem>
       </List>
     </Box>
   );
