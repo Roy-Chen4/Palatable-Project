@@ -12,17 +12,32 @@ const button_disp = [
   {
     url: 'https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
     title: 'Meats',
-    width: '33%',
+    width: '16.6%',
   },
   {
     url: 'https://images.unsplash.com/photo-1590779033100-9f60a05a013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
     title: 'Vegetables',
-    width: '33%'
+    width: '16.6%'
   },
   {
     url: 'https://images.unsplash.com/photo-1564149504298-00c351fd7f16?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
     title: 'Seasoning',
-    width: '33%',
+    width: '16.6%',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1546622653-c4c1d0035acd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    title: 'Condiments',
+    width: '16.6%'
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1600626335465-0038a1ddcc2a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    title: 'Carbohydrates',
+    width: '16.6%'
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    title: 'Fruits',
+    width: '16.6%'
   },
 ]
 
@@ -41,25 +56,27 @@ const ImageButton = styled(ButtonBase)(({theme}) => ({
     '& .MuiImageMarked-root': {
       opacity: 0,
     },
-    '& .MuiTypography-root': {
+    /*'& .MuiTypography-root': {
       border: '4px solid currentColor',
     },
+    */
   },
 }));
 
 const ImageSrc = styled('span')({
   position: 'absolute',
-  left: 0,
+  left: 10,
   right: 0,
   top: 0,
   bottom: 0,
   backgroundSize: 'cover',
   backgroundPosition: 'center 40%',
+  borderRadius: '2vw',
 });
 
 const Image = styled('span')(({ theme }) => ({
   position: 'absolute',
-  left: 0,
+  left: 10,
   right: 0,
   top: 0,
   bottom: 0,
@@ -71,17 +88,19 @@ const Image = styled('span')(({ theme }) => ({
 
 const ImageBackdrop = styled('span')(({ theme }) => ({
   position: 'absolute',
-  left: 0,
+  left: 10,
   right: 0,
   top: 0,
   bottom: 0,
+  backgroundSize: 'cover',
   backgroundColor: theme.palette.common.black,
-  opacity: 0.4,
+  opacity: 0.5,
+  borderRadius: '2vw',
   transition: theme.transitions.create('opacity'),
 }));
 
 const ImageMarked = styled('span')(({ theme }) => ({
-  height: 3,
+  height: 0,
   width: 18,
   backgroundColor: theme.palette.common.white,
   position: 'absolute',
@@ -111,13 +130,14 @@ function IngredientPage() {
             />
         </div>
         <div className='IngredientDisplay'>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%'}}>
       {button_disp.map((image) => (
         <ImageButton
           focusRipple
           key={image.title}
           style={{
             width: image.width,
+            borderRadius: '2vw',
           }}
         >
           <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
@@ -129,8 +149,12 @@ function IngredientPage() {
               color="inherit"
               sx={{
                 position: 'relative',
+                /*
                 p: 4,
                 pt: 2,
+                */
+                fontSize: '1.25vw',
+                fontWeight: 'bold', 
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
               }}
             >
