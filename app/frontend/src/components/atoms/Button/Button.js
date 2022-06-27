@@ -26,7 +26,7 @@ import styled, { css } from 'styled-components'
 export const Button = styled.button`
   background-color: white;
   border-radius: 5px;
-  display: inline-block;
+  display: flex;
   border-radius: 3px;
   padding: 0.5rem 0;
   margin: 0.5rem 1rem;
