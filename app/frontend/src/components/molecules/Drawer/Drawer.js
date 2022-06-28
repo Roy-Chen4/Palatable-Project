@@ -144,163 +144,162 @@ export default function CollapsableDrawer() {
 						// onKeyDown={toggleDrawer(false)}
 					>
 						<List>
-						<IconButton className='close-icon' onClick={toggleDrawer(false)}>
-							<ChevronLeftIcon />
-						</IconButton>
-						<div className="login_reg_button">
-							<Button theme={ptheme}
-								variant="contained"
-								onClick={handleClickOpen}
-								sx={{color:"white"}} 
-							>
-								Register/Login
-							</Button>
-						</div>
+							<IconButton className='close-icon' onClick={toggleDrawer(false)}>
+								<ChevronLeftIcon />
+							</IconButton>
+							<div className="login_reg_button">
+								<Button theme={ptheme}
+									variant="contained"
+									onClick={handleClickOpen}
+									sx={{color:"white"}} 
+								>
+									Register/Login
+								</Button>
+							</div>
 
-						<Dialog open={regOpen} onClose={handleClose} fullScreen>
-							<div class = "banner">
-									<img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" className="register_banner" alt="loginbanner"/>
-								</div>
-							<div className='register_ui'>
-								<DialogTitle>
-									<p className='rego_heading'>
-									Become Palatable
-									</p>
+							<Dialog open={regOpen} onClose={handleClose} fullScreen>
+								<div class = "banner">
+										<img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" className="register_banner" alt="loginbanner"/>
+									</div>
+								<div className='register_ui'>
+									<DialogTitle>
+										<p className='rego_heading'>
+										Become Palatable
+										</p>
+										</DialogTitle>
+									<DialogContent>
+										<DialogContentText>
+											To subscribe to this website, please enter the required details below. Upon successful 
+											registration you will have full access to recipe exploration and contribution!
+										</DialogContentText>
+										<TextField
+											margin="normal"
+											/*
+											label="First Name"
+											*/
+											placeholder='First Name'
+											sx={{width:"37%", paddingLeft: "10vmin"}}
+										/>
+										<TextField
+											margin="normal"
+											/*
+											label="Last Name"
+											*/
+											placeholder='Last Name'
+											sx={{width:"37%", paddingLeft: "3vmin"}}
+										/>
+										<TextField
+											autoFocus
+											margin="normal"
+											id="name"
+											/*
+											label="Email Address"
+											*/
+											type="email"
+											// variant="standard"
+											placeholder="Email Address"
+											sx={{width:"77%", paddingLeft: "10vmin"}}
+										/>
+										<TextField 
+											margin="normal"
+											/*
+											label="Password"
+											*/
+											placeholder='Enter password'
+											sx={{width:"77%", paddingLeft: "10vmin"}}
+										/>
+										<TextField
+											margin="normal"
+											/*
+											label="Confirm Password"
+											*/
+											placeholder='Confirm password'
+											sx={{width:"77%", paddingLeft: "10vmin"}}
+										/>
+								</DialogContent>
+										</div>
+								<DialogActions>
+									<Button onClick={handleClickOpenLog}>Already have an account?</Button>
+									<Button theme={btheme} sx={{width:"100px"}} variant="contained" onClick={handleClose}>Cancel</Button>
+									<Button theme={ptheme} sx={{width:"100px",color:"white"}} variant="contained" onClick={handleClickOpenConf}>Register</Button>
+								</DialogActions>
+							</Dialog>
+
+							<Dialog open={confOpen} onClose={handleCloseConf} fullWidth='true' maxWidth='md'>
+								<div className="confirmation_ui">
+									<DialogTitle>
+										<p1 className='conf_heading'>
+											Account Confirmation
+										</p1>
 									</DialogTitle>
-								<DialogContent>
+									<DialogContent>
 									<DialogContentText>
-										To subscribe to this website, please enter the required details below. Upon successful 
-										registration you will have full access to recipe exploration and contribution!
+										Please enter the five letter code that was emailed to you.
 									</DialogContentText>
 									<TextField
 										margin="normal"
-										/*
-										label="First Name"
-										*/
-										placeholder='First Name'
-										sx={{width:"37%", paddingLeft: "10vmin"}}
+										placeholder='AAAAA'
+										sx={{width:"70%"}}
 									/>
-									<TextField
-										margin="normal"
-										/*
-										label="Last Name"
-										*/
-										placeholder='Last Name'
-										sx={{width:"37%", paddingLeft: "3vmin"}}
-									/>
-									<TextField
-										autoFocus
-										margin="normal"
-										id="name"
-										/*
-										label="Email Address"
-										*/
-										type="email"
-										// variant="standard"
-										placeholder="Email Address"
-										sx={{width:"77%", paddingLeft: "10vmin"}}
-									/>
-									<TextField 
-										margin="normal"
-										/*
-										label="Password"
-										*/
-										placeholder='Enter password'
-										sx={{width:"77%", paddingLeft: "10vmin"}}
-									/>
-									<TextField
-										margin="normal"
-										/*
-										label="Confirm Password"
-										*/
-										placeholder='Confirm password'
-										sx={{width:"77%", paddingLeft: "10vmin"}}
-									/>
-							</DialogContent>
-									</div>
-							<DialogActions>
-								<Button onClick={handleClickOpenLog}>Already have an account?</Button>
-								<Button theme={btheme} sx={{width:"100px"}} variant="contained" onClick={handleClose}>Cancel</Button>
-								<Button theme={ptheme} sx={{width:"100px",color:"white"}} variant="contained" onClick={handleClickOpenConf}>Register</Button>
-							</DialogActions>
-						</Dialog>
-
-						<Dialog open={confOpen} onClose={handleCloseConf} fullWidth='true' maxWidth='md'>
-							<div className="confirmation_ui">
-								<DialogTitle>
-									<p1 className='conf_heading'>
-										Account Confirmation
-									</p1>
-								</DialogTitle>
-								<DialogContent>
-								<DialogContentText>
-									Please enter the five letter code that was emailed to you.
-								</DialogContentText>
-								<TextField
-									margin="normal"
-									placeholder='AAAAA'
-									sx={{width:"70%"}}
-								/>
-								</DialogContent>
-							</div>
-							<DialogActions>
-								<Button 
-								onClick={handleCloseConf}
-								variant="contained"
-								theme={btheme}
-								> 
-								Close 
-									</Button>
-								<Button 
-								onClick={handleRegister}
-								variant="contained"
-								theme={ptheme}
-								sx={{color:"white"}}
-								> 
-								Submit 
-									</Button>
-							</DialogActions>
-						</Dialog>
-
-						<Dialog open={logOpen} onClose={handleCloseConf} fullWidth='true' maxWidth='md'>
-							<div className="confirmation_ui">
-							<DialogTitle>
-								<p1 className='conf_heading'>
-									Log In
-								</p1>
-							</DialogTitle>
-							<DialogContent>
-							<TextField
-								margin="normal"
-								placeholder='Email Address'
-								sx={{width:"70%"}}
-							/>
-							<TextField
-								margin="normal"
-								placeholder='Password'
-								sx={{width:"70%"}}
-							/>
-							</DialogContent>
-							</div>
-							<DialogActions>
-								<Button 
-									onClick={handleCloseLog}
+									</DialogContent>
+								</div>
+								<DialogActions>
+									<Button 
+									onClick={handleCloseConf}
 									variant="contained"
 									theme={btheme}
 									> 
 									Close 
-								</Button>
-								<Button 
-								onClick={handleLogin}
-								variant="contained"
-								theme={ptheme}
-								sx={{color:"white"}}
-								> 
-									Log In 
-								</Button>
-							</DialogActions>
-						</Dialog>
+										</Button>
+									<Button 
+									onClick={handleRegister}
+									variant="contained"
+									theme={ptheme}
+									sx={{color:"white"}}
+									> 
+									Submit 
+										</Button>
+								</DialogActions>
+							</Dialog>
 
+							<Dialog open={logOpen} onClose={handleCloseConf} fullWidth='true' maxWidth='md'>
+								<div className="confirmation_ui">
+								<DialogTitle>
+									<p1 className='conf_heading'>
+										Log In
+									</p1>
+								</DialogTitle>
+								<DialogContent>
+								<TextField
+									margin="normal"
+									placeholder='Email Address'
+									sx={{width:"70%"}}
+								/>
+								<TextField
+									margin="normal"
+									placeholder='Password'
+									sx={{width:"70%"}}
+								/>
+								</DialogContent>
+								</div>
+								<DialogActions>
+									<Button 
+										onClick={handleCloseLog}
+										variant="contained"
+										theme={btheme}
+										> 
+										Close 
+									</Button>
+									<Button 
+									onClick={handleLogin}
+									variant="contained"
+									theme={ptheme}
+									sx={{color:"white"}}
+									> 
+										Log In 
+									</Button>
+								</DialogActions>
+							</Dialog>
 							<ListItem disablePadding>
 								<ListItemButton>
 									<ListItemIcon>
@@ -317,34 +316,22 @@ export default function CollapsableDrawer() {
 									<ListItemText primary={'Feed'} />
 								</ListItemButton>
 							</ListItem>
-							<div onClick={handleSettingsOpen}>
-								<SettingsOutlinedIcon />
-								Settings
-							</div>
-							<div>
-								<Button 
-									onClick={handleLogin}
-									variant="contained"
-									theme={ptheme}
-									sx={{color:"white"}}
-								> 
-									Log In 
-								</Button>
-								<ListItem 
-									disablePadding
-									sx= {{
-										display:
-											loggedIn ? "flex" : "none",
-									}}
-								>
-									<ListItemButton>
-										<ListItemIcon>
-											<SettingsOutlinedIcon />
-										</ListItemIcon>
-										<ListItemText primary={'Settings'} />
-									</ListItemButton>
-								</ListItem>
-							</div>
+							
+							<ListItem 
+								disablePadding
+								sx= {{
+									display:
+										loggedIn ? "flex" : "none",
+								}}
+								onClick={() => handleSettingsOpen()}
+							>
+								<ListItemButton>
+									<ListItemIcon>
+										<SettingsOutlinedIcon />
+									</ListItemIcon>
+									<ListItemText primary={'Settings'} />
+								</ListItemButton>
+							</ListItem>
 
 							<Dialog open={settingsOpen} onClose={handleSettingsClose} fullWidth='true' maxWidth='md'>
 								<div className="user-settings">
@@ -375,20 +362,20 @@ export default function CollapsableDrawer() {
 
 
 
-								<ListItem 
-									disablePadding
-									sx= {{
-										display:
-											loggedIn ? "flex" : "none",
-									}}
-								>
-									<ListItemButton>
-										<ListItemIcon>
-											<ExitToAppOutlinedIcon />
-										</ListItemIcon>
-										<ListItemText primary={'Sign Out'} />
-									</ListItemButton>
-								</ListItem>
+							<ListItem 
+								disablePadding
+								sx= {{
+									display:
+										loggedIn ? "flex" : "none",
+								}}
+							>
+								<ListItemButton>
+									<ListItemIcon>
+										<ExitToAppOutlinedIcon />
+									</ListItemIcon>
+									<ListItemText primary={'Sign Out'} />
+								</ListItemButton>
+							</ListItem>
 						</List>
 					</Box>
 
