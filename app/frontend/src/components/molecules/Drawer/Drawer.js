@@ -10,6 +10,8 @@ import ListItemText from '@mui/material/ListItemText';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { createTheme} from '@mui/material/styles';
@@ -25,10 +27,11 @@ import './Drawer.css'
 export default function CollapsableDrawer() {
   const [registerDetails, setRegisterDetails] = React.useState({
     email: "", 
-    password:""
+    password1:"",
+    password2:""
   });
   
-  const handleRegisterChange = event => {
+  const handleRegisterChange = (event) => {
     const { name, value } = event.target;
     setRegisterDetails( {
       ...registerDetails,
@@ -41,32 +44,15 @@ export default function CollapsableDrawer() {
     password:""
   });
   
-  // function handleLoginChange (event) {
-  //   const { name, value } = event.target;
-  //   setLoginDetails( {
-  //     ...loginDetails,
-  //     [name]: value,
-  //   })
-  // }
-
-
-
-  // const [loginEmail, setloginEmail] = React.useState("");
-  // const [loginPassword, setloginPassword] = React.useState("");
-
-  const loginEmailChange = (event) => {
-    setLoginDetails({
+  function handleLoginChange (event) {
+    const { name, value } = event.target;
+    setLoginDetails( {
       ...loginDetails,
-      email: event.target.value
+      [name]: value,
     })
   }
 
-  const loginPasswordChange =(event) => {
-    setLoginDetails({
-      ...loginDetails,
-      password: event.target.value
-    })
-  }
+  const [settingsOpen, setSettingsOpen] = React.useState(false);
 
   // registerDetails user formatted entry
   const handleRegisterSubmit = () => {
@@ -74,19 +60,24 @@ export default function CollapsableDrawer() {
     axios
       .post("/register/", registerDetails)
       .then((res) => console.log(res))
-      .catch((err) => console.log(err.response.status));
+      .then(() => handleLogin())
+      .catch((err) => console.log(err));
       
   }
   
+  //add a loading icon
   const handleLoginSubmit = () => {
-    console.log(loginDetails);
+    // console.log(loginDetails);
     axios
       .post("/login/", loginDetails)
-      .then(() => this.setLogOpen(false))
+      .then((res) => console.log(res))
+      .then(() => handleLogin())
       .catch((err) => console.log(err));
       
   }
 	
+  const [loggedIn, setLoggedIn] = React.useState(false);  
+
 	const [state, setState] = React.useState(false);
 
   const toggleDrawer = (open) => () => {
@@ -128,10 +119,24 @@ export default function CollapsableDrawer() {
 	setLogOpen(false);
   }
 
+  const handleLogin = () => {
+    setLogOpen(false);
+    setRegOpen(false);
+    setLoggedIn(true);
+    }
   // const handleCloseRegLog = () => {
 	// setLogOpen(false);
 	// setRegOpen(false);
   // }
+
+  const handleSettingsOpen = () => {
+		console.log("settings open now")
+		setSettingsOpen(true);
+	};
+
+	const handleSettingsClose = () => {
+		setSettingsOpen(false);
+	};
   
 
   const ptheme = createTheme({
@@ -177,7 +182,11 @@ export default function CollapsableDrawer() {
 				<Button theme={ptheme}
 					variant="contained"
 					onClick={handleClickOpen}
-					sx={{color:"white"}} 
+					sx={{
+            color:"white",
+            display:
+              loggedIn ? "none" : "flex",
+          }} 
 				>
 					Register/Login
 				</Button>
@@ -205,8 +214,9 @@ export default function CollapsableDrawer() {
 							/*
 							label="Email Address"
 							*/
-              // value={registerDetails.email}
-              onBlur={handleRegisterChange}
+              name="email"
+              value={registerDetails.email}
+              onChange={handleRegisterChange}
 							type="email"
 							// variant="standard"
 							placeholder="Email Address"
@@ -217,8 +227,9 @@ export default function CollapsableDrawer() {
 							/*
 							label="Password"
 							*/
-              // value={registerDetails.password}
-              onBlur={handleRegisterChange}
+              name="password1"
+              value={registerDetails.password1}
+              onChange={handleRegisterChange}
               type="password"
 							placeholder='Enter password'
 							sx={{width:"77%", paddingLeft: "10vmin"}}
@@ -228,6 +239,9 @@ export default function CollapsableDrawer() {
 							/*
 							label="Confirm Password"
 							*/
+              name="password2"
+              value={registerDetails.password2}
+              onChange={handleRegisterChange}
               type="password"
 							placeholder='Confirm password'
 							sx={{width:"77%", paddingLeft: "10vmin"}}
@@ -291,7 +305,7 @@ export default function CollapsableDrawer() {
           name="email"
           value={loginDetails.email}
 					placeholder='Email Address'
-          onChange={loginEmailChange}
+          onChange={handleLoginChange}
 					sx={{width:"70%"}}
 				/>
 				<TextField
@@ -300,7 +314,7 @@ export default function CollapsableDrawer() {
           value={loginDetails.password}
 					placeholder='Password'
           type="password"
-          onChange={loginPasswordChange}
+          onChange={handleLoginChange}
 					sx={{width:"70%"}}
 				/>
 				</DialogContent>
@@ -339,6 +353,82 @@ export default function CollapsableDrawer() {
 						<ListItemText primary={'Feed'} />
 					</ListItemButton>
 				 </ListItem>
+         <ListItem 
+            disablePadding
+            sx= {{
+              display:
+                loggedIn ? "flex" : "none",
+            }}
+            onClick={() => handleSettingsOpen()}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <SettingsOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Settings'} />
+            </ListItemButton>
+          </ListItem>
+
+          <Dialog open={settingsOpen} onClose={handleSettingsClose} fullWidth='true' maxWidth='md'>
+            <div className="confirmation_ui">
+            <DialogTitle>
+              <p1 className='conf_heading'>
+                User Settings
+              </p1>
+            </DialogTitle>
+            <DialogContent>
+            <TextField
+              margin="normal"
+              placeholder='Change Email'
+              sx={{width:"70%"}}
+            />
+            <TextField
+              margin="normal"
+              placeholder='New Password'
+              sx={{width:"70%"}}
+            />
+            <TextField
+              margin="normal"
+              placeholder='Old Password'
+              sx={{width:"70%"}}
+            />
+            </DialogContent>
+            </div>
+            <DialogActions>
+              <Button 
+                onClick={handleSettingsClose}
+                variant="contained"
+                theme={btheme}
+                > 
+                Close 
+              </Button>
+              <Button 
+              onClick={handleSettingsClose}
+              variant="contained"
+              theme={ptheme}
+              sx={{color:"white"}}
+              > 
+                Save
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+
+
+          <ListItem 
+            disablePadding
+            sx= {{
+              display:
+                loggedIn ? "flex" : "none",
+            }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <ExitToAppOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Sign Out'} />
+            </ListItemButton>
+          </ListItem>
       </List>
     </Box>
   );
