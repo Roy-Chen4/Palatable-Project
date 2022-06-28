@@ -21,7 +21,8 @@ from palatable import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html')),
-    path('register/', views.register,name='register'),
+    ##path('register/', views.register,name='register'), 
     path('test/', views.test),
     path('login', views.login),
+    path('register/', views.register),
 ]

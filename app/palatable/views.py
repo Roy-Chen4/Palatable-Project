@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm  
 from .forms import NewUserForm1
 from rest_framework.decorators import api_view
-from .serializers import LoginSerializer, UserSerializer
+from .serializers import *
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
@@ -13,6 +13,7 @@ from django.contrib.auth import authenticate
 
 # Create your views here.
 
+'''
 def register(request):
     form = NewUserForm1()
 
@@ -23,6 +24,7 @@ def register(request):
 
     context = {'form':form}
     return render(request, 'register.html', context)
+'''
 
 @api_view(['GET'])
 def test(request):
@@ -42,5 +44,16 @@ def login(request):
                 # The backend authenticated the credentials
                 return Response(serializer.data)
         # No backend authenticated the credentials
-        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN) 
-        
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+@api_view(['POST'])
+def register(request):
+    form = NewUserForm1()
+    if request.method == 'POST':
+        serializer = RegisterSerializer(data = request.data)
+        if serializer.is_valid():
+            form = NewUserForm1(request.data)
+            if form.is_valid():
+                form.save()
+                return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
