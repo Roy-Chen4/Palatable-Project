@@ -35,6 +35,34 @@ export default function CollapsableDrawer() {
     })
   }
 
+  const [loginDetails, setLoginDetails] = React.useState({
+    email: "", 
+    password:""
+  });
+  
+  const handleLoginChange = event => {
+    const { name, value } = event.target;
+    setLoginDetails( {
+      ...loginDetails,
+      [name]: value,
+    })
+  }
+
+  const handleRegisterSubmit = () => {
+    axios
+      .post("/register/", registerDetails)
+      .then(() => this.setRegOpen(false))
+      .catch((err) => console.log(err));
+      
+  }
+  
+  const handleLoginSubmit = () => {
+    axios
+      .post("/login/", loginDetails)
+      .then(() => this.setLogOpen(false))
+      .catch((err) => console.log(err));
+      
+  }
 	
 	const [state, setState] = React.useState(false);
 
@@ -57,14 +85,6 @@ export default function CollapsableDrawer() {
   };
 
   const [confOpen, setConfOpen] = React.useState(false); 
-
-  const handleRegisterSubmit = () => {
-	axios
-      .post("/register/", registerDetails)
-      .then(() => this.setRegOpen(false))
-      .catch((err) => console.log(err));
-    
-  }
 
   const handleCloseConf = () => {
 	setConfOpen(false);
@@ -259,12 +279,16 @@ export default function CollapsableDrawer() {
 				<DialogContent>
 				<TextField
 					margin="normal"
+          value={loginDetails.email}
 					placeholder='Email Address'
+          onChange={handleLoginChange}
 					sx={{width:"70%"}}
 				/>
 				<TextField
 					margin="normal"
+          value={loginDetails.password}
 					placeholder='Password'
+          onChange={handleLoginChange}
 					sx={{width:"70%"}}
 				/>
 				</DialogContent>
