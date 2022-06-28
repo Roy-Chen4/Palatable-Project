@@ -1,0 +1,70 @@
+.App {
+    text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.register_banner {
+  /* height: 100%; */
+  height: 90vw;
+}
+
+.banner {
+  position: absolute;
+  left: -90vw;
+  overflow-y: hidden;
+  /* width:30vw; */
+}
+
+.app-logo {
+  display:flex;
+  justify-content: center;
+}
+
+.register_ui {
+  padding-left: 88vmin;
+}
+
+.rego_heading {
+  font-size: 7vmin;
+  padding-top: 0px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+  
+.confirmation_ui {
+  padding: 2vw;
+  text-align: center;
+}
+
+.conf_heading {
+  font-size: 3vw;
+  padding-top: 0px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.App-logo {
+  height: 10vh;
+  justify-content: center;
+  /* padding-left: 46vw; */
+}
+
+.login_reg_button {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
