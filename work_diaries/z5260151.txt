@@ -16,11 +16,10 @@ Week 2
 - Delegated work to memebers so we could start completion on the first deliverable - project proposal.
 
 Week 3
-
 - Created all storyboards for project proposal
 - Created system architecture flow chart for project proposal
 - Helped format thes sections in the document
 
 Week 4
-
 - Started on backend auth devlopment  
+- Completed register function backend
