@@ -19,6 +19,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import axios from 'axios';
 import './Drawer.css'
 
 export default function CollapsableDrawer() {
@@ -40,23 +41,45 @@ export default function CollapsableDrawer() {
     password:""
   });
   
-  const handleLoginChange = event => {
-    const { name, value } = event.target;
-    setLoginDetails( {
+  // function handleLoginChange (event) {
+  //   const { name, value } = event.target;
+  //   setLoginDetails( {
+  //     ...loginDetails,
+  //     [name]: value,
+  //   })
+  // }
+
+
+
+  // const [loginEmail, setloginEmail] = React.useState("");
+  // const [loginPassword, setloginPassword] = React.useState("");
+
+  const loginEmailChange = (event) => {
+    setLoginDetails({
       ...loginDetails,
-      [name]: value,
+      email: event.target.value
     })
   }
 
+  const loginPasswordChange =(event) => {
+    setLoginDetails({
+      ...loginDetails,
+      password: event.target.value
+    })
+  }
+
+  // registerDetails user formatted entry
   const handleRegisterSubmit = () => {
+    console.log(registerDetails);
     axios
       .post("/register/", registerDetails)
-      .then(() => this.setRegOpen(false))
-      .catch((err) => console.log(err));
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err.response.status));
       
   }
   
   const handleLoginSubmit = () => {
+    console.log(loginDetails);
     axios
       .post("/login/", loginDetails)
       .then(() => this.setLogOpen(false))
@@ -105,10 +128,10 @@ export default function CollapsableDrawer() {
 	setLogOpen(false);
   }
 
-  const handleCloseRegLog = () => {
-	setLogOpen(false);
-	setRegOpen(false);
-  }
+  // const handleCloseRegLog = () => {
+	// setLogOpen(false);
+	// setRegOpen(false);
+  // }
   
 
   const ptheme = createTheme({
@@ -176,30 +199,14 @@ export default function CollapsableDrawer() {
 							registration you will have full access to recipe exploration and contribution!
 						</DialogContentText>
 						<TextField
-							margin="normal"
-							/*
-							label="First Name"
-							*/
-							placeholder='First Name'
-							sx={{width:"37%", paddingLeft: "10vmin"}}
-						/>
-						<TextField
-							margin="normal"
-							/*
-							label="Last Name"
-							*/
-							placeholder='Last Name'
-							sx={{width:"37%", paddingLeft: "3vmin"}}
-						/>
-						<TextField
 							autoFocus
 							margin="normal"
 							id="name"
 							/*
 							label="Email Address"
 							*/
-              value={registerDetails.email}
-              onChange={handleRegisterChange}
+              // value={registerDetails.email}
+              onBlur={handleRegisterChange}
 							type="email"
 							// variant="standard"
 							placeholder="Email Address"
@@ -210,8 +217,9 @@ export default function CollapsableDrawer() {
 							/*
 							label="Password"
 							*/
-              value={registerDetails.password}
-              onChange={handleRegisterChange}
+              // value={registerDetails.password}
+              onBlur={handleRegisterChange}
+              type="password"
 							placeholder='Enter password'
 							sx={{width:"77%", paddingLeft: "10vmin"}}
 						/>
@@ -220,6 +228,7 @@ export default function CollapsableDrawer() {
 							/*
 							label="Confirm Password"
 							*/
+              type="password"
 							placeholder='Confirm password'
 							sx={{width:"77%", paddingLeft: "10vmin"}}
 						/>
@@ -279,16 +288,19 @@ export default function CollapsableDrawer() {
 				<DialogContent>
 				<TextField
 					margin="normal"
+          name="email"
           value={loginDetails.email}
 					placeholder='Email Address'
-          onChange={handleLoginChange}
+          onChange={loginEmailChange}
 					sx={{width:"70%"}}
 				/>
 				<TextField
 					margin="normal"
+          name="password"
           value={loginDetails.password}
 					placeholder='Password'
-          onChange={handleLoginChange}
+          type="password"
+          onChange={loginPasswordChange}
 					sx={{width:"70%"}}
 				/>
 				</DialogContent>
@@ -302,7 +314,7 @@ export default function CollapsableDrawer() {
 						Close 
 					</Button>
 					<Button 
-					onClick={handleCloseRegLog}
+					onClick={handleLoginSubmit}
 					variant="contained"
 					theme={ptheme}
 					sx={{color:"white"}}
