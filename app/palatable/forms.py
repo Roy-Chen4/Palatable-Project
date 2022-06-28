@@ -1,14 +1,19 @@
+from typing import OrderedDict
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 # create forms below
-
+class NewUserForm1(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
 class NewUserForm(UserCreationForm):
-    userEmail = forms.EmailField(label = 'email', required = True)
-    password1 = forms.CharField(label = 'password', required = True)
-    password2 = forms.CharField(label = 'confirm password', required = True)
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
 
     def email_clean(self):
         userEmail = self.cleaned_data['email'].lower()

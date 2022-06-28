@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('palatable'),
-        'USER': config('postgres'),
-        'PASSWORD': config('comp3900'),
-        'HOST': config('database-1.c0wxxqc8ue6o.us-west-1.rds.amazonaws.com'),
+        'NAME':'palatable',
+        'USER': 'postgres',
+        'PASSWORD': 'comp3900',
+        'HOST': 'database-1.c0wxxqc8ue6o.us-west-1.rds.amazonaws.com',
         'PORT': '5432'
     }
 }
