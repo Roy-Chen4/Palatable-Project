@@ -5,9 +5,11 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm  
 from .forms import NewUserForm1
 from rest_framework.decorators import api_view
-from .serializers import UserSerializer
+from .serializers import LoginSerializer, UserSerializer
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework import status
+from django.contrib.auth import authenticate
 
 # Create your views here.
 
@@ -28,3 +30,17 @@ def test(request):
         queryset = User.objects.first()
         serializer = UserSerializer(queryset)
         return Response(serializer.data)
+
+@api_view(['POST'])
+def login(request):
+    if request.method == 'POST':
+        print(request.data)
+        serializer = LoginSerializer(data = request.data)
+        if serializer.is_valid():  
+            user = authenticate(username = serializer.data['email'], password = serializer.data['password'])
+            if user is not None:
+                # The backend authenticated the credentials
+                return Response(serializer.data)
+        # No backend authenticated the credentials
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN) 
+        
