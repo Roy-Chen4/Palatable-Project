@@ -334,12 +334,29 @@ export default function CollapsableDrawer() {
 							</ListItem>
 
 							<Dialog open={settingsOpen} onClose={handleSettingsClose} fullWidth='true' maxWidth='md'>
-								<div className="user-settings">
-									<DialogTitle>
-											User Settings
-									</DialogTitle>
-									<DialogContent>
-									</DialogContent>
+								<div className="confirmation_ui">
+								<DialogTitle>
+									<p1 className='conf_heading'>
+										User Settings
+									</p1>
+								</DialogTitle>
+								<DialogContent>
+								<TextField
+									margin="normal"
+									placeholder='Change Email'
+									sx={{width:"70%"}}
+								/>
+								<TextField
+									margin="normal"
+									placeholder='New Password'
+									sx={{width:"70%"}}
+								/>
+								<TextField
+									margin="normal"
+									placeholder='Old Password'
+									sx={{width:"70%"}}
+								/>
+								</DialogContent>
 								</div>
 								<DialogActions>
 									<Button 
@@ -350,12 +367,12 @@ export default function CollapsableDrawer() {
 										Close 
 									</Button>
 									<Button 
-									onClick={handleLogin}
+									onClick={handleSettingsClose}
 									variant="contained"
 									theme={ptheme}
 									sx={{color:"white"}}
 									> 
-										Save 
+										Save
 									</Button>
 								</DialogActions>
 							</Dialog>
