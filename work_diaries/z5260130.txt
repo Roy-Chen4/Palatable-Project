@@ -13,3 +13,9 @@ Week 3:
 - Completed the software architecture
 - Completed analysis of technologies used for our project in the proposal
 - Added a search bar to the home page 
+
+Week 4:
+- Completed the register UI for demo 1
+- Completed the Login UI for demo 1
+- Added components to the ingredients page UI
+- Implemented email authentication code for backend
