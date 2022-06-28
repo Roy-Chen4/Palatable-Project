@@ -22,3 +22,5 @@ Week 3
 - Helped format thes sections in the document
 
 Week 4
+
+- Started on backend auth devlopment  
