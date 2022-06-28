@@ -138,22 +138,6 @@ export default function CollapsableDrawer() {
 							registration you will have full access to recipe exploration and contribution!
 						</DialogContentText>
 						<TextField
-							margin="normal"
-							/*
-							label="First Name"
-							*/
-							placeholder='First Name'
-							sx={{width:"37%", paddingLeft: "10vmin"}}
-						/>
-						<TextField
-							margin="normal"
-							/*
-							label="Last Name"
-							*/
-							placeholder='Last Name'
-							sx={{width:"37%", paddingLeft: "3vmin"}}
-						/>
-						<TextField
 							autoFocus
 							margin="normal"
 							id="name"
