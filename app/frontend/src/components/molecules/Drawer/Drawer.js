@@ -22,7 +22,21 @@ import DialogTitle from '@mui/material/DialogTitle';
 import './Drawer.css'
 
 export default function CollapsableDrawer() {
-  const [state, setState] = React.useState(false);
+  const [registerDetails, setRegisterDetails] = React.useState({
+    email: "", 
+    password:""
+  });
+  
+  const handleRegisterChange = event => {
+    const { name, value } = event.target;
+    setRegisterDetails( {
+      ...registerDetails,
+      [name]: value,
+    })
+  }
+
+	
+	const [state, setState] = React.useState(false);
 
   const toggleDrawer = (open) => () => {
     // if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -44,8 +58,12 @@ export default function CollapsableDrawer() {
 
   const [confOpen, setConfOpen] = React.useState(false); 
 
-  const handleClickOpenConf = () => {
-	setConfOpen(true);
+  const handleRegisterSubmit = () => {
+	axios
+      .post("/register/", registerDetails)
+      .then(() => this.setRegOpen(false))
+      .catch((err) => console.log(err));
+    
   }
 
   const handleCloseConf = () => {
@@ -160,6 +178,8 @@ export default function CollapsableDrawer() {
 							/*
 							label="Email Address"
 							*/
+              value={registerDetails.email}
+              onChange={handleRegisterChange}
 							type="email"
 							// variant="standard"
 							placeholder="Email Address"
@@ -170,6 +190,8 @@ export default function CollapsableDrawer() {
 							/*
 							label="Password"
 							*/
+              value={registerDetails.password}
+              onChange={handleRegisterChange}
 							placeholder='Enter password'
 							sx={{width:"77%", paddingLeft: "10vmin"}}
 						/>
@@ -186,7 +208,7 @@ export default function CollapsableDrawer() {
 				<DialogActions>
 					<Button onClick={handleClickOpenLog}>Already have an account?</Button>
 					<Button theme={btheme} sx={{width:"100px"}} variant="contained" onClick={handleClose}>Cancel</Button>
-					<Button theme={ptheme} sx={{width:"100px",color:"white"}} variant="contained" onClick={handleClickOpenConf}>Register</Button>
+					<Button theme={ptheme} sx={{width:"100px",color:"white"}} variant="contained" onClick={handleRegisterSubmit}>Register</Button>
 				</DialogActions>
 			</Dialog>
 
