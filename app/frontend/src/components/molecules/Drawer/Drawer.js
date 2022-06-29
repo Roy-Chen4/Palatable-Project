@@ -377,7 +377,13 @@ export default function CollapsableDrawer() {
 					</Button>
 				</DialogActions>
 			</Dialog>
-				 <ListItem disablePadding>
+				 <ListItem 
+          disablePadding
+          sx= {{
+            display:
+              loggedIn ? "flex" : "none",
+          }}
+        >
 					<ListItemButton>
 						<ListItemIcon>
 							<FavoriteBorderOutlinedIcon />
@@ -479,7 +485,12 @@ export default function CollapsableDrawer() {
 			<React.Fragment key={'left'}>
 				<div className='menu-icon'>
 					<Button onClick={toggleDrawer(true)}>
-						<MenuIcon sx={{color:'#df7b84'}}/>
+						<MenuIcon sx={[{color:'#df7b84'}, {
+              '&:hover': {
+                color: 'white',
+                // backgroundColor: 'white',
+              },
+            },]}/>
 					</Button>
 				</div>
 				<Drawer
