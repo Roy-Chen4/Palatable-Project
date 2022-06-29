@@ -439,17 +439,12 @@ export default function CollapsableDrawer() {
             <DialogContent>
             <TextField
               margin="normal"
-              placeholder='Change Email'
+              placeholder='Email'
               sx={{width:"70%"}}
             />
             <TextField
               margin="normal"
-              placeholder='New Password'
-              sx={{width:"70%"}}
-            />
-            <TextField
-              margin="normal"
-              placeholder='Old Password'
+              placeholder='Password'
               sx={{width:"70%"}}
             />
             </DialogContent>
