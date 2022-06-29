@@ -157,10 +157,20 @@ export default function CollapsableDrawer() {
     setLogOpen(false);
     setRegOpen(false);
     setLoggedIn(true);
-    }
+  }
   const handleLogout = () => {
+    setLoginDetails( {
+      email: "",
+      password: "",
+    })
+    setRegisterDetails( {
+      email: "",
+      password1: "",
+      password2: "",
+    })
     setLoggedIn(false);
-    }
+
+  }
   // const handleCloseRegLog = () => {
 	// setLogOpen(false);
 	// setRegOpen(false);
@@ -344,6 +354,7 @@ export default function CollapsableDrawer() {
           error={hasError} 
 					margin="normal"
           name="email"
+          id='loginEmail'
           value={loginDetails.email}
 					placeholder='Email Address'
           onChange={handleLoginChange}
@@ -353,6 +364,7 @@ export default function CollapsableDrawer() {
           error={hasError} 
 					margin="normal"
           name="password"
+          id='loginPassword'
           value={loginDetails.password}
 					placeholder='Password'
           type="password"
@@ -469,7 +481,7 @@ export default function CollapsableDrawer() {
               display:
                 loggedIn ? "flex" : "none",
             }}
-            onClick={() => setLoggedIn(false)}
+            onClick={() => handleLogout()}
           >
             <ListItemButton>
               <ListItemIcon>
