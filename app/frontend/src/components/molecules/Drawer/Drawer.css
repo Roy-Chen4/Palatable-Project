@@ -5,8 +5,9 @@
 }
 
 .banner {
-    position: absolute;
-    left: -70vmin;
+    position: relative;
+    height: 100vh;
+    /* left: -70vmin; */
 }
 
 .register_banner {
@@ -30,9 +31,9 @@
     text-align: center;
 }
 
-image {
+/* image {
     height: 10vw;
-}
+} */
 
 .confirmation_ui {
     padding: 2vw;

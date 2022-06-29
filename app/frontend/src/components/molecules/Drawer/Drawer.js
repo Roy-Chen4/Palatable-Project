@@ -30,8 +30,11 @@ export default function CollapsableDrawer() {
     password1:"",
     password2:""
   });
+
+  const [errorMessage, setErrorMessage] = React.useState("")
   
   const handleRegisterChange = (event) => {
+    setHasError(false);
     const { name, value } = event.target;
     setRegisterDetails( {
       ...registerDetails,
@@ -45,6 +48,7 @@ export default function CollapsableDrawer() {
   });
   
   function handleLoginChange (event) {
+    setHasError(false);
     const { name, value } = event.target;
     setLoginDetails( {
       ...loginDetails,
@@ -61,7 +65,7 @@ export default function CollapsableDrawer() {
       .post("/register/", registerDetails)
       .then((res) => console.log(res))
       .then(() => handleLogin())
-      .catch((err) => console.log(err));
+      .catch((err) => {console.log(err.request.response)});
       
   }
   
@@ -72,9 +76,26 @@ export default function CollapsableDrawer() {
       .post("/login/", loginDetails)
       .then((res) => console.log(res))
       .then(() => handleLogin())
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err.request);
+        setHasError(true);
+        const obj = JSON.parse(err.request.response);
+        if (Object.keys(obj).length === 0) {
+          setErrorMessage("Invalid User")
+        } else if (obj.email !== undefined) {
+          setErrorMessage(obj.email[0])
+        } else if (obj.password !== undefined) {
+          setErrorMessage(obj.password[0])
+        }
+        // console.log(err.request.responseText);
+        // console.log(obj.password);
+        // console.log(Object.keys(obj).length);
+        // console.log(err.request.response.email);
+      });
       
   }
+
+  const [hasError, setHasError] = React.useState(false);
 	
   const [loggedIn, setLoggedIn] = React.useState(false);  
 
@@ -123,6 +144,9 @@ export default function CollapsableDrawer() {
     setLogOpen(false);
     setRegOpen(false);
     setLoggedIn(true);
+    }
+  const handleLogout = () => {
+    setLoggedIn(false);
     }
   // const handleCloseRegLog = () => {
 	// setLogOpen(false);
@@ -208,6 +232,7 @@ export default function CollapsableDrawer() {
 							registration you will have full access to recipe exploration and contribution!
 						</DialogContentText>
 						<TextField
+              error={hasError} 
 							autoFocus
 							margin="normal"
 							id="name"
@@ -223,6 +248,7 @@ export default function CollapsableDrawer() {
 							sx={{width:"77%", paddingLeft: "10vmin"}}
 						/>
 						<TextField 
+              error={hasError} 
 							margin="normal"
 							/*
 							label="Password"
@@ -235,6 +261,7 @@ export default function CollapsableDrawer() {
 							sx={{width:"77%", paddingLeft: "10vmin"}}
 						/>
 						<TextField
+              error={hasError} 
 							margin="normal"
 							/*
 							label="Confirm Password"
@@ -301,6 +328,7 @@ export default function CollapsableDrawer() {
 				</DialogTitle>
 				<DialogContent>
 				<TextField
+          error={hasError} 
 					margin="normal"
           name="email"
           value={loginDetails.email}
@@ -309,6 +337,7 @@ export default function CollapsableDrawer() {
 					sx={{width:"70%"}}
 				/>
 				<TextField
+          error={hasError} 
 					margin="normal"
           name="password"
           value={loginDetails.password}
@@ -421,6 +450,7 @@ export default function CollapsableDrawer() {
               display:
                 loggedIn ? "flex" : "none",
             }}
+            onClick={() => setLoggedIn(false)}
           >
             <ListItemButton>
               <ListItemIcon>
