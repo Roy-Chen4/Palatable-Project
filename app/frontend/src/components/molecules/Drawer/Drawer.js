@@ -65,7 +65,18 @@ export default function CollapsableDrawer() {
       .post("/register/", registerDetails)
       .then((res) => console.log(res))
       .then(() => handleLogin())
-      .catch((err) => {console.log(err.request.response)});
+      .catch((err) => {
+        console.log(err.request);
+        setHasError(true);
+        const obj = JSON.parse(err.request.response);
+        if (Object.keys(obj).length === 0) {
+          setErrorMessage("Invalid User")
+        } else if (obj.email !== undefined) {
+          setErrorMessage(obj.email[0])
+        } else if (obj.password !== undefined) {
+          setErrorMessage(obj.password[0])
+        }
+      });
       
   }
   
