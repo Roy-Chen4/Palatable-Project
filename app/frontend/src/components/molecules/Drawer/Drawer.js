@@ -67,6 +67,7 @@ export default function CollapsableDrawer() {
       .then(() => handleLogin())
       .catch((err) => {
         console.log(err.request);
+        console.log(err.request.responseText);
         setHasError(true);
         const obj = JSON.parse(err.request.response);
         if (Object.keys(obj).length === 0) {
@@ -89,6 +90,7 @@ export default function CollapsableDrawer() {
       .then(() => handleLogin())
       .catch((err) => {
         console.log(err.request);
+        console.log(err.request.responseText);
         setHasError(true);
         const obj = JSON.parse(err.request.response);
         if (Object.keys(obj).length === 0) {
