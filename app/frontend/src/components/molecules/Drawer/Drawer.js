@@ -171,10 +171,6 @@ export default function CollapsableDrawer() {
     setLoggedIn(false);
 
   }
-  // const handleCloseRegLog = () => {
-	// setLogOpen(false);
-	// setRegOpen(false);
-  // }
 
   const handleSettingsOpen = () => {
 		console.log("settings open now")
@@ -192,12 +188,6 @@ export default function CollapsableDrawer() {
         main: '#df7b84',
       },
     },
-    // typography: {
-    //   // fontFamily: [
-    //   //   'Comic Sans MS, Comic Sans',
-    //   // ],
-		// 	color: '#df7b84',
-    // },
   });
 
   const btheme = createTheme({
@@ -206,20 +196,12 @@ export default function CollapsableDrawer() {
         main: '#E8E8E8',
       },
     },
-    // typography: {
-    //   // fontFamily: [
-    //   //   'Comic Sans MS, Comic Sans',
-    //   // ],
-		// 	color: 'white',
-    // },
   });
 
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(false)}
     >
       <List>
 			<IconButton className='close-icon' onClick={toggleDrawer(false)}>
