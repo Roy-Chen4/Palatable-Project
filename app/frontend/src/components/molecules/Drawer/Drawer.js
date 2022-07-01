@@ -31,6 +31,7 @@ export default function CollapsableDrawer() {
     password2:""
   });
 
+  // eslint-disable-next-line no-unused-vars
   const [errorMessage, setErrorMessage] = React.useState("")
   
   const handleRegisterChange = (event) => {
@@ -222,7 +223,7 @@ export default function CollapsableDrawer() {
 			</div>
 
 			<Dialog open={regOpen} onClose={handleClose} fullScreen>
-				<div class = "banner">
+				<div className = "banner">
 						<img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" className="register_banner" alt="loginbanner"/>
 					</div>
 				<div className='register_ui'>
@@ -373,7 +374,7 @@ export default function CollapsableDrawer() {
 					</Button>
 				</DialogActions>
 			</Dialog>
-				 <ListItem 
+				<ListItem 
           disablePadding
           sx= {{
             display:
@@ -386,15 +387,15 @@ export default function CollapsableDrawer() {
 						</ListItemIcon>
 						<ListItemText primary={'Saved Recipes'} />
 					</ListItemButton>
-				 </ListItem>
-				 <ListItem disablePadding>
+        </ListItem>
+				<ListItem disablePadding>
 					<ListItemButton>
 						<ListItemIcon>
 							<ForumOutlinedIcon />
 						</ListItemIcon>
 						<ListItemText primary={'Feed'} />
 					</ListItemButton>
-				 </ListItem>
+				</ListItem>
          <ListItem 
             disablePadding
             sx= {{
