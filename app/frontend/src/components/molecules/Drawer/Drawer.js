@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -16,12 +15,15 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { createTheme} from '@mui/material/styles';
-import './Drawer.css'
 import LoginRegisterModal from '../Modal/LoginRegModal';
 import SettingsModal from '../Modal/SettingsModal';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../../reducers/isLogged';
+import './Drawer.css'
 
 export default function CollapsableDrawer() {
+  const dispatch = useDispatch();
+
   const loggedIn = useSelector((state) => state.user.value.isLogged);
 
   const [settingsOpen, setSettingsOpen] = React.useState(false);
@@ -41,10 +43,6 @@ export default function CollapsableDrawer() {
   const handleSettingsOpen = () => {
     setSettingsOpen(true);
 	};
-  
-  const handleLogout = () => {
-    // setLoggedIn(false);
-  }
   
   const ptheme = createTheme({
     palette: {
@@ -128,7 +126,9 @@ export default function CollapsableDrawer() {
             display:
               loggedIn ? "flex" : "none",
           }}
-          onClick={() => handleLogout()}
+          onClick={() => {
+            dispatch(logout());
+          }}
         >
           <ListItemButton>
             <ListItemIcon>
