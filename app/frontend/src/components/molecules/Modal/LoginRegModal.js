@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import { 
     Dialog, 
@@ -14,7 +13,7 @@ import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-export default function RegisterModal(props) {
+export default function LoginRegisterModal(props) {
     // state or LoginModal
     const [regOpen, setRegOpen] = React.useState(false);
 
@@ -73,6 +72,10 @@ export default function RegisterModal(props) {
             password2: "",
           })
     }
+
+
+    // const [hasError, setHasError] = React.useState(false);
+    // const [errorMessage, setErrorMessage] = React.useState("")
 
     // login user calling login API
     const handleLoginSubmit = () => {
@@ -254,7 +257,7 @@ export default function RegisterModal(props) {
 
 }
 
-RegisterModal.propTypes = {
+LoginRegisterModal.propTypes = {
     open: PropTypes.bool,
     onClose: PropTypes.func,
     onToggle: PropTypes.func,

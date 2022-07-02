@@ -15,21 +15,12 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { createTheme} from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import './Drawer.css'
-import RegisterModal from '../Modal/LoginRegModal';
+import LoginRegisterModal from '../Modal/LoginRegModal';
+import SettingsModal from '../Modal/SettingsModal';
 
 export default function CollapsableDrawer() {
-  // eslint-disable-next-line no-unused-vars
-  // const [errorMessage, setErrorMessage] = React.useState("")
-
   const [settingsOpen, setSettingsOpen] = React.useState(false);
-
-  // const [hasError, setHasError] = React.useState(false);
 	
   const [loggedIn, setLoggedIn] = React.useState(false);  
   
@@ -45,30 +36,18 @@ export default function CollapsableDrawer() {
     setRegOpen(true);
   };
 
+  const handleSettingsOpen = () => {
+    setSettingsOpen(true);
+	};
+  
   const handleLogout = () => {
     setLoggedIn(false);
   }
-
-  const handleSettingsOpen = () => {
-		setSettingsOpen(true);
-	};
-
-	const handleSettingsClose = () => {
-		setSettingsOpen(false);
-	};
   
   const ptheme = createTheme({
     palette: {
       primary: {
         main: '#df7b84',
-      },
-    },
-  });
-
-  const btheme = createTheme({
-    palette: {
-      primary: {
-        main: '#E8E8E8',
       },
     },
   });
@@ -82,6 +61,7 @@ export default function CollapsableDrawer() {
         <IconButton className='close-icon' onClick={toggleDrawer(false)}>
           <ChevronLeftIcon />
         </IconButton>
+
         <div className="login_reg_button">
           <Button theme={ptheme}
             variant="contained"
@@ -95,7 +75,8 @@ export default function CollapsableDrawer() {
             Register/Login
           </Button>
         </div>
-        <RegisterModal open={regOpen} onClose={() => setRegOpen(false)} onToggle={() => setRegOpen(true)}></RegisterModal>
+
+        <LoginRegisterModal open={regOpen} onClose={() => setRegOpen(false)} onToggle={() => setRegOpen(true)}></LoginRegisterModal>
 
         <ListItem 
           disablePadding
@@ -111,6 +92,7 @@ export default function CollapsableDrawer() {
             <ListItemText primary={'Saved Recipes'} />
           </ListItemButton>
         </ListItem>
+
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -119,6 +101,7 @@ export default function CollapsableDrawer() {
             <ListItemText primary={'Feed'} />
           </ListItemButton>
         </ListItem>
+
         <ListItem 
           disablePadding
           sx= {{
@@ -135,46 +118,7 @@ export default function CollapsableDrawer() {
           </ListItemButton>
         </ListItem>
 
-        <Dialog open={settingsOpen} onClose={handleSettingsClose} fullWidth='true' maxWidth='md'>
-          <div className="confirmation_ui">
-          <DialogTitle>
-            <p1 className='conf_heading'>
-              User Settings
-            </p1>
-          </DialogTitle>
-          <DialogContent>
-          <TextField
-            margin="normal"
-            placeholder='Email'
-            sx={{width:"70%"}}
-          />
-          <TextField
-            margin="normal"
-            placeholder='Password'
-            sx={{width:"70%"}}
-          />
-          </DialogContent>
-          </div>
-          <DialogActions>
-            <Button 
-              onClick={handleSettingsClose}
-              variant="contained"
-              theme={btheme}
-              > 
-              Close 
-            </Button>
-            <Button 
-            onClick={handleSettingsClose}
-            variant="contained"
-            theme={ptheme}
-            sx={{color:"white"}}
-            > 
-              Save
-            </Button>
-          </DialogActions>
-        </Dialog>
-
-
+        <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)}></SettingsModal>
 
         <ListItem 
           disablePadding
