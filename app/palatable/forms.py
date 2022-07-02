@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 class NewUserForm1(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['email', 'password1', 'password2']
 class NewUserForm(UserCreationForm):
     class Meta:
         model = User
