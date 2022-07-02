@@ -82,7 +82,6 @@ export default function LoginRegisterModal(props) {
 
     // login user calling login API
     const handleLoginSubmit = () => {
-        // console.log(loginDetails);
         axios
             .post("/login/", loginDetails)
             .then((res) => console.log(res))
