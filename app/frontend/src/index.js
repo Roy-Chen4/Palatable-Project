@@ -4,14 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux";
-import { configurestore } from '@reduxjs/toolkit';
-import allReducers from './reducers'
+import { configureStore } from '@reduxjs/toolkit';
+// import allReducers from './reducers'
+import isLoggedReducer from './reducers/isLogged';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+
 //STORE
-let store = configurestore(
-  allReducers,
+let store = configureStore({
+  reducer: {
+    isLoggedIn: isLoggedReducer,
+  }},
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

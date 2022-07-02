@@ -1,11 +1,18 @@
-const isLoggedReducer = (state = false, action) => {
+const initialState = { isLogged : false };
+
+const isLoggedReducer = (state=initialState , action) => {
     switch (action.type) {
-      case 'LOGIN':
-        return !state;
-      case 'REGISTER':
-        return !state;
-      case 'LOGOUT':
-        return !state;
+        case 'LOGIN':
+            return {...state ,  isLogged : true };
+            // return !state;
+        case 'REGISTER':
+            // return !state;
+            return {...state ,  isLogged : true };
+        case 'LOGOUT':
+            // return !state;
+            return { ...state , isLogged : false };
+        default:
+            return state;
     }
 }
 
