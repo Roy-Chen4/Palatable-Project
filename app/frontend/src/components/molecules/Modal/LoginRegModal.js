@@ -16,15 +16,15 @@ import axios from 'axios';
 
 export default function RegisterModal(props) {
     // state or LoginModal
-    const [loginOpen, setLoginOpen] = React.useState(false);
+    const [regOpen, setRegOpen] = React.useState(false);
 
     // set RegisterModal closed when LoginModal opens
-    const toggleRegiserModal = () => {
-        props.onClose();
-        setLoginOpen(true);
-    };
     const toggleLoginModal = () => {
-        setLoginOpen(false);
+        props.onClose();
+        setRegOpen(true);
+    };
+    const toggleRegisterModal = () => {
+        setRegOpen(false);
         props.onToggle();
     };
 
@@ -144,7 +144,57 @@ export default function RegisterModal(props) {
 
     return (
         <div>
-            <Dialog open={props.open} fullScreen>
+            <Dialog open={props.open} fullWidth='true' maxWidth='md'>
+                <div className="confirmation_ui">
+                <DialogTitle>
+                    <p1 className='conf_heading'>
+                        Log In
+                    </p1>
+                </DialogTitle>
+                <DialogContent>
+                <TextField
+                    // error={hasError} 
+                    margin="normal"
+                    name="email"
+                    id='loginEmail'
+                    value={loginDetails.email}
+                    placeholder='Email Address'
+                    onChange={handleLoginChange}
+                    sx={{width:"70%"}}
+                />
+                <TextField
+                    // error={hasError} 
+                    margin="normal"
+                    name="password"
+                    id='loginPassword'
+                    value={loginDetails.password}
+                    placeholder='Password'
+                    type="password"
+                    onChange={handleLoginChange}
+                    sx={{width:"70%"}}
+                />
+                </DialogContent>
+                </div>
+                <DialogActions>
+                    <Button onClick={toggleLoginModal}>Don&apos;t have an account?</Button>
+                    <Button 
+                        onClick={props.onClose}
+                        variant="contained"
+                        theme={secondaryTheme}
+                    > 
+                        Close 
+                    </Button>
+                    <Button 
+                        onClick={handleLoginSubmit}
+                        variant="contained"
+                        theme={primaryTheme}
+                        sx={{color:"white"}}
+                    > 
+                        Log In 
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog open={regOpen} fullScreen>
                 <div className = "banner">
                     <img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" className="register_banner" alt="loginbanner"/>
                 </div>
@@ -194,59 +244,9 @@ export default function RegisterModal(props) {
                     </DialogContent>
                 </div>
                 <DialogActions>
-                    <Button onClick={toggleRegiserModal}>Already have an account?</Button>
-                    <Button theme={secondaryTheme} sx={{width:"100px"}} variant="contained" onClick={props.onClose}>Cancel</Button>
+                    <Button onClick={toggleRegisterModal}>Already have an account?</Button>
+                    <Button theme={secondaryTheme} sx={{width:"100px"}} variant="contained" onClick={() => setRegOpen(false)}>Cancel</Button>
                     <Button theme={primaryTheme} sx={{width:"100px",color:"white"}} variant="contained" onClick={handleRegisterSubmit}>Register</Button>
-                </DialogActions>
-            </Dialog>
-                <Dialog open={loginOpen} fullWidth='true' maxWidth='md'>
-                <div className="confirmation_ui">
-                <DialogTitle>
-                    <p1 className='conf_heading'>
-                        Log In
-                    </p1>
-                </DialogTitle>
-                <DialogContent>
-                <TextField
-                    // error={hasError} 
-                    margin="normal"
-                    name="email"
-                    id='loginEmail'
-                    value={loginDetails.email}
-                    placeholder='Email Address'
-                    onChange={handleLoginChange}
-                    sx={{width:"70%"}}
-                />
-                <TextField
-                    // error={hasError} 
-                    margin="normal"
-                    name="password"
-                    id='loginPassword'
-                    value={loginDetails.password}
-                    placeholder='Password'
-                    type="password"
-                    onChange={handleLoginChange}
-                    sx={{width:"70%"}}
-                />
-                </DialogContent>
-                </div>
-                <DialogActions>
-                    <Button onClick={toggleLoginModal}>Don&apos;t have an account?</Button>
-                    <Button 
-                        onClick={() => setLoginOpen(false)}
-                        variant="contained"
-                        theme={secondaryTheme}
-                    > 
-                        Close 
-                    </Button>
-                    <Button 
-                        onClick={handleLoginSubmit}
-                        variant="contained"
-                        theme={primaryTheme}
-                        sx={{color:"white"}}
-                    > 
-                        Log In 
-                    </Button>
                 </DialogActions>
             </Dialog>
         </div>

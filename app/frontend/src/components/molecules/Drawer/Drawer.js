@@ -36,9 +36,7 @@ export default function CollapsableDrawer() {
 	const [state, setState] = React.useState(false);
   
 	const [regOpen, setRegOpen] = React.useState(false);
-    
-  // const [logOpen, setLogOpen] = React.useState(false); 
-  
+
   const toggleDrawer = (open) => () => {
     setState(open);
   };
