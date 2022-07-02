@@ -8,10 +8,7 @@ const initialState = {
 
 export const userSlice = createSlice({
     name: 'user',
-    initialState: { value: {
-        isLogged: false,
-        diet: '',
-    }
+    initialState: { value: initialState
     },
     reducers: {
         login: (state, action) => {
