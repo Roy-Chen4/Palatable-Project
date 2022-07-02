@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import { 
     Dialog, 
@@ -12,8 +13,14 @@ from '@mui/material';
 import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+// import { login } from '../../../actions';
+import { login } from '../../../reducers/isLogged';
 
 export default function LoginRegisterModal(props) {
+    const dispatch = useDispatch()
+    const logIn = useSelector((state) => state.user.value.isLogged);
+
     // state or LoginModal
     const [regOpen, setRegOpen] = React.useState(false);
 
@@ -73,7 +80,6 @@ export default function LoginRegisterModal(props) {
           })
     }
 
-
     // const [hasError, setHasError] = React.useState(false);
     // const [errorMessage, setErrorMessage] = React.useState("")
 
@@ -84,7 +90,9 @@ export default function LoginRegisterModal(props) {
             .post("/login/", loginDetails)
             .then((res) => console.log(res))
             .then(() => clearFields())
-            // .then(() => handleLogin())
+            .then(() => dispatch(login({ isLogged: true, diet: ''})))
+            // .then(() => console.log(logIn))
+            .then(() => props.onClose())
             .catch((err) => {
                 console.log(err.request);
                 console.log(err.request.responseText);

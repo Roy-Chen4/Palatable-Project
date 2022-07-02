@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -18,12 +19,13 @@ import { createTheme} from '@mui/material/styles';
 import './Drawer.css'
 import LoginRegisterModal from '../Modal/LoginRegModal';
 import SettingsModal from '../Modal/SettingsModal';
+import { useSelector } from 'react-redux';
 
 export default function CollapsableDrawer() {
+  const loggedIn = useSelector((state) => state.user.value.isLogged);
+
   const [settingsOpen, setSettingsOpen] = React.useState(false);
 	
-  const [loggedIn, setLoggedIn] = React.useState(false);  
-  
 	const [state, setState] = React.useState(false);
   
 	const [regOpen, setRegOpen] = React.useState(false);
@@ -41,7 +43,7 @@ export default function CollapsableDrawer() {
 	};
   
   const handleLogout = () => {
-    setLoggedIn(false);
+    // setLoggedIn(false);
   }
   
   const ptheme = createTheme({

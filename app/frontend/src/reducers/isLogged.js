@@ -1,20 +1,21 @@
-const initialState = { isLogged : false };
+import { createSlice } from "@reduxjs/toolkit";
 
-const isLoggedReducer = (state=initialState , action) => {
-    switch (action.type) {
-        case 'LOGIN':
-            return {...state ,  isLogged : true };
-            // return !state;
-        case 'REGISTER':
-            // return !state;
-            return {...state ,  isLogged : true };
-        case 'LOGOUT':
-            // return !state;
-            return { ...state , isLogged : false };
-        default:
-            return state;
-    }
+
+const initialState = {
+    isLogged: false,
+    diet: '',
 }
 
-export default isLoggedReducer;
-  
+export const userSlice = createSlice({
+    name: 'user',
+    initialState: { value: initialState},
+    reducers: {
+        login: (state, action) => {
+            state.value = action.payload
+        }
+    }
+});
+
+export const { login } = userSlice.actions;
+ 
+export default userSlice.reducer;
