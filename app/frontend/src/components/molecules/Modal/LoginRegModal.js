@@ -119,6 +119,8 @@ export default function LoginRegisterModal(props) {
         .post("/register/", registerDetails)
         .then((res) => console.log(res))
         .then(() => clearFields())
+        .then(() => dispatch(login({ isLogged: true, diet: ''})))
+        .then(() => setRegOpen(false))
         // .then(() => handleLogin())
         .catch((err) => {
             console.log(err.request);
