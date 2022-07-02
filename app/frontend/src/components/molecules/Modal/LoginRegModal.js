@@ -153,7 +153,7 @@ export default function LoginRegisterModal(props) {
 
     return (
         <div>
-            <Dialog open={props.open} fullWidth='true' maxWidth='md'>
+            <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth='md'>
                 <div className="confirmation_ui">
                 <DialogTitle>
                     <p1 className='conf_heading'>
