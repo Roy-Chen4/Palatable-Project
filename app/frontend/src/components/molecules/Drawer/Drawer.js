@@ -19,162 +19,39 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import axios from 'axios';
 import './Drawer.css'
+import RegisterModal from '../Modal/LoginRegModal';
 
 export default function CollapsableDrawer() {
-  const [registerDetails, setRegisterDetails] = React.useState({
-    email: "", 
-    password1:"",
-    password2:""
-  });
-
   // eslint-disable-next-line no-unused-vars
-  const [errorMessage, setErrorMessage] = React.useState("")
-  
-  const handleRegisterChange = (event) => {
-    setHasError(false);
-    const { name, value } = event.target;
-    setRegisterDetails( {
-      ...registerDetails,
-      [name]: value,
-    })
-  }
-
-  const [loginDetails, setLoginDetails] = React.useState({
-    email: "", 
-    password:""
-  });
-  
-  function handleLoginChange (event) {
-    setHasError(false);
-    const { name, value } = event.target;
-    setLoginDetails( {
-      ...loginDetails,
-      [name]: value,
-    })
-  }
+  // const [errorMessage, setErrorMessage] = React.useState("")
 
   const [settingsOpen, setSettingsOpen] = React.useState(false);
 
-  // registerDetails user formatted entry
-  const handleRegisterSubmit = () => {
-    console.log(registerDetails);
-    axios
-      .post("/register/", registerDetails)
-      .then((res) => console.log(res))
-      .then(() => handleLogin())
-      .catch((err) => {
-        console.log(err.request);
-        console.log(err.request.responseText);
-        setHasError(true);
-        const obj = JSON.parse(err.request.response);
-        if (Object.keys(obj).length === 0) {
-          setErrorMessage("Invalid User")
-        } else if (obj.email !== undefined) {
-          setErrorMessage(obj.email[0])
-        } else if (obj.password !== undefined) {
-          setErrorMessage(obj.password[0])
-        }
-      });
-      
-  }
-  
-  //add a loading icon
-  const handleLoginSubmit = () => {
-    // console.log(loginDetails);
-    axios
-      .post("/login/", loginDetails)
-      .then((res) => console.log(res))
-      .then(() => handleLogin())
-      .catch((err) => {
-        console.log(err.request);
-        console.log(err.request.responseText);
-        setHasError(true);
-        const obj = JSON.parse(err.request.response);
-        if (Object.keys(obj).length === 0) {
-          setErrorMessage("Invalid User")
-        } else if (obj.email !== undefined) {
-          setErrorMessage(obj.email[0])
-        } else if (obj.password !== undefined) {
-          setErrorMessage(obj.password[0])
-        }
-        // console.log(err.request.responseText);
-        // console.log(obj.password);
-        // console.log(Object.keys(obj).length);
-        // console.log(err.request.response.email);
-      });
-      
-  }
-
-  const [hasError, setHasError] = React.useState(false);
+  // const [hasError, setHasError] = React.useState(false);
 	
   const [loggedIn, setLoggedIn] = React.useState(false);  
-
+  
 	const [state, setState] = React.useState(false);
-
+  
+	const [regOpen, setRegOpen] = React.useState(false);
+    
+  // const [logOpen, setLogOpen] = React.useState(false); 
+  
   const toggleDrawer = (open) => () => {
-    // if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-    //   return;
-    // }
-
     setState(open);
   };
 
-	const [regOpen, setRegOpen] = React.useState(false);
-  
   const handleClickOpen = () => {
     setRegOpen(true);
   };
 
-  const handleClose = () => {
-    setRegOpen(false);
-  };
-
-  const [confOpen, setConfOpen] = React.useState(false); 
-
-  const handleCloseConf = () => {
-	setConfOpen(false);
-  }
-
-  const handleCloseConfreg = () => {
-	setConfOpen(false);
-	setRegOpen(false);
-  }
-
-  const [logOpen, setLogOpen] = React.useState(false); 
-
-  const handleClickOpenLog = () => {
-	setLogOpen(true);
-  }
-
-  const handleCloseLog = () => {
-	setLogOpen(false);
-  }
-
-  const handleLogin = () => {
-    setLogOpen(false);
-    setRegOpen(false);
-    setLoggedIn(true);
-  }
   const handleLogout = () => {
-    setLoginDetails( {
-      email: "",
-      password: "",
-    })
-    setRegisterDetails( {
-      email: "",
-      password1: "",
-      password2: "",
-    })
     setLoggedIn(false);
-
   }
 
   const handleSettingsOpen = () => {
-		console.log("settings open now")
 		setSettingsOpen(true);
 	};
 
@@ -182,7 +59,6 @@ export default function CollapsableDrawer() {
 		setSettingsOpen(false);
 	};
   
-
   const ptheme = createTheme({
     palette: {
       primary: {
@@ -205,269 +81,118 @@ export default function CollapsableDrawer() {
       role="presentation"
     >
       <List>
-			<IconButton className='close-icon' onClick={toggleDrawer(false)}>
-				<ChevronLeftIcon />
-			</IconButton>
-			<div className="login_reg_button">
-				<Button theme={ptheme}
-					variant="contained"
-					onClick={handleClickOpen}
-					sx={{
-            color:"white",
-            display:
-              loggedIn ? "none" : "flex",
-          }} 
-				>
-					Register/Login
-				</Button>
-			</div>
+        <IconButton className='close-icon' onClick={toggleDrawer(false)}>
+          <ChevronLeftIcon />
+        </IconButton>
+        <div className="login_reg_button">
+          <Button theme={ptheme}
+            variant="contained"
+            onClick={handleClickOpen}
+            sx={{
+              color:"white",
+              display:
+                loggedIn ? "none" : "flex",
+            }} 
+          >
+            Register/Login
+          </Button>
+        </div>
+        <RegisterModal open={regOpen} onClose={() => setRegOpen(false)} onToggle={() => setRegOpen(true)}></RegisterModal>
 
-			<Dialog open={regOpen} onClose={handleClose} fullScreen>
-				<div className = "banner">
-						<img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" className="register_banner" alt="loginbanner"/>
-					</div>
-				<div className='register_ui'>
-					<DialogTitle>
-						<p className='rego_heading'>
-						Become Palatable
-						</p>
-						</DialogTitle>
-					<DialogContent>
-						<DialogContentText>
-							To subscribe to this website, please enter the required details below. Upon successful 
-							registration you will have full access to recipe exploration and contribution!
-						</DialogContentText>
-						<TextField
-              error={hasError} 
-							autoFocus
-							margin="normal"
-							id="name"
-							/*
-							label="Email Address"
-							*/
-              name="email"
-              value={registerDetails.email}
-              onChange={handleRegisterChange}
-							type="email"
-							// variant="standard"
-							placeholder="Email Address"
-							sx={{width:"77%", paddingLeft: "10vmin"}}
-						/>
-						<TextField 
-              error={hasError} 
-							margin="normal"
-							/*
-							label="Password"
-							*/
-              name="password1"
-              value={registerDetails.password1}
-              onChange={handleRegisterChange}
-              type="password"
-							placeholder='Enter password'
-							sx={{width:"77%", paddingLeft: "10vmin"}}
-						/>
-						<TextField
-              error={hasError} 
-							margin="normal"
-							/*
-							label="Confirm Password"
-							*/
-              name="password2"
-              value={registerDetails.password2}
-              onChange={handleRegisterChange}
-              type="password"
-							placeholder='Confirm password'
-							sx={{width:"77%", paddingLeft: "10vmin"}}
-						/>
-				</DialogContent>
-						</div>
-				<DialogActions>
-					<Button onClick={handleClickOpenLog}>Already have an account?</Button>
-					<Button theme={btheme} sx={{width:"100px"}} variant="contained" onClick={handleClose}>Cancel</Button>
-					<Button theme={ptheme} sx={{width:"100px",color:"white"}} variant="contained" onClick={handleRegisterSubmit}>Register</Button>
-				</DialogActions>
-			</Dialog>
-
-			<Dialog open={confOpen} onClose={handleCloseConf} fullWidth='true' maxWidth='md'>
-				<div className="confirmation_ui">
-				<DialogTitle>
-					<p1 className='conf_heading'>
-						Account Confirmation
-					</p1>
-				</DialogTitle>
-				<DialogContent>
-				<DialogContentText>
-					Please enter the five letter code that was emailed to you.
-				</DialogContentText>
-				<TextField
-					margin="normal"
-					placeholder='AAAAA'
-					sx={{width:"70%"}}
-				/>
-				</DialogContent>
-				</div>
-				<DialogActions>
-					<Button 
-					onClick={handleCloseConf}
-					variant="contained"
-					theme={btheme}
-					> 
-					Close 
-						</Button>
-					<Button 
-					onClick={handleCloseConfreg}
-					variant="contained"
-					theme={ptheme}
-					sx={{color:"white"}}
-					> 
-					Submit 
-						</Button>
-				</DialogActions>
-			</Dialog>
-
-			<Dialog open={logOpen} onClose={handleCloseConf} fullWidth='true' maxWidth='md'>
-				<div className="confirmation_ui">
-				<DialogTitle>
-					<p1 className='conf_heading'>
-						Log In
-					</p1>
-				</DialogTitle>
-				<DialogContent>
-				<TextField
-          error={hasError} 
-					margin="normal"
-          name="email"
-          id='loginEmail'
-          value={loginDetails.email}
-					placeholder='Email Address'
-          onChange={handleLoginChange}
-					sx={{width:"70%"}}
-				/>
-				<TextField
-          error={hasError} 
-					margin="normal"
-          name="password"
-          id='loginPassword'
-          value={loginDetails.password}
-					placeholder='Password'
-          type="password"
-          onChange={handleLoginChange}
-					sx={{width:"70%"}}
-				/>
-				</DialogContent>
-				</div>
-				<DialogActions>
-					<Button 
-						onClick={handleCloseLog}
-						variant="contained"
-						theme={btheme}
-						> 
-						Close 
-					</Button>
-					<Button 
-					onClick={handleLoginSubmit}
-					variant="contained"
-					theme={ptheme}
-					sx={{color:"white"}}
-					> 
-						Log In 
-					</Button>
-				</DialogActions>
-			</Dialog>
-				<ListItem 
+        <ListItem 
           disablePadding
           sx= {{
             display:
               loggedIn ? "flex" : "none",
           }}
         >
-					<ListItemButton>
-						<ListItemIcon>
-							<FavoriteBorderOutlinedIcon />
-						</ListItemIcon>
-						<ListItemText primary={'Saved Recipes'} />
-					</ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <FavoriteBorderOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Saved Recipes'} />
+          </ListItemButton>
         </ListItem>
-				<ListItem disablePadding>
-					<ListItemButton>
-						<ListItemIcon>
-							<ForumOutlinedIcon />
-						</ListItemIcon>
-						<ListItemText primary={'Feed'} />
-					</ListItemButton>
-				</ListItem>
-         <ListItem 
-            disablePadding
-            sx= {{
-              display:
-                loggedIn ? "flex" : "none",
-            }}
-            onClick={() => handleSettingsOpen()}
-          >
-            <ListItemButton>
-              <ListItemIcon>
-                <SettingsOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Settings'} />
-            </ListItemButton>
-          </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <ForumOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Feed'} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem 
+          disablePadding
+          sx= {{
+            display:
+              loggedIn ? "flex" : "none",
+          }}
+          onClick={() => handleSettingsOpen()}
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <SettingsOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Settings'} />
+          </ListItemButton>
+        </ListItem>
 
-          <Dialog open={settingsOpen} onClose={handleSettingsClose} fullWidth='true' maxWidth='md'>
-            <div className="confirmation_ui">
-            <DialogTitle>
-              <p1 className='conf_heading'>
-                User Settings
-              </p1>
-            </DialogTitle>
-            <DialogContent>
-            <TextField
-              margin="normal"
-              placeholder='Email'
-              sx={{width:"70%"}}
-            />
-            <TextField
-              margin="normal"
-              placeholder='Password'
-              sx={{width:"70%"}}
-            />
-            </DialogContent>
-            </div>
-            <DialogActions>
-              <Button 
-                onClick={handleSettingsClose}
-                variant="contained"
-                theme={btheme}
-                > 
-                Close 
-              </Button>
-              <Button 
+        <Dialog open={settingsOpen} onClose={handleSettingsClose} fullWidth='true' maxWidth='md'>
+          <div className="confirmation_ui">
+          <DialogTitle>
+            <p1 className='conf_heading'>
+              User Settings
+            </p1>
+          </DialogTitle>
+          <DialogContent>
+          <TextField
+            margin="normal"
+            placeholder='Email'
+            sx={{width:"70%"}}
+          />
+          <TextField
+            margin="normal"
+            placeholder='Password'
+            sx={{width:"70%"}}
+          />
+          </DialogContent>
+          </div>
+          <DialogActions>
+            <Button 
               onClick={handleSettingsClose}
               variant="contained"
-              theme={ptheme}
-              sx={{color:"white"}}
+              theme={btheme}
               > 
-                Save
-              </Button>
-            </DialogActions>
-          </Dialog>
+              Close 
+            </Button>
+            <Button 
+            onClick={handleSettingsClose}
+            variant="contained"
+            theme={ptheme}
+            sx={{color:"white"}}
+            > 
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
 
 
 
-          <ListItem 
-            disablePadding
-            sx= {{
-              display:
-                loggedIn ? "flex" : "none",
-            }}
-            onClick={() => handleLogout()}
-          >
-            <ListItemButton>
-              <ListItemIcon>
-                <ExitToAppOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Sign Out'} />
-            </ListItemButton>
-          </ListItem>
+        <ListItem 
+          disablePadding
+          sx= {{
+            display:
+              loggedIn ? "flex" : "none",
+          }}
+          onClick={() => handleLogout()}
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <ExitToAppOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Sign Out'} />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );

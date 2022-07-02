@@ -5,11 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux";
 import { configureStore } from '@reduxjs/toolkit';
-// import allReducers from './reducers'
 import isLoggedReducer from './reducers/isLogged';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
 
 //STORE
 let store = configureStore({
@@ -18,41 +16,6 @@ let store = configureStore({
   }},
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
-
-//ACTION
-// const login = () => {
-//   return {
-//     type: 'LOGIN'
-//   }
-// }
-// const register = () => {
-//   return {
-//     type: 'REGISTER'
-//   }
-// }
-// const logout = () => {
-//   return {
-//     type: 'LOGOUT'
-//   }
-// }
-// const update = () => {
-//   return {
-//     type: 'UPDATE'
-//   }
-// }
-// const search = () => {
-//   return {
-//     type: 'SEARCH'
-//   }
-// }
-
-// const details = (state = {email: ''}) => {
-
-// }
-
-//DISPATCH
-
-
 
 root.render(
   <Provider store={store}>
