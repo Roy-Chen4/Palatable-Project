@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 import LoginModalBody from '../ModalBody/LoginModalBody';
 import RegisterModalBody from '../ModalBody/RegisterModalBody';
-// TWO FACTOR MODAL REFACTORED
-// import TwoFactorModal from './TwoFactorModal';
+import TwoFactorModalBody from '../ModalBody/TwoFactorModalBody';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../reducers/isLogged';
 
 export default function AuthModal(props) {
+    const dispatch = useDispatch();
     // state of RegisterModal
     const [regOpen, setRegOpen] = React.useState(false);
 
     // state of TwoFactorModal
     // TWOFACTORMODAL REFACTORED
-    // const [twoFactorOpen, setTwoFactorOpen] = React.useState(false);
+    const [twoFactorOpen, setTwoFactorOpen] = React.useState(false);
 
     // set LoginModal closed when RegisterModal opens
     const toggleLoginModal = () => {
@@ -51,9 +53,20 @@ export default function AuthModal(props) {
                     <LoginModalBody onClose={props.onClose} onToggle={() => toggleLoginModal()} primaryTheme={primaryTheme} secondaryTheme={secondaryTheme}/>
                 </div>
             </Dialog>
-
-            {/* TWOFACTORMODAL REFACTORED */}
-            {/* <TwoFactorModal open={twoFactorOpen} onClose={() => setTwoFactorOpen(false)}></TwoFactorModal> */}
+            
+            <Dialog open={twoFactorOpen} fullWidth='true' maxWidth='md'>
+                <div className="confirmation_ui">
+                    <TwoFactorModalBody 
+                        onClose={() => {
+                            setTwoFactorOpen(false);
+                            dispatch(logout());
+                        }} 
+                        registerClose={() => setRegOpen(false)}
+                        primaryTheme={primaryTheme} 
+                        secondaryTheme={secondaryTheme}
+                    />
+                </div>
+            </Dialog>
 
             <Dialog open={regOpen} fullScreen>
                 <div className = "banner">
@@ -63,7 +76,7 @@ export default function AuthModal(props) {
                     <RegisterModalBody 
                         onClose={() => setRegOpen(false)} 
                         onToggle={() => toggleRegisterModal()} 
-                        // openTwoFactor={() => setTwoFactorOpen(true)}
+                        openTwoFactor={() => setTwoFactorOpen(true)}
                         primaryTheme={primaryTheme} 
                         secondaryTheme={secondaryTheme}
                     />   

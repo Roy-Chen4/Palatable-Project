@@ -25,8 +25,8 @@ const form = props => {
         handleBlur,
         onToggle,
         onClose,
-        // openTwoFactor,
-        resetForm,
+        openTwoFactor,
+        // resetForm,
         primaryTheme,
         secondaryTheme
     } = props;
@@ -40,23 +40,19 @@ const form = props => {
 
     // register user calling register API
     const onRegisterSubmit = () => {
-        // console.log(registerDetails);
-        // TWOFACTORMODAL REFACTORED
-        // openTwoFactor()
-        // .then(
         axios
             .post("/register/", values)
             .then((res) => console.log(res))
             .then(() => dispatch(login({ isLogged: true, email: values.email, diet: ''})))
-            .then(() => resetForm())
-            .then(() => props.onClose())
+            // .then(() => resetForm())
+            // .then(() => props.registerClose())
             .then(() => setIsSubmitting(false))
             .catch((err) => {
-                setAccountError(true);
-                setIsSubmitting(false)
+                // setAccountError(true);
+                // setIsSubmitting(false)
                 console.log(err.request);
-            })
-    // );
+        })
+        openTwoFactor()
     }
 
     return (
