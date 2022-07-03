@@ -15,7 +15,7 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { createTheme} from '@mui/material/styles';
-import AuthModal from '../Modal/LoginRegModal';
+import AuthModal from '../Modal/AuthModal';
 import SettingsModal from '../Modal/SettingsModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../../reducers/isLogged';
