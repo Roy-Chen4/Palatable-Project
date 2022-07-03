@@ -64,18 +64,13 @@ def register(request):
 # edit email in settings
 @api_view(['POST'])
 def editemail(request):
-    form = EditEmailForm()
     if request.method == 'POST':
         serializer = EditEmailSerializer(data = request.data)
         if serializer.is_valid():
-            print('lol')
-            form = EditEmailForm(request.data)
-            print(form.data)
-            print(form.errors)
-            if form.is_valid():
-                print('lol')
-                form.save()
-                return Response(serializer.data)
+            user = User.objects.get(email = serializer.data['old_email'])
+            user.email = serializer.data['new_email']
+            user.save()
+            return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 
 # edit password in settings
