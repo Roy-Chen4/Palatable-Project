@@ -1,0 +1,54 @@
+
+.close-icon {
+    display: flex;
+    position: right;
+}
+
+.banner {
+    position: relative;
+    height: 100vh;
+    /* left: -70vmin; */
+}
+
+.register_banner {
+    height: 100%;
+}
+
+.banner {
+    position: absolute;
+    left: -70vmin;
+}
+
+
+.register_ui {
+    padding-left: 88vmin;
+}
+
+.rego_heading {
+    font-size: 7vmin;
+    padding-top: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+/* image {
+    height: 10vw;
+} */
+
+.confirmation_ui {
+    padding: 2vw;
+    text-align: center;
+}
+
+.conf_heading {
+    font-size: 3vw;
+    padding-top: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+.login_reg_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

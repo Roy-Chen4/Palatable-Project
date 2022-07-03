@@ -24,3 +24,7 @@ Week 3
 
 
 
+- Set up atomic design
+- Creating route configuration for two page design
+- Finishing Project Proposal
+- Created Logo

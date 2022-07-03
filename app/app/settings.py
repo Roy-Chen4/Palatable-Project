@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'palatable',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -78,8 +80,12 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME':'palatable',
+        'USER': 'postgres',
+        'PASSWORD': 'comp3900',
+        'HOST': 'database-1.c0wxxqc8ue6o.us-west-1.rds.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
@@ -101,6 +107,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = ['palatable.backends.CustomEmailBackend', 'django.contrib.auth.backends.ModelBackend']
 
 
 # Internationalization
