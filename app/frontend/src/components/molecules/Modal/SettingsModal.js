@@ -12,8 +12,6 @@ import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
 
 export default function SettingsModal(props) {
-
-
     const ptheme = createTheme({
         palette: {
             primary: {
