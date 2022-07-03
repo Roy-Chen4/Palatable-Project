@@ -14,12 +14,18 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../reducers/isLogged';
+// TWO FACTOR MODAL REFACTORED
+// import TwoFactorModal from './TwoFactorModal';
 
 export default function LoginRegisterModal(props) {
     const dispatch = useDispatch()
 
-    // state or LoginModal
+    // state of RegisterModal
     const [regOpen, setRegOpen] = React.useState(false);
+
+    // state of TwoFactorModal
+    // TWOFACTORMODAL REFACTORED
+    // const [twoFactorOpen, setTwoFactorOpen] = React.useState(false);
 
     // set RegisterModal closed when LoginModal opens
     const toggleLoginModal = () => {
@@ -110,27 +116,31 @@ export default function LoginRegisterModal(props) {
 
     // register details user calling register API
     const handleRegisterSubmit = () => {
-      console.log(registerDetails);
-      axios
-        .post("/register/", registerDetails)
-        .then((res) => console.log(res))
-        .then(() => clearFields())
-        .then(() => dispatch(login({ isLogged: true, diet: ''})))
-        .then(() => setRegOpen(false))
-        // .then(() => handleLogin())
-        .catch((err) => {
-            console.log(err.request);
-            console.log(err.request.responseText);
-        //   setHasError(true);
-        //   const obj = JSON.parse(err.request.response);
-        //   if (Object.keys(obj).length === 0) {
-        //     setErrorMessage("Invalid User")
-        //   } else if (obj.email !== undefined) {
-        //     setErrorMessage(obj.email[0])
-        //   } else if (obj.password !== undefined) {
-        //     setErrorMessage(obj.password[0])
-        //   }
-        });
+        console.log(registerDetails);
+        // TWOFACTORMODAL REFACTORED
+        // setTwoFactorOpen(true)
+        // .then(
+        axios
+            .post("/register/", registerDetails)
+            .then((res) => console.log(res))
+            .then(() => clearFields())
+            .then(() => dispatch(login({ isLogged: true, diet: ''})))
+            .then(() => setRegOpen(false))
+            // .then(() => handleLogin())
+            .catch((err) => {
+                console.log(err.request);
+                console.log(err.request.responseText);
+            //   setHasError(true);
+            //   const obj = JSON.parse(err.request.response);
+            //   if (Object.keys(obj).length === 0) {
+            //     setErrorMessage("Invalid User")
+            //   } else if (obj.email !== undefined) {
+            //     setErrorMessage(obj.email[0])
+            //   } else if (obj.password !== undefined) {
+            //     setErrorMessage(obj.password[0])
+            //   }
+            })
+        // );
     }
 
     // Primary colour theme for buttons
@@ -203,6 +213,10 @@ export default function LoginRegisterModal(props) {
                     </Button>
                 </DialogActions>
             </Dialog>
+
+            {/* TWOFACTORMODAL REFACTORED */}
+            {/* <TwoFactorModal open={twoFactorOpen} onClose={() => setTwoFactorOpen(false)}></TwoFactorModal> */}
+
             <Dialog open={regOpen} fullScreen>
                 <div className = "banner">
                     <img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" className="register_banner" alt="loginbanner"/>
