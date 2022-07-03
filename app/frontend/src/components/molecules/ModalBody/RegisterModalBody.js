@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { 
     DialogContent,
@@ -26,7 +25,7 @@ const form = props => {
         handleBlur,
         onToggle,
         onClose,
-        openTwoFactor,
+        // openTwoFactor,
         resetForm,
         primaryTheme,
         secondaryTheme

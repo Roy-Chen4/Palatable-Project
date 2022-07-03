@@ -1,7 +1,4 @@
-/* eslint-disable no-unused-vars */
-import {
-    createTheme, Dialog
-} from '@mui/material';
+import { createTheme, Dialog } from '@mui/material';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import LoginModalBody from '../ModalBody/LoginModalBody';
