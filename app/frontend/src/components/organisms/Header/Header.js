@@ -1,7 +1,7 @@
 import logo from '../../atoms/Logo/logo.png'
 import * as React from 'react';
 import './Header.css';
-import CollapsableDrawer from '../../molecules/Drawer/Drawer';
+import CollapsableDrawer from '../Drawer/Drawer';
 import { Box } from '@mui/system';
 import { Toolbar } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
