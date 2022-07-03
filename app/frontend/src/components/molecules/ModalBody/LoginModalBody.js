@@ -20,7 +20,6 @@ const form = props => {
         values,
         touched,
         errors,
-        isSubmitting,
         handleChange,
         handleBlur,
         onToggle,
@@ -32,34 +31,25 @@ const form = props => {
 
     const dispatch = useDispatch();
 
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
+
     const [accountError, setAccountError] = React.useState(false);
 
     // login user calling login API
     const onLoginSubmit = () => {
+        setIsSubmitting(true);
         console.log(errors)
         axios
             .post("/login/", values)
             .then((res) => console.log(res))
-            .then(() => dispatch(login({ isLogged: true, diet: ''})))
+            .then(() => dispatch(login({ isLogged: true, email: values.email, diet: ''})))
             .then(() => resetForm())
             .then(() => props.onClose())
+            .then(() => setIsSubmitting(false))
             .catch((err) => {
                 setAccountError(true);
+                setIsSubmitting(false);
                 console.log(err.request);
-                // console.log(err.request.responseText);
-                // setHasError(true);
-                // const obj = JSON.parse(err.request.response);
-                // if (Object.keys(obj).length === 0) {
-                // setErrorMessage("Invalid User")
-                // } else if (obj.email !== undefined) {
-                // setErrorMessage(obj.email[0])
-                // } else if (obj.password !== undefined) {
-                // setErrorMessage(obj.password[0])
-                // }
-                // console.log(err.request.responseText);
-                // console.log(obj.password);
-                // console.log(Object.keys(obj).length);
-                // console.log(err.request.response.email);
         });
     }
     return (

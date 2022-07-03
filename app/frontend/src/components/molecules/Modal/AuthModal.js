@@ -26,9 +26,6 @@ export default function AuthModal(props) {
         props.onToggle();
     };
 
-    // const [hasError, setHasError] = React.useState(false);
-    // const [errorMessage, setErrorMessage] = React.useState("")
-
     // Primary colour theme for buttons
     const primaryTheme = createTheme({
         palette: {

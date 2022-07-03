@@ -21,7 +21,6 @@ const form = props => {
         values,
         touched,
         errors,
-        isSubmitting,
         handleChange,
         handleBlur,
         onToggle,
@@ -37,6 +36,8 @@ const form = props => {
 
     const [accountError, setAccountError] = React.useState(false);
 
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
+
     // register user calling register API
     const onRegisterSubmit = () => {
         // console.log(registerDetails);
@@ -46,22 +47,14 @@ const form = props => {
         axios
             .post("/register/", values)
             .then((res) => console.log(res))
-            .then(() => dispatch(login({ isLogged: true, diet: ''})))
+            .then(() => dispatch(login({ isLogged: true, email: values.email, diet: ''})))
             .then(() => resetForm())
             .then(() => props.onClose())
+            .then(() => setIsSubmitting(false))
             .catch((err) => {
                 setAccountError(true);
+                setIsSubmitting(false)
                 console.log(err.request);
-                // console.log(err.request.responseText);
-                //   setHasError(true);
-                //   const obj = JSON.parse(err.request.response);
-                //   if (Object.keys(obj).length === 0) {
-                //     setErrorMessage("Invalid User")
-                //   } else if (obj.email !== undefined) {
-                //     setErrorMessage(obj.email[0])
-                //   } else if (obj.password !== undefined) {
-                //     setErrorMessage(obj.password[0])
-                //   }
             })
     // );
     }
@@ -80,7 +73,7 @@ const form = props => {
                 </DialogContentText>
                 <TextField
                     id="email"
-                    label="Email"
+                    placeholder="Email"
                     type="email"
                     value={values.email}
                     onChange={(e) => {handleChange(e); setAccountError(false)}}
@@ -89,11 +82,11 @@ const form = props => {
                     error={touched.email && Boolean(errors.email)}
                     margin="normal"
                     // variant="outlined"
-                    sx={{width:"77%", paddingLeft: "10vmin"}}
+                    sx={{width:"65%", paddingLeft: "10vmin"}}
                 />
                 <TextField
                     id="password1"
-                    label="Password"
+                    placeholder="Password"
                     type="password"
                     value={values.password1}
                     onChange={(e) => {handleChange(e); setAccountError(false)}}
@@ -102,11 +95,11 @@ const form = props => {
                     error={touched.password1 && Boolean(errors.password1)}
                     margin="normal"
                     // variant="outlined"
-                    sx={{width:"77%", paddingLeft: "10vmin"}}
+                    sx={{width:"65%", paddingLeft: "10vmin"}}
                 />
                 <TextField
                     id="password2"
-                    label="Password"
+                    placeholder="Confirm Password"
                     type="password"
                     value={values.password2}
                     onChange={(e) => {handleChange(e); setAccountError(false)}}
@@ -115,7 +108,7 @@ const form = props => {
                     error={touched.password2 && Boolean(errors.password2)}
                     margin="normal"
                     // variant="outlined"
-                    sx={{width:"77%", paddingLeft: "10vmin"}}
+                    sx={{width:"65%", paddingLeft: "10vmin"}}
                 />
             </DialogContent>
             <p1 className="error-text" style={{visibility: accountError ? "visible" : "hidden"}}>Account already exists</p1>
@@ -131,11 +124,11 @@ const form = props => {
                 <Button 
                     onClick={() => onRegisterSubmit()}
                     variant="contained"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || errors.email || errors.password}
                     theme={primaryTheme}
                     sx={{color:"white"}}
                 > 
-                    Log In 
+                    Register
                 </Button> 
             </DialogActions>
 
