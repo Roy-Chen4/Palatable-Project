@@ -15,7 +15,7 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { createTheme} from '@mui/material/styles';
-import LoginRegisterModal from '../Modal/LoginRegModal';
+import AuthModal from '../Modal/LoginRegModal';
 import SettingsModal from '../Modal/SettingsModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../../reducers/isLogged';
@@ -76,7 +76,7 @@ export default function CollapsableDrawer() {
           </Button>
         </div>
 
-        <LoginRegisterModal open={regOpen} onClose={() => setRegOpen(false)} onToggle={() => setRegOpen(true)}></LoginRegisterModal>
+        <AuthModal open={regOpen} onClose={() => setRegOpen(false)} onToggle={() => setRegOpen(true)}></AuthModal>
 
         <ListItem 
           disablePadding

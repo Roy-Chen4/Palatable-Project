@@ -17,7 +17,7 @@ import { login } from '../../../reducers/isLogged';
 // TWO FACTOR MODAL REFACTORED
 // import TwoFactorModal from './TwoFactorModal';
 
-export default function LoginRegisterModal(props) {
+export default function AuthModal(props) {
     const dispatch = useDispatch()
 
     // state of RegisterModal
@@ -277,7 +277,7 @@ export default function LoginRegisterModal(props) {
 
 }
 
-LoginRegisterModal.propTypes = {
+AuthModal.propTypes = {
     open: PropTypes.bool,
     onClose: PropTypes.func,
     onToggle: PropTypes.func,
