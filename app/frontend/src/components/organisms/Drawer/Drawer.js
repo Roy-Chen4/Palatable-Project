@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
+import { Dialog } from '@mui/material';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -16,7 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { createTheme} from '@mui/material/styles';
 import AuthModal from '../../molecules/Modal/AuthModal';
-import SettingsModal from '../../molecules/Modal/SettingsModal';
+import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../../reducers/isLogged';
 import './Drawer.css'
@@ -44,13 +45,22 @@ export default function CollapsableDrawer() {
     setSettingsOpen(true);
 	};
   
-  const ptheme = createTheme({
+  const primaryTheme = createTheme({
     palette: {
       primary: {
         main: '#df7b84',
       },
     },
   });
+
+  // Secondary colour theme for buttons
+  const secondaryTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#E8E8E8',
+        },
+    },
+});
 
   const list = (anchor) => (
     <Box
@@ -63,7 +73,7 @@ export default function CollapsableDrawer() {
         </IconButton>
 
         <div className="login_reg_button">
-          <Button theme={ptheme}
+          <Button theme={primaryTheme}
             variant="contained"
             onClick={handleClickOpen}
             sx={{
@@ -76,7 +86,7 @@ export default function CollapsableDrawer() {
           </Button>
         </div>
 
-        <AuthModal open={regOpen} onClose={() => setRegOpen(false)} onToggle={() => setRegOpen(true)}></AuthModal>
+        <AuthModal open={regOpen} onClose={() => setRegOpen(false)} onToggle={() => setRegOpen(true)} ></AuthModal>
 
         <ListItem 
           disablePadding
@@ -118,7 +128,16 @@ export default function CollapsableDrawer() {
           </ListItemButton>
         </ListItem>
 
-        <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)}></SettingsModal>
+        <Dialog open={settingsOpen} onClose={() => setSettingsOpen(false)} fullWidth='true' maxWidth='md'>
+            <div className="confirmation_ui">
+              <SettingsModalBody 
+                onClose={() => setSettingsOpen(false)} 
+                primaryTheme={primaryTheme} 
+                secondaryTheme={secondaryTheme}
+              />
+            </div>
+        </Dialog>
+
 
         <ListItem 
           disablePadding
