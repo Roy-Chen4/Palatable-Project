@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { 
     DialogContent, 
@@ -14,6 +13,7 @@ import * as yup from "yup";
 import axios from 'axios';
 import { useDispatch } from "react-redux";
 import { login } from "../../../reducers/isLogged";
+import "./ModalBody.css"
 
 const form = props => {
     const {
@@ -32,9 +32,11 @@ const form = props => {
 
     const dispatch = useDispatch();
 
+    const [accountError, setAccountError] = React.useState(false);
+
     // login user calling login API
     const onLoginSubmit = () => {
-        console.log("hello")
+        console.log(errors)
         axios
             .post("/login/", values)
             .then((res) => console.log(res))
@@ -42,8 +44,9 @@ const form = props => {
             .then(() => resetForm())
             .then(() => props.onClose())
             .catch((err) => {
+                setAccountError(true);
                 console.log(err.request);
-                console.log(err.request.responseText);
+                // console.log(err.request.responseText);
                 // setHasError(true);
                 // const obj = JSON.parse(err.request.response);
                 // if (Object.keys(obj).length === 0) {
@@ -68,32 +71,33 @@ const form = props => {
             </DialogTitle>
             <DialogContent>
                 <TextField
-                id="email"
-                label="Email"
-                type="email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperText={touched.email ? errors.email : ""}
-                error={touched.email && Boolean(errors.email)}
-                margin="normal"
-                // variant="outlined"
-                sx={{width:"70%"}}
+                    id="email"
+                    label="Email"
+                    type="email"
+                    value={values.email}
+                    onChange={(e) => {handleChange(e); setAccountError(false)}}
+                    onBlur={handleBlur}
+                    helperText={touched.email ? errors.email : ""}
+                    error={(touched.email && Boolean(errors.email))}
+                    margin="normal"
+                    // variant="outlined"
+                    sx={{width:"70%"}}
                 />
                 <TextField
-                id="password"
-                label="Password"
-                type="password"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperText={touched.password ? errors.password : ""}
-                error={touched.password && Boolean(errors.password)}
-                margin="normal"
-                // variant="outlined"
-                sx={{width:"70%"}}
+                    id="password"
+                    label="Password"
+                    type="password"
+                    value={values.password}
+                    onChange={(e) => {handleChange(e); setAccountError(false)}}
+                    onBlur={handleBlur}
+                    helperText={touched.password ? errors.password : ""}
+                    error={(touched.password && Boolean(errors.password))}
+                    margin="dense"
+                    // variant="outlined"
+                    sx={{width:"70%"}}
                 />
             </DialogContent>
+            <p1 className="error-text" style={{visibility: accountError ? "visible" : "hidden"}}>Invalid Email or Password</p1>
             <DialogActions>
                 <Button onClick={onToggle}>Don&apos;t have an account?</Button>
                 <Button 
@@ -106,7 +110,7 @@ const form = props => {
                 <Button 
                     onClick={() => onLoginSubmit()}
                     variant="contained"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || errors.email || errors.password}
                     theme={primaryTheme}
                     sx={{color:"white"}}
                 > 

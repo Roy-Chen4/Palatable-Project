@@ -14,6 +14,7 @@ import axios from 'axios';
 import { useDispatch } from "react-redux";
 import { login } from "../../../reducers/isLogged";
 import validationRegister from "../../../validation/regSchema";
+import "./ModalBody.css"
 
 const form = props => {
     const {
@@ -33,6 +34,9 @@ const form = props => {
 
     const dispatch = useDispatch();
 
+
+    const [accountError, setAccountError] = React.useState(false);
+
     // register user calling register API
     const onRegisterSubmit = () => {
         // console.log(registerDetails);
@@ -46,19 +50,20 @@ const form = props => {
             .then(() => resetForm())
             .then(() => props.onClose())
             .catch((err) => {
+                setAccountError(true);
                 console.log(err.request);
-                console.log(err.request.responseText);
-            //   setHasError(true);
-            //   const obj = JSON.parse(err.request.response);
-            //   if (Object.keys(obj).length === 0) {
-            //     setErrorMessage("Invalid User")
-            //   } else if (obj.email !== undefined) {
-            //     setErrorMessage(obj.email[0])
-            //   } else if (obj.password !== undefined) {
-            //     setErrorMessage(obj.password[0])
-            //   }
+                // console.log(err.request.responseText);
+                //   setHasError(true);
+                //   const obj = JSON.parse(err.request.response);
+                //   if (Object.keys(obj).length === 0) {
+                //     setErrorMessage("Invalid User")
+                //   } else if (obj.email !== undefined) {
+                //     setErrorMessage(obj.email[0])
+                //   } else if (obj.password !== undefined) {
+                //     setErrorMessage(obj.password[0])
+                //   }
             })
-        // );
+    // );
     }
 
     return (
@@ -78,7 +83,7 @@ const form = props => {
                     label="Email"
                     type="email"
                     value={values.email}
-                    onChange={handleChange}
+                    onChange={(e) => {handleChange(e); setAccountError(false)}}
                     onBlur={handleBlur}
                     helperText={touched.email ? errors.email : ""}
                     error={touched.email && Boolean(errors.email)}
@@ -91,7 +96,7 @@ const form = props => {
                     label="Password"
                     type="password"
                     value={values.password1}
-                    onChange={handleChange}
+                    onChange={(e) => {handleChange(e); setAccountError(false)}}
                     onBlur={handleBlur}
                     helperText={touched.password1 ? errors.password1 : ""}
                     error={touched.password1 && Boolean(errors.password1)}
@@ -104,7 +109,7 @@ const form = props => {
                     label="Password"
                     type="password"
                     value={values.password2}
-                    onChange={handleChange}
+                    onChange={(e) => {handleChange(e); setAccountError(false)}}
                     onBlur={handleBlur}
                     helperText={touched.password2 ? errors.password2 : ""}
                     error={touched.password2 && Boolean(errors.password2)}
@@ -113,6 +118,7 @@ const form = props => {
                     sx={{width:"77%", paddingLeft: "10vmin"}}
                 />
             </DialogContent>
+            <p1 className="error-text" style={{visibility: accountError ? "visible" : "hidden"}}>Account already exists</p1>
             <DialogActions>
                 <Button onClick={onToggle}>Already have an account?</Button>
                 <Button 
