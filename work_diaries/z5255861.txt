@@ -14,7 +14,6 @@ Week 2
 - Helped draft up storyboard, drew mock ups of potential pages at university with group
 
 Week 3
-
 - Set up atomic design
 - Creating route configuration for two page design
 - Finishing Project Proposal
@@ -22,9 +21,16 @@ Week 3
 - Introduce header component in layout and multipage design after discussion with group
 - Added a npm watch script that will check for changes in source
 
+Week 4
+- Work on Login/Reg/Setting Modal
+- Implementing errors
+- Fixing drawer
+- Adding conditional components to drawer
+- Connecting frontend to backend
+- UI fixes
 
-
-- Set up atomic design
-- Creating route configuration for two page design
-- Finishing Project Proposal
-- Created Logo
+Week 5
+- Refactoring Modal bodies into components
+- Error Message fixes
+- Redux setup
+- Settings UI changes
