@@ -27,6 +27,7 @@ const form = props => {
         handleChange,
         handleBlur,
         onClose,
+        onSubmit,
         registerClose,
         resetForm,
         primaryTheme,
@@ -45,7 +46,7 @@ const form = props => {
     const onTwoFactorSubmit = () => {
         setIsSubmitting(true);
         console.log(values)
-      
+     
 
         axios
             .post("/twofac/", values)

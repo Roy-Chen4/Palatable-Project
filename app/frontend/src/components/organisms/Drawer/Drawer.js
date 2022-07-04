@@ -10,6 +10,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
+import KitchenOutlinedIcon from '@material-ui/icons/KitchenOutlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
@@ -17,6 +18,7 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { createTheme} from '@mui/material/styles';
 import AuthModal from '../../molecules/Modal/AuthModal';
+import DietModal from '../../molecules/Modal/DietModal';
 import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../../reducers/isLogged';
@@ -28,6 +30,7 @@ export default function CollapsableDrawer() {
   const loggedIn = useSelector((state) => state.user.value.isLogged);
 
   const [settingsOpen, setSettingsOpen] = React.useState(false);
+  const [dietOpen, setDietOpen] = React.useState(false);
 	
 	const [state, setState] = React.useState(false);
   
@@ -86,7 +89,13 @@ export default function CollapsableDrawer() {
           </Button>
         </div>
 
-        <AuthModal open={regOpen} onClose={() => setRegOpen(false)} onToggle={() => setRegOpen(true)} ></AuthModal>
+        <AuthModal 
+          open={regOpen} 
+          onClose={() => setRegOpen(false)} 
+          onToggle={() => setRegOpen(true)} 
+          primaryTheme={primaryTheme} 
+          secondaryTheme={secondaryTheme}
+        />
 
         <ListItem 
           disablePadding
@@ -127,6 +136,31 @@ export default function CollapsableDrawer() {
             <ListItemText primary={'Settings'} />
           </ListItemButton>
         </ListItem>
+        
+        <ListItem 
+          disablePadding
+          sx= {{
+            display:
+              loggedIn ? "flex" : "none",
+          }}
+          onClick={() => setDietOpen(true)}
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <KitchenOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary={'My Diet'} />
+          </ListItemButton>
+        </ListItem>
+
+        
+        <DietModal
+          open={dietOpen}
+          onClose={() => setDietOpen(false)} 
+          primaryTheme={primaryTheme} 
+          secondaryTheme={secondaryTheme}
+        />
+       
 
         <Dialog open={settingsOpen} onClose={() => setSettingsOpen(false)} fullWidth='true' maxWidth='md'>
             <div className="confirmation_ui">

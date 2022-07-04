@@ -34,3 +34,5 @@ Week 5
 - Error Message fixes
 - Redux setup
 - Settings UI changes
+- Settings email and password updates
+- Dietary Requirement UI and redux setup

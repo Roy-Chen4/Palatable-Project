@@ -43,7 +43,7 @@ const form = props => {
         axios
             .post("/register/", values)
             .then((res) => console.log(res))
-            .then(() => dispatch(login({ isLogged: true, email: values.email, diet: ''})))
+            .then(() => dispatch(login({ isLogged: true, email: values.email})))
             // .then(() => resetForm())
             // .then(() => props.registerClose())
             .then(() => setIsSubmitting(false))
@@ -120,7 +120,7 @@ const form = props => {
                 <Button 
                     onClick={() => onRegisterSubmit()}
                     variant="contained"
-                    disabled={isSubmitting || errors.email || errors.password}
+                    disabled={isSubmitting || errors.email || errors.password || accountError}
                     theme={primaryTheme}
                     sx={{color:"white"}}
                 > 
