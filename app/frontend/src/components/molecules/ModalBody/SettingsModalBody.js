@@ -67,7 +67,6 @@ const form = props => {
     // password change calling editpassword API
     const onPasswordSubmit = () => {
         setIsSubmitting(true);
-        console.log(errors);
         const editPassword = {
             email: userEmail,
             new_password1: values.email,
@@ -76,7 +75,6 @@ const form = props => {
         axios
             .post("/editpassword/", editPassword)
             .then((res) => console.log(res))
-            // .then(() => dispatch(login({ isLogged: true, email: values.email, diet: ''})))
             .then(() => resetForm())
             .then(() => props.onClose())
             .then(() => setIsSubmitting(false))
@@ -86,14 +84,6 @@ const form = props => {
                 console.log(err.request);
         });
     }
-    // // Selected colour theme for buttons
-    // const selectedTheme = createTheme({
-    //     palette: {
-    //         primary: {
-    //             main: '#df7b84',
-    //         },
-    //     },
-    // });
 
     return (
         <form>

@@ -25,6 +25,7 @@ const form = props => {
         handleChange,
         handleBlur,
         onClose,
+        onSubmit,
         registerClose,
         resetForm,
         primaryTheme,
@@ -42,21 +43,21 @@ const form = props => {
     // login user calling login API
     const onTwoFactorSubmit = () => {
         setIsSubmitting(true);
-        console.log(errors)
+        console.log(values)
       
-
-        axios
-            .post("/login/", values)
-            .then((res) => console.log(res))
-            .then(() => resetForm())
-            .then(() => onClose())
-            .then(() => registerClose())
-            .then(() => setIsSubmitting(false))
-            .catch((err) => {
-                // setAccountError(true);
-                // setIsSubmitting(false);
-                console.log(err.request);
-        });
+        // onSubmit()
+        // axios
+        //     .post("/login/", values)
+        //     .then((res) => console.log(res))
+        //     .then(() => resetForm())
+        //     .then(() => onSubmit())
+        //     .then(() => registerClose())
+        //     .then(() => setIsSubmitting(false))
+        //     .catch((err) => {
+        //         // setAccountError(true);
+        //         setIsSubmitting(false);
+        //         console.log(err.request);
+        // });
     }
 
     return (
@@ -71,11 +72,14 @@ const form = props => {
                  Please enter the five letter code that was emailed to you.
                </DialogContentText>
                 <TextField
-                    id="password"
+                    id="codeDetails"
                     placeholder='AAAAA'
                     type="password"
-                    value={values.password}
-                    onChange={(e) => {handleChange(e);}}
+                    value={values.codeDetails}
+                    onChange={
+                        (e) => {handleChange(e);
+                        // console.log(values.codeDetails);
+                    }}
                     onBlur={handleBlur}
                     //helperText={touched.password ? errors.password : ""}
                     //error={(touched.password && Boolean(errors.password))}

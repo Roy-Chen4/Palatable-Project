@@ -13,7 +13,8 @@ export const userSlice = createSlice({
     },
     reducers: {
         login: (state, action) => {
-            state.value = action.payload
+            state.value.email = action.payload.email
+            state.value.isLogged = action.payload.isLogged
         },
         logout: (state) => {
             state.value = initialState
