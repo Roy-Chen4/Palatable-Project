@@ -15,6 +15,9 @@ class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length = 30)
     password1 = serializers.CharField(max_length = 30)
     password2 = serializers.CharField(max_length = 30)
+    
+class CodeSerializer(serializers.Serializer):
+    codeDetail= serializers.CharField(max_length = 6)
 
 class EditEmailSerializer(serializers.Serializer):
     old_email = serializers.EmailField(max_length = 30)
