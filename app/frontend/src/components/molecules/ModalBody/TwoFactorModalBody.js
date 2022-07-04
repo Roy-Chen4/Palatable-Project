@@ -15,6 +15,8 @@ import { withFormik } from "formik";
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../reducers/isLogged";
+import { login } from "../../../reducers/isLogged";
+import validationRegister from "../../../validation/regSchema";
 import "./ModalBody.css"
 
 const form = props => {
@@ -42,16 +44,17 @@ const form = props => {
     // login user calling login API
     const onTwoFactorSubmit = () => {
         setIsSubmitting(true);
-        console.log(errors)
+        console.log(values)
       
 
         axios
-            .post("/login/", values)
+            .post("/twofac/", values)
             .then((res) => console.log(res))
             .then(() => resetForm())
             .then(() => onClose())
             .then(() => registerClose())
             .then(() => setIsSubmitting(false))
+            .then(() => dispatch(login({ isLogged: true, email: values.email, diet: ''})))
             .catch((err) => {
                 // setAccountError(true);
                 // setIsSubmitting(false);
@@ -71,11 +74,11 @@ const form = props => {
                  Please enter the five letter code that was emailed to you.
                </DialogContentText>
                 <TextField
-                    id="password"
+                    id="codeDetail"
                     placeholder='AAAAA'
                     type="password"
-                    value={values.password}
-                    onChange={(e) => {handleChange(e);}}
+                    value={values.codeDetail}
+                    onChange={(e) => {handleChange(e)}}
                     onBlur={handleBlur}
                     //helperText={touched.password ? errors.password : ""}
                     //error={(touched.password && Boolean(errors.password))}
