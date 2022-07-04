@@ -5,15 +5,19 @@ import {
     DialogTitle, 
     TextField,
     DialogActions, 
-    Button
+    Button,
+    RadioGroup
 } 
 from '@mui/material';
-import validationRegister from "../../../validation/regSchema";
 import { withFormik } from "formik";
 import * as yup from "yup";
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../reducers/isLogged";
+import Radio from '@material-ui/core/Radio';
+import EditFieldButton from "../../atoms/EditFieldButton/EditFieldButton";
+import validationSettings from "../../../validation/settingSchema";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import "./ModalBody.css"
 
 const form = props => {
@@ -26,28 +30,54 @@ const form = props => {
         onClose,
         resetForm,
         primaryTheme,
-        secondaryTheme
+        secondaryTheme,
+        setFieldValue
     } = props;
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const [isSubmitting, setIsSubmitting] = React.useState(false);
 
     const [accountError, setAccountError] = React.useState(false);
+    
+    const [editDisable, setEditDisable] = React.useState(true);
+    
+    const [toggleEmailPass, setToggleEmailPass] = React.useState(true);
 
     const userEmail = useSelector((state) => state.user.value.email);
-
-    // login user calling login API
-    const onSettingSubmit = () => {
+    
+    
+    // password change calling editpassword API
+    const onEmailSubmit = () => {
+        setIsSubmitting(true);
+        const editPassword = {
+            old_email: userEmail,
+            new_email: values.email,
+        }
+        axios
+            .post("/editemail/", editPassword)
+            .then((res) => console.log(res))
+            .then(() => dispatch(login({ isLogged: true, email: values.email, diet: ''})))
+            .then(() => resetForm())
+            .then(() => props.onClose())
+            .then(() => setIsSubmitting(false))
+            .catch((err) => {
+                setAccountError(true);
+                setIsSubmitting(false);
+                console.log(err.request);
+        });
+    }
+    // password change calling editpassword API
+    const onPasswordSubmit = () => {
         setIsSubmitting(true);
         console.log(errors);
-        const editDetails = {
+        const editPassword = {
             email: userEmail,
-            new_password1: values.password1,
+            new_password1: values.email,
             new_password2: values.password2,
         }
         axios
-            .post("/editpassword/", editDetails)
+            .post("/editpassword/", editPassword)
             .then((res) => console.log(res))
             // .then(() => dispatch(login({ isLogged: true, email: values.email, diet: ''})))
             .then(() => resetForm())
@@ -59,6 +89,15 @@ const form = props => {
                 console.log(err.request);
         });
     }
+    // // Selected colour theme for buttons
+    // const selectedTheme = createTheme({
+    //     palette: {
+    //         primary: {
+    //             main: '#df7b84',
+    //         },
+    //     },
+    // });
+
     return (
         <form>
             <DialogTitle>
@@ -66,7 +105,54 @@ const form = props => {
                     User Settings
                 </p1>
             </DialogTitle>
+            <Button 
+                onClick={() => {
+                    setToggleEmailPass(true);
+                    setEditDisable(true);
+                    setAccountError(false);
+                    setFieldValue("toggle", true);
+                    setFieldValue("email", userEmail);
+                }}
+                variant={toggleEmailPass ? "contained" : "outlined"}
+                theme={secondaryTheme}
+                sx={{
+                    color:"black",
+                    fontWeight: toggleEmailPass ? "bold" : "normal",
+                    width:"20%"
+                }}
+                control={<Radio />} 
+            > 
+                Email
+            </Button>
+            <Button 
+                onClick={() => {
+                    setToggleEmailPass(false);
+                    setEditDisable(true);
+                    setAccountError(false);
+                    setFieldValue("toggle", false);
+                    setFieldValue("password1", '');
+                    setFieldValue("passord2", '');
+                }}
+                variant={toggleEmailPass ? "outlined" : "contained"}
+                theme={secondaryTheme}
+                sx={{
+                    color:"black",
+                    fontWeight: toggleEmailPass ? "normal" : "bold",
+                    width:"20%"
+                }}
+            > 
+                Password 
+            </Button> 
             <DialogContent>
+                <TextField
+                    id="toggle"
+                    defaultValue={true}
+                    value={values.toggle}
+                    sx={{
+                        display: 'none',
+                        width:"70%"
+                    }}
+                />
                 <TextField
                     id="email"
                     label="Email"
@@ -78,8 +164,13 @@ const form = props => {
                     helperText={touched.email ? errors.email : ""}
                     error={(touched.email && Boolean(errors.email))}
                     margin="normal"
-                    // variant="outlined"
-                    sx={{width:"70%"}}
+                    variant="outlined"
+                    sx={{
+                        display: toggleEmailPass ? "inline-flex" : "none",
+                        width:"70%"
+                    }}
+                    disabled={editDisable}
+                    InputProps={{endAdornment: <EditFieldButton onClick={() => setEditDisable(false)}/>}}
                 />
                 <TextField
                     id="password1"
@@ -91,8 +182,13 @@ const form = props => {
                     helperText={touched.password1 ? errors.password1 : ""}
                     error={touched.password1 && Boolean(errors.password1)}
                     margin="normal"
-                    // variant="outlined"
-                    sx={{width:"70%"}}
+                    variant="outlined"
+                    sx={{
+                        visibility: toggleEmailPass ? "hidden" : "visible",
+                        width:"70%"
+                    }}
+                    disabled={editDisable}
+                    InputProps={{endAdornment: <EditFieldButton onClick={() => setEditDisable(false)}/>}}
                 />
                 <TextField
                     id="password2"
@@ -104,11 +200,15 @@ const form = props => {
                     helperText={touched.password2 ? errors.password2 : ""}
                     error={touched.password2 && Boolean(errors.password2)}
                     margin="normal"
-                    // variant="outlined"
-                    sx={{width:"70%"}}
+                    variant="outlined"
+                    sx={{
+                        display: toggleEmailPass ? "none" : "inline-flex",
+                        width:"70%"
+                    }}
+                    disabled={editDisable}
                 />
             </DialogContent>
-            <p1 className="error-text" style={{visibility: accountError ? "visible" : "hidden"}}>Invalid Email or Password</p1>
+            <p1 className="error-text" style={{visibility: accountError ? "visible" : "hidden"}}>Invalid {toggleEmailPass ? " email" : " password"}</p1>
             <DialogActions>
                 <Button 
                     onClick={() => onClose()}
@@ -118,11 +218,28 @@ const form = props => {
                     Close 
                 </Button>
                 <Button 
-                    onClick={() => onSettingSubmit()}
+                    id="emailSubmit"
+                    onClick={() => onEmailSubmit()}
                     variant="contained"
-                    disabled={isSubmitting || errors.email || errors.password}
+                    disabled={isSubmitting || errors.email}
                     theme={primaryTheme}
-                    sx={{color:"white"}}
+                    sx={{
+                        display: toggleEmailPass ? "inline-flex" : "none",
+                        color:"white"
+                    }}
+                    > 
+                    Save 
+                </Button> 
+                <Button 
+                    id="passwordSubmit"
+                    onClick={() => onPasswordSubmit()}
+                    variant="contained"
+                    disabled={isSubmitting || errors.password}
+                    theme={primaryTheme}
+                    sx={{
+                        display: toggleEmailPass ? "none" : "inline-flex",
+                        color:"white"
+                    }}
                 > 
                     Save 
                 </Button> 
@@ -132,7 +249,8 @@ const form = props => {
 };
 
 const SettingsModalBody = withFormik({
-    validationSchema: yup.object().shape(validationRegister),
+    setFieldValue(){},
+    validationSchema: yup.object().shape(validationSettings),
 })(form);
 
 export default SettingsModalBody;
