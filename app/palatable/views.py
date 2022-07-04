@@ -3,13 +3,41 @@ from django.contrib.auth import forms
 from django.shortcuts import redirect  
 from django.contrib import messages  
 from django.contrib.auth.forms import UserCreationForm  
-from .forms import NewUserForm1
+from .forms import *
 from rest_framework.decorators import api_view
 from .serializers import *
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
 from django.contrib.auth import authenticate
+import random
+import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+
+def generate_code(length = 5):
+    global code
+    code = ""
+    characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
+    for x in range(length):
+        code += random.choice(characters)
+    return code
+
+def email_generate(sender, receiver, apple):
+    em_body = apple
+
+    message = MIMEText(em_body, 'html')
+    message['Subject'] = 'This is your verification code'
+    message['From'] = sender
+    message['To'] = ''.join(receiver)
+
+    s = smtplib.SMTP_SSL(host = 'smtp.gmail.com', port = 465)
+    s.ehlo()
+    s.login(user = sender, password = 'nptjkuhikqtprucq')
+    s.sendmail(sender, receiver, message.as_string())
+    print('email has been sent')
+    s.close()
 
 # Create your views here.
 
@@ -26,6 +54,7 @@ def register(request):
     return render(request, 'register.html', context)
 '''
 
+# Test 
 @api_view(['GET'])
 def test(request):
     if request.method == 'GET':
@@ -33,6 +62,7 @@ def test(request):
         serializer = UserSerializer(queryset)
         return Response(serializer.data)
 
+# login
 @api_view(['POST'])
 def login(request):
     if request.method == 'POST':
@@ -46,7 +76,8 @@ def login(request):
         # No backend authenticated the credentials
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 
-@api_view(['POST'])
+# register
+''' @api_view(['POST'])
 def register(request):
     form = NewUserForm1()
     if request.method == 'POST':
@@ -56,4 +87,62 @@ def register(request):
             if form.is_valid():
                 form.save()
                 return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN) '''
+        
+@api_view(['POST'])
+def register(request):
+    form = NewUserForm1()
+    if request.method == 'POST':
+        serializer = RegisterSerializer(data = request.data)
+        if serializer.is_valid():
+            form = NewUserForm1(request.data)
+            if form.is_valid():
+                form.save()
+                fname = serializer.data['email']
+                email_address = fname
+                apple = generate_code()
+                sender = 'imdabest564@gmail.com'
+                receiver = email_address
+                email_generate(sender, receiver, apple)
+                return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+@api_view(['POST'])
+def twofac(request):
+    if request.method == 'POST':
+        serializer = CodeSerializer(data = request.data)
+        if serializer.is_valid():
+            vcode=serializer.data['codeDetail']
+            if (vcode == code):
+                return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+                
+    
+    
+# edit email in settings
+@api_view(['POST'])
+def editemail(request):
+    if request.method == 'POST':
+        serializer = EditEmailSerializer(data = request.data)
+        if serializer.is_valid():
+            user = User.objects.get(email = serializer.data['old_email'])
+            user.email = serializer.data['new_email']
+            user.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+# edit password in settings
+@api_view(['POST'])
+def editpassword(request):
+    if request.method == 'POST':
+        serializer = EditPasswordSerializer(data = request.data)
+        if serializer.is_valid():
+            user = User.objects.get(email = serializer.data['email'])
+            password_validation.validate_password(serializer.data['new_password1'], user)
+            user.set_password(serializer.data['new_password1'])
+            user.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+    

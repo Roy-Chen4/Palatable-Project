@@ -1,18 +1,31 @@
-import { createTheme, Dialog } from '@mui/material';
+import { Dialog, Alert, AlertTitle } from '@mui/material';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import LoginModalBody from '../ModalBody/LoginModalBody';
 import RegisterModalBody from '../ModalBody/RegisterModalBody';
-// TWO FACTOR MODAL REFACTORED
-// import TwoFactorModal from './TwoFactorModal';
+import TwoFactorModalBody from '../ModalBody/TwoFactorModalBody';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../reducers/isLogged';
+import ForgottenPassModalBody from '../ModalBody/ForgottenPassModalBody';
+
 
 export default function AuthModal(props) {
+    const dispatch = useDispatch();
     // state of RegisterModal
     const [regOpen, setRegOpen] = React.useState(false);
+    
+    // state of forgotten password modal
+    const [forgottenPassOpen, setForgottenPassOpen] = React.useState(false);
+    
+    // count of incorrect entries
+    const [loginFailCount, setLoginFailCount] = React.useState(0);
+    
+    // state of alert modal
+    const [successModalOpen, setSuccessModalOpen] = React.useState(false);
 
     // state of TwoFactorModal
     // TWOFACTORMODAL REFACTORED
-    // const [twoFactorOpen, setTwoFactorOpen] = React.useState(false);
+    const [twoFactorOpen, setTwoFactorOpen] = React.useState(false);
 
     // set LoginModal closed when RegisterModal opens
     const toggleLoginModal = () => {
@@ -26,37 +39,67 @@ export default function AuthModal(props) {
         props.onToggle();
     };
 
-    // const [hasError, setHasError] = React.useState(false);
-    // const [errorMessage, setErrorMessage] = React.useState("")
-
-    // Primary colour theme for buttons
-    const primaryTheme = createTheme({
-        palette: {
-            primary: {
-                main: '#df7b84',
-            },
-        },
-    });
-
-    // Secondary colour theme for buttons
-    const secondaryTheme = createTheme({
-        palette: {
-            primary: {
-                main: '#E8E8E8',
-            },
-        },
-    });
+    const increaseLoginFailCount = () => {
+        setLoginFailCount(loginFailCount+1);
+    }
 
     return (
         <div>
+            <Dialog open={successModalOpen} onClose={() => setSuccessModalOpen(false)}>                
+                <Alert severity="success" spacing={2}>
+                    <AlertTitle>Your Password has been changed</AlertTitle>
+                </Alert>
+            </Dialog>
+
             <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth='md'>
                 <div className="confirmation_ui">
-                    <LoginModalBody onClose={props.onClose} onToggle={() => toggleLoginModal()} primaryTheme={primaryTheme} secondaryTheme={secondaryTheme}/>
+                    <LoginModalBody 
+                        onClose={props.onClose} 
+                        onToggle={() => toggleLoginModal()} 
+                        openTwoFactor={() => setTwoFactorOpen(true)}
+                        openForgottenPass={() => setForgottenPassOpen(true)}
+                        failCount={loginFailCount}
+                        resetFailCount={() => setLoginFailCount(0)}
+                        increaseFailCount={increaseLoginFailCount}
+                        primaryTheme={props.primaryTheme} 
+                        secondaryTheme={props.secondaryTheme}
+                    />
+                </div>
+            </Dialog>
+            
+            <Dialog open={forgottenPassOpen} onClose={() => setForgottenPassOpen(false)} fullWidth='true' maxWidth='md'>
+                <div className="confirmation_ui">
+                    <ForgottenPassModalBody
+                        onClose={() => setForgottenPassOpen(false)}
+                        onSubmit={() => {
+                            setForgottenPassOpen(false);
+                            setLoginFailCount(0);
+                        }}
+                        primaryTheme={props.primaryTheme} 
+                        secondaryTheme={props.secondaryTheme}
+                        openAlert={() => setSuccessModalOpen(true)}
+                        closeAlert={() => setSuccessModalOpen(false)}
+                    />
                 </div>
             </Dialog>
 
-            {/* TWOFACTORMODAL REFACTORED */}
-            {/* <TwoFactorModal open={twoFactorOpen} onClose={() => setTwoFactorOpen(false)}></TwoFactorModal> */}
+            <Dialog open={twoFactorOpen} fullWidth='true' maxWidth='md'>
+                <div className="confirmation_ui">
+                    <TwoFactorModalBody 
+                        onClose={() => {
+                            setTwoFactorOpen(false);
+                            setForgottenPassOpen(false);
+                            dispatch(logout());
+                        }} 
+                        onSubmit={() => setTwoFactorOpen(false)}
+                        registerClose={() => setRegOpen(false)}
+                        primaryTheme={props.primaryTheme} 
+                        secondaryTheme={props.secondaryTheme}
+                    />
+                </div>
+            </Dialog>
+
+
 
             <Dialog open={regOpen} fullScreen>
                 <div className = "banner">
@@ -66,9 +109,9 @@ export default function AuthModal(props) {
                     <RegisterModalBody 
                         onClose={() => setRegOpen(false)} 
                         onToggle={() => toggleRegisterModal()} 
-                        // openTwoFactor={() => setTwoFactorOpen(true)}
-                        primaryTheme={primaryTheme} 
-                        secondaryTheme={secondaryTheme}
+                        openTwoFactor={() => setTwoFactorOpen(true)}
+                        primaryTheme={props.primaryTheme} 
+                        secondaryTheme={props.secondaryTheme}
                     />   
                 </div>
             </Dialog>
@@ -81,4 +124,6 @@ AuthModal.propTypes = {
     open: PropTypes.bool,
     onClose: PropTypes.func,
     onToggle: PropTypes.func,
+    primaryTheme: PropTypes.func,
+    secondaryTheme: PropTypes.func,
 }

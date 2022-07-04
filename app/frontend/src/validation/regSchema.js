@@ -12,7 +12,7 @@ const validationRegister = {
     password2: yup
         .string()
         .min(8, "Password must contain at least 8 characters")
-        .required("Confirm password"),
+        .required("Please confirm password"),
 };
 
 export default validationRegister;
