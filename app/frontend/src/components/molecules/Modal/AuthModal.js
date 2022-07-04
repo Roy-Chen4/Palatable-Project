@@ -1,4 +1,4 @@
-import { createTheme, Dialog } from '@mui/material';
+import { Dialog } from '@mui/material';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import LoginModalBody from '../ModalBody/LoginModalBody';
@@ -28,29 +28,16 @@ export default function AuthModal(props) {
         props.onToggle();
     };
 
-    // Primary colour theme for buttons
-    const primaryTheme = createTheme({
-        palette: {
-            primary: {
-                main: '#df7b84',
-            },
-        },
-    });
-
-    // Secondary colour theme for buttons
-    const secondaryTheme = createTheme({
-        palette: {
-            primary: {
-                main: '#E8E8E8',
-            },
-        },
-    });
-
     return (
         <div>
             <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth='md'>
                 <div className="confirmation_ui">
-                    <LoginModalBody onClose={props.onClose} onToggle={() => toggleLoginModal()} primaryTheme={primaryTheme} secondaryTheme={secondaryTheme}/>
+                    <LoginModalBody 
+                        onClose={props.onClose} 
+                        onToggle={() => toggleLoginModal()} 
+                        primaryTheme={props.primaryTheme} 
+                        secondaryTheme={props.secondaryTheme}
+                    />
                 </div>
             </Dialog>
             
@@ -62,8 +49,8 @@ export default function AuthModal(props) {
                             dispatch(logout());
                         }} 
                         registerClose={() => setRegOpen(false)}
-                        primaryTheme={primaryTheme} 
-                        secondaryTheme={secondaryTheme}
+                        primaryTheme={props.primaryTheme} 
+                        secondaryTheme={props.secondaryTheme}
                     />
                 </div>
             </Dialog>
@@ -77,8 +64,8 @@ export default function AuthModal(props) {
                         onClose={() => setRegOpen(false)} 
                         onToggle={() => toggleRegisterModal()} 
                         openTwoFactor={() => setTwoFactorOpen(true)}
-                        primaryTheme={primaryTheme} 
-                        secondaryTheme={secondaryTheme}
+                        primaryTheme={props.primaryTheme} 
+                        secondaryTheme={props.secondaryTheme}
                     />   
                 </div>
             </Dialog>
@@ -91,4 +78,6 @@ AuthModal.propTypes = {
     open: PropTypes.bool,
     onClose: PropTypes.func,
     onToggle: PropTypes.func,
+    primaryTheme: PropTypes.func,
+    secondaryTheme: PropTypes.func,
 }

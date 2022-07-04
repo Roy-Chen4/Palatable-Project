@@ -1,12 +1,10 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { 
     DialogContent, 
     DialogTitle, 
     TextField,
     DialogActions, 
-    Button,
-    RadioGroup
+    Button
 } 
 from '@mui/material';
 import { withFormik } from "formik";
@@ -17,7 +15,6 @@ import { login } from "../../../reducers/isLogged";
 import Radio from '@material-ui/core/Radio';
 import EditFieldButton from "../../atoms/EditFieldButton/EditFieldButton";
 import validationSettings from "../../../validation/settingSchema";
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import "./ModalBody.css"
 
 const form = props => {

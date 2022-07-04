@@ -17,10 +17,13 @@ export const userSlice = createSlice({
         },
         logout: (state) => {
             state.value = initialState
+        },
+        dietChange: (state, action) => {
+            state.value.diet= action.payload.newUserDiet
         }
     }
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, dietChange } = userSlice.actions;
  
 export default userSlice.reducer;
