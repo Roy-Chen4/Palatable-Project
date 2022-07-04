@@ -10,6 +10,34 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
 from django.contrib.auth import authenticate
+import random
+import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+
+def generate_code(length = 5):
+    global code
+    code = ""
+    characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
+    for x in range(length):
+        code += random.choice(characters)
+    return code
+
+def email_generate(sender, receiver, apple):
+    em_body = apple
+
+    message = MIMEText(em_body, 'html')
+    message['Subject'] = 'This is your verification code'
+    message['From'] = sender
+    message['To'] = ''.join(receiver)
+
+    s = smtplib.SMTP_SSL(host = 'smtp.gmail.com', port = 465)
+    s.ehlo()
+    s.login(user = sender, password = 'nptjkuhikqtprucq')
+    s.sendmail(sender, receiver, message.as_string())
+    print('email has been sent')
+    s.close()
 
 # Create your views here.
 
@@ -49,7 +77,7 @@ def login(request):
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 
 # register
-@api_view(['POST'])
+''' @api_view(['POST'])
 def register(request):
     form = NewUserForm1()
     if request.method == 'POST':
@@ -59,8 +87,39 @@ def register(request):
             if form.is_valid():
                 form.save()
                 return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN) '''
+        
+@api_view(['POST'])
+def register(request):
+    form = NewUserForm1()
+    if request.method == 'POST':
+        serializer = RegisterSerializer(data = request.data)
+        if serializer.is_valid():
+            form = NewUserForm1(request.data)
+            if form.is_valid():
+                form.save()
+                fname = serializer.data['email']
+                email_address = fname
+                apple = generate_code()
+                sender = 'imdabest564@gmail.com'
+                receiver = email_address
+                email_generate(sender, receiver, apple)
+                return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 
+@api_view(['POST'])
+def twofac(request):
+    if request.method == 'POST':
+        serializer = CodeSerializer(data = request.data)
+        if serializer.is_valid():
+            vcode=serializer.data['codeDetail']
+            if (vcode == code):
+                return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+                
+    
+    
 # edit email in settings
 @api_view(['POST'])
 def editemail(request):
@@ -85,3 +144,5 @@ def editpassword(request):
             user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+    
