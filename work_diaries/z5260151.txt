@@ -23,3 +23,9 @@ Week 3
 Week 4
 - Started on backend auth devlopment  
 - Completed register function backend
+- Completed Login function backend
+
+Week 5 
+- Helped prepare for project demo
+- Attended retrospective meeting
+- Created retrospective document and helped complete it
