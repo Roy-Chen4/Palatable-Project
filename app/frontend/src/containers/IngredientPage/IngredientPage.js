@@ -177,23 +177,23 @@ const dataFiltered = filterData(searchQuery, data); */
 
 function IngredientPage() {
   
-    return (
-      <div className="IngredientPage">
-        <div className='TextInput'>
-            {/* <TextField
-            variant='outlined'
-            margin='normal'
-            sx={{position: "relative", display: "flex", justifyContent: "center", alignContent: "center", width: "30%", backgroundColor: "white"}}
-            InputProps={{
-                endAdornment: (
-                    <InputAdornment>
-                        <SearchIcon/>
-                    </InputAdornment>
-                )
-            }}
-            /> */}
-            <SearchBar/>
-        </div>
+  return (
+    <div className="IngredientPage">
+      <div className='TextInput'>
+          {/* <TextField
+          variant='outlined'
+          margin='normal'
+          sx={{position: "relative", display: "flex", justifyContent: "center", alignContent: "center", width: "30%", backgroundColor: "white"}}
+          InputProps={{
+              endAdornment: (
+                  <InputAdornment>
+                      <SearchIcon/>
+                  </InputAdornment>
+              )
+          }}
+          /> */}
+        <SearchBar/>
+      </div>
         {/* <div
       style={{
         display: "flex",
@@ -225,46 +225,46 @@ function IngredientPage() {
         ))}
       </div>
     </div> */}
-        <div className='IngredientDisplay'>
+      <div className='IngredientDisplay'>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%'}}>
-      {button_disp.map((image) => (
-        <ImageButton
-          focusRipple
-          key={image.title}
-          style={{
-            width: image.width,
-            borderRadius: '2vw',
-          }}
-        >
-          <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
-          <ImageBackdrop className="MuiImageBackdrop-root" />
-          <Image>
-            <Typography
-              component="span"
-              variant="subtitle1"
-              color="inherit"
-              sx={{
-                position: 'relative',
-                /*
-                p: 4,
-                pt: 2,
-                */
-                fontSize: '1.25vw',
-                fontWeight: 'bold', 
-                pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+          {button_disp.map((image) => (
+            <ImageButton
+              focusRipple
+              key={image.title}
+              style={{
+                width: image.width,
+                borderRadius: '2vw',
               }}
             >
-              {image.title}
-              <ImageMarked className="MuiImageMarked-root" />
-            </Typography>
-          </Image>
-        </ImageButton>
-      ))}
-    </Box>
-        </div>
+              <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
+              <ImageBackdrop className="MuiImageBackdrop-root" />
+              <Image>
+                <Typography
+                  component="span"
+                  variant="subtitle1"
+                  color="inherit"
+                  sx={{
+                    position: 'relative',
+                    /*
+                    p: 4,
+                    pt: 2,
+                    */
+                    fontSize: '1.25vw',
+                    fontWeight: 'bold', 
+                    pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+                  }}
+                >
+                  {image.title}
+                  <ImageMarked className="MuiImageMarked-root" />
+                </Typography>
+              </Image>
+            </ImageButton>
+          ))}
+        </Box>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   export default IngredientPage;
   
