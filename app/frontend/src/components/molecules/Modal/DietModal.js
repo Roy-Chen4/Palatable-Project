@@ -50,7 +50,7 @@ export default function DietModal(props) {
                 <p2 className='user-diet-text'>
                     Current Diet: &nbsp;
                 </p2>
-                <p2>
+                <p2 style={{textTransform: 'uppercase'}}>
                     {userDiet === '' ? ' None' : userDiet}
                 </p2>
                 <DialogContent>

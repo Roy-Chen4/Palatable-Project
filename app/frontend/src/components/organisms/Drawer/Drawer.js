@@ -63,7 +63,7 @@ export default function CollapsableDrawer() {
             main: '#E8E8E8',
         },
     },
-});
+  });
 
   const list = (anchor) => (
     <Box
