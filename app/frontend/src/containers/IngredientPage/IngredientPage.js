@@ -1,3 +1,4 @@
+import { Divider } from '@mui/material';
 import * as React from 'react';
 import IngredientCarousel from '../../components/organisms/Carousel/Carousel';
 /* import { InputAdornment } from '@mui/material'; 
@@ -157,6 +158,7 @@ function IngredientPage() {
         </Box>
       </div> */}
       <IngredientCarousel />
+      <Divider className="line-divider"/>
     </div>
   );
 }
