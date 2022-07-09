@@ -6,3 +6,9 @@
 .user-diet-text {
     font-weight: 500;
 }
+
+.category-heading {
+    font-weight: 500;
+    font-size: 2rem;
+    color: #282c34;
+}

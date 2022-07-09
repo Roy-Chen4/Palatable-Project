@@ -14,7 +14,7 @@ import
     Button 
 } from '@mui/material';
 import Carousel from 'react-material-ui-carousel'
-import Banner from '../../molecules/Banner/Banner';
+import Banner from '../../molecules/Slider/Slider';
 
 
 
@@ -59,7 +59,7 @@ function IngredientCarousel() {
         
         {
             url: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-            name: 'Vegetables',
+            name: 'Grains',
             width: '100%',
             items: [
                 {
@@ -69,7 +69,7 @@ function IngredientCarousel() {
                 },
                 {
                     url: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-                    name: 'Grains',
+                    name: 'Miscellaneous',
                     width: '100%'
                 },
             ]
@@ -83,7 +83,7 @@ function IngredientCarousel() {
             sx={{width:"100vw"}}
             className="ingredient-carousel"
             animation="slide" 
-            interval={8000}
+            autoPlay={false}
             cycleNavigation
             navButtonsAlwaysVisible
         >
