@@ -1,17 +1,14 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { 
     DialogContent, 
     DialogTitle, 
     DialogActions, 
     Button,
-    ButtonGroup,
     Tabs,
 } 
 from '@mui/material';
 import { Dialog } from '@mui/material';
-import { useSelector, useDispatch } from "react-redux";
-import { dietChange } from "../../../reducers/isLogged";
+import { useDispatch } from "react-redux";
 import PropTypes from 'prop-types';
 import './Modal.css';
 import { createTheme} from '@mui/material/styles';
