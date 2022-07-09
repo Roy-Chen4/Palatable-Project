@@ -25,6 +25,7 @@ export default function CategoryModal(props) {
     const onDietSubmit = () => {
         setIsSubmitting(true);
         setTimeout(function() { 
+            wipeColors();
             props.onClose();
             setIsSubmitting(false);
         }.bind(this), 1000)
@@ -65,6 +66,11 @@ export default function CategoryModal(props) {
             dispatch(remove({item: ingredient}));
         }
     }
+
+    function wipeColors() {
+        setButtonColor(false);
+    }
+
     return (
         <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth='md'>
             <div className="modal-body">
@@ -98,7 +104,10 @@ export default function CategoryModal(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button 
-                        onClick={() => props.onClose()}
+                        onClick={() => {
+                            wipeColors();
+                            props.onClose();
+                        }}
                         variant="contained"
                         theme={secondaryTheme}
                     > 
