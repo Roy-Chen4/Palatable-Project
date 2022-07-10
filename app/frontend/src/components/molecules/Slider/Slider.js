@@ -82,6 +82,7 @@ function Banner(props) {
         transition: theme.transitions.create('opacity'),
     }));
 
+    const [ingredientList, setIngredientList] = React.useState([]);
 
     function generateList(category) {
         let list = []
@@ -211,7 +212,7 @@ function Banner(props) {
                     name: "Soy Sauce"
                 },
                 {
-                    name: "Sweet Chilli Sauce"
+                    name: "Sweet Chilli"
                 },
                 { 
                     name: "Tomato Sauce"
@@ -430,6 +431,8 @@ function Banner(props) {
                 onClose={()=>{setCategoryModalOpen(false)}}
                 category={selectedCategory}
                 list={generateList(selectedCategory)}
+                ingredientList={ingredientList}
+                setIngredientList={()=>setIngredientList()}
             />
         </div>
     );
