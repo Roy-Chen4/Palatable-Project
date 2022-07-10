@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { 
     DialogContent, 
@@ -8,11 +9,11 @@ import {
 } 
 from '@mui/material';
 import { Dialog } from '@mui/material';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
 import './Modal.css';
 import { createTheme} from '@mui/material/styles';
-import { add, remove } from "../../../reducers/userIngredients";
+import { add } from "../../../reducers/userIngredients";
 
 export default function CategoryModal(props) {
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export default function CategoryModal(props) {
     const [isSubmitting, setIsSubmitting] = React.useState(false);
 
     const onDietSubmit = () => {
+        dispatch(add({ingredients: ingredientList}));
         setIsSubmitting(true);
         setTimeout(function() { 
             wipeColors();
@@ -49,23 +51,36 @@ export default function CategoryModal(props) {
 
     const unselected = '#ffffff';
     const selected = '#ffe8e8';
+    const preselected = '#c2c2c2';
+    const userAddedIngredients = useSelector((state) => state.ingredients.ingredients);
     const [buttonColor, setButtonColor] = React.useState({});
-    
+    const [ingredientList, setIngredientList] = React.useState([]);
+
     function handleClick(i, ingredient) {
+        // console.log(buttonColor)
         const newColor = buttonColor[i] === selected ? unselected : selected;
         const newState ={...buttonColor,[i]:newColor}
         setButtonColor(newState);
         if (buttonColor[i] !== selected) {
-            console.log(ingredient);
-            dispatch(add({item: ingredient}));
+            if (!(ingredientList.some(i => i === ingredient)) || userAddedIngredients.length === 0) {
+                setIngredientList([...ingredientList, ingredient]);
+            }
         } else {
-            console.log(ingredient);
-            dispatch(remove({item: ingredient}));
+            setIngredientList(ingredientList.filter(i => i !== ingredient));
         }
     }
 
     function wipeColors() {
         setButtonColor(false);
+    }
+
+
+    function setInitialColor(i, item) {
+        if (userAddedIngredients.some(a => a === item)) {
+            return preselected;
+        } else {
+            return buttonColor[i];
+        }
     }
 
     return (
@@ -84,7 +99,7 @@ export default function CategoryModal(props) {
                         {props.list.map((item, i) => (
                             <Button
                                 style={{ 
-                                    backgroundColor: buttonColor[i], 
+                                    backgroundColor: setInitialColor(i, item.name), 
                                     height:"50px",
                                     fontSize: "1rem",
                                     color: "#df7b84",
@@ -103,6 +118,7 @@ export default function CategoryModal(props) {
                     <Button 
                         onClick={() => {
                             wipeColors();
+                            setIngredientList(userAddedIngredients);
                             props.onClose();
                         }}
                         variant="contained"
