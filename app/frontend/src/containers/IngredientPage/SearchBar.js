@@ -7,10 +7,24 @@ import {
     Button,
 } 
 from '@mui/material';
+import { useDispatch } from "react-redux";
+import { add } from "../../reducers/userIngredients";
 
 function SearchBar() {
+
+    const dispatch = useDispatch();
+
+    const onIngredientSubmit = () => {
+        dispatch(add({ingredients: ingredientName}));
+        /* setIsSubmitting(true); */
+        setTimeout(function() { 
+        /* setIsSubmitting(false); */
+        }.bind(this), 1000)
+    }
+
     const [jsonResults, setJsonResults] = useState([]);
-    const [ingredientName, setIngredientName] = useState('');
+
+    const [ingredientName, setIngredientName] = useState([]);
 
     useEffect(() => {
     fetch("https://www.balldontlie.io/api/v1/players")
@@ -30,9 +44,9 @@ function SearchBar() {
                         option.first_name === value.first_name
                     }
                     noOptionsText={"No availabe selection"}
-                    onChange={(value) => {
+                    onChange={(e, value) => {
                         console.log(value);
-                        setIngredientName(value.first_name + value.last_name);
+                        setIngredientName([value.first_name]);
                         console.log(ingredientName)
                     }}
                     renderOption={(props, jsonResults) => (
@@ -50,7 +64,18 @@ function SearchBar() {
                     renderInput={(params) => <TextField {...params} value={ingredientName} label = "Input name"/>}
                 />
             </Stack>
-            <Button onClick={()=> console.log(ingredientName)}>Enter</Button>
+            <Button onClick={()=> onIngredientSubmit()}>Enter</Button>
+            {/* add const dispatch = useDispatch(); at the top
+                const onIngredientSubmit = () => {
+                dispatch(add({ingredients: ingredientName}));
+                setIsSubmitting(true);
+                setTimeout(function() { 
+                wipeColors();
+                props.onClose();
+                setIsSubmitting(false);
+                }.bind(this), 1000)
+            } at the top above return
+            */}
         </div>
     );
 }
