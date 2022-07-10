@@ -4,19 +4,26 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './IngredientList.css'
+import { useDispatch } from 'react-redux';
+import { remove } from '../../../reducers/userIngredients';
 
 function IngredientList() {
-    var ingredientList = (useSelector((state) => state.ingredients.ingredients))
+    const dispatch = useDispatch();
+    const ingredientList = (useSelector((state) => state.ingredients.ingredients))
     var sortedList = [...ingredientList].sort((a,b) => a.localeCompare(b))
     
     const styles = theme => ({
         root: {
-          flexGrow: 1,
+            flexGrow: 1,
         },
         control: {
-          padding: theme.spacing.unit * 2,
+            padding: theme.spacing.unit * 2,
         },
-      });
+    });
+
+    const removeItem = (value) => {
+        dispatch(remove({ingredients: value}))
+    }
 
     return ( 
         <div className='ingredient-list'>
@@ -37,7 +44,17 @@ function IngredientList() {
                                 InputProps={{
                                     endAdornment: 
                                         <InputAdornment position="end">
-                                            <DeleteIcon />
+                                            <DeleteIcon 
+                                                sx={{
+                                                    ":hover": {
+                                                        color: "#df7b84",
+                                                        cursor: "pointer"
+                                                    }
+                                                }}
+                                                onClick= { () =>
+                                                    removeItem(value)
+                                                }
+                                            />
                                         </InputAdornment>,
                                 }}
                             />

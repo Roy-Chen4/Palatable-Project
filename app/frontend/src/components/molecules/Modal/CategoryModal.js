@@ -14,16 +14,16 @@ import PropTypes from 'prop-types';
 import './Modal.css';
 import { createTheme} from '@mui/material/styles';
 import { add } from "../../../reducers/userIngredients";
-import { setIn } from "formik";
 
 export default function CategoryModal(props) {
     const dispatch = useDispatch();
 
     const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-    const onDietSubmit = () => {
+    const onIngredientSubmit = () => {
         dispatch(add({ingredients: ingredientList}));
         setIsSubmitting(true);
+        setIngredientList([])
         setTimeout(function() { 
             wipeColors();
             props.onClose();
@@ -62,7 +62,7 @@ export default function CategoryModal(props) {
         const newState ={...buttonColor,[i]:newColor}
         setButtonColor(newState);
         if (buttonColor[i] !== selected) {
-            if (!(ingredientList.some(i => i === ingredient)) || userAddedIngredients.length === 0) {
+            if (!(userAddedIngredients.some(i => i === ingredient)) || userAddedIngredients.length === 0) {
                 setIngredientList([...ingredientList, ingredient]);
             }
         } else {
@@ -121,7 +121,7 @@ export default function CategoryModal(props) {
                     <Button 
                         onClick={() => {
                             wipeColors();
-                            setIngredientList(userAddedIngredients);
+                            setIngredientList([]);
                             props.onClose();
                         }}
                         variant="contained"
@@ -130,7 +130,7 @@ export default function CategoryModal(props) {
                         Close 
                     </Button>
                     <Button 
-                        onClick={() => onDietSubmit()}
+                        onClick={() => onIngredientSubmit()}
                         variant="contained"
                         disabled={isSubmitting}
                         theme={primaryTheme}
