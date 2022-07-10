@@ -1,5 +1,7 @@
+import { Divider } from '@mui/material';
 import * as React from 'react';
 import IngredientCarousel from '../../components/organisms/Carousel/Carousel';
+import IngredientList from '../../components/organisms/IngredientList/IngredientList';
 /* import { InputAdornment } from '@mui/material'; 
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search'; */
@@ -157,6 +159,8 @@ function IngredientPage() {
         </Box>
       </div> */}
       <IngredientCarousel />
+      <Divider className="line-divider"/>
+      <IngredientList />
     </div>
   );
 }

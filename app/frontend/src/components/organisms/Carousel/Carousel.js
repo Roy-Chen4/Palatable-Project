@@ -1,26 +1,10 @@
-/* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import ButtonBase from '@mui/material/ButtonBase';
-import Box from '@mui/material/Box';
-// import Typography from '@mui/material/Typography';
-import 
-{ 
-    Card,
-    CardContent,
-    CardMedia,
-    Typography,
-    Grid,
-    Button 
-} from '@mui/material';
 import Carousel from 'react-material-ui-carousel'
 import Banner from '../../molecules/Slider/Slider';
 
 
 
 function IngredientCarousel() {
-
-
     const ingredients = [
         {
             url: 'https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',

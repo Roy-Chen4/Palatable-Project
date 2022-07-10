@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import './Modal.css';
 import { createTheme} from '@mui/material/styles';
 import { add } from "../../../reducers/userIngredients";
+import { setIn } from "formik";
 
 export default function CategoryModal(props) {
     const dispatch = useDispatch();
@@ -57,17 +58,24 @@ export default function CategoryModal(props) {
     const [ingredientList, setIngredientList] = React.useState([]);
 
     function handleClick(i, ingredient) {
-        // console.log(buttonColor)
+        // console.log(userAddedIngredients)
+        // console.log(ingredientList);
         const newColor = buttonColor[i] === selected ? unselected : selected;
         const newState ={...buttonColor,[i]:newColor}
         setButtonColor(newState);
         if (buttonColor[i] !== selected) {
+            // setIngredientList([...userAddedIngredients]);
             if (!(ingredientList.some(i => i === ingredient)) || userAddedIngredients.length === 0) {
                 setIngredientList([...ingredientList, ingredient]);
             }
         } else {
             setIngredientList(ingredientList.filter(i => i !== ingredient));
         }
+        // console.log("hello: " + ingredientList)
+        // const uniqueNames = Array.from(new Set(ingredientList));
+
+        // setIngredientList([...uniqueNames])
+        // console.log("bye: " + ingredientList)
     }
 
     function wipeColors() {
@@ -76,6 +84,9 @@ export default function CategoryModal(props) {
 
 
     function setInitialColor(i, item) {
+        // if (userAddedIngredients.length === 0) {
+        //     return buttonColor[i];
+        // } 
         if (userAddedIngredients.some(a => a === item)) {
             return preselected;
         } else {
@@ -105,6 +116,9 @@ export default function CategoryModal(props) {
                                     color: "#df7b84",
                                     fontWeight: "700",
                                 }}
+                                disabled={
+                                    setInitialColor(i, item.name)===preselected ? true : false
+                                }
                                 key={i}
                                 index={i}
                                 onClick={() => handleClick(i, item.name)}
@@ -147,4 +161,6 @@ CategoryModal.propTypes = {
     onClose: PropTypes.func,
     category: PropTypes.string,
     list: PropTypes.any,
+    // ingredientList: PropTypes.any,
+    // setIngredientList: PropTypes.func,
 }

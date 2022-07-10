@@ -82,16 +82,23 @@ function Banner(props) {
         transition: theme.transitions.create('opacity'),
     }));
 
+    const [ingredientList, setIngredientList] = React.useState([]);
 
     function generateList(category) {
         let list = []
         if (category === 'Meats') {
             return (list = [
-                { 
-                    name: "Pork"
+                {
+                    name: "Bacon"
                 },
                 {
                     name: "Beef"
+                },
+                {
+                    name: "Chicken"
+                },
+                {
+                    name: "Crab"
                 },
                 {
                     name: "Goat"
@@ -100,47 +107,26 @@ function Banner(props) {
                     name: "Lamb"
                 },
                 {
-                    name: "Chicken"
-                },
-                {
-                    name: "Turkey"
-                },
-                {
-                    name: "Bacon"
-                },
-                {
                     name: "Lobster"
                 },
-                {
-                    name: "Crab"
+                { 
+                    name: "Pork"
                 },
                 {
                     name: "Salmon"
+                },
+                {
+                    name: "Turkey"
                 },
             ])
         }
         else if (category === 'Vegetables') {
             return (list = [
-                { 
-                    name: "Lettuce"
-                },
                 {
                     name: "Beetroot"
                 },
                 {
-                    name: "Potato"
-                },
-                {
                     name: "Broccoli"
-                },
-                {
-                    name: "Onion"
-                },
-                {
-                    name: "Garlic"
-                },
-                {
-                    name: "Shallot"
                 },
                 {
                     name: "Celery"
@@ -149,60 +135,63 @@ function Banner(props) {
                     name: "Cucumber"
                 },
                 {
+                    name: "Garlic"
+                },
+                { 
+                    name: "Lettuce"
+                },
+                {
+                    name: "Onion"
+                },
+                {
+                    name: "Potato"
+                },
+                {
                     name: "Pumpkin"
+                },
+                {
+                    name: "Shallot"
                 },
             ])
         }
         else if (category === 'Seasoning') {
             return (list = [
-                { 
-                    name: "Salt"
-                },
-                {
-                    name: "Pepper"
-                },
                 {
                     name: "Basil"
-                },
-                {
-                    name: "Cumin"
-                },
-                {
-                    name: "Ground Ginger"
                 },
                 {
                     name: "Chilli Flakes"
                 },
                 {
+                    name: "Cumin"
+                },
+                {
                     name: "Ground Cinnamon"
+                },
+                {
+                    name: "Ground Ginger"
+                },
+                {
+                    name: "Organo"
+                },
+                {
+                    name: "Pepper"
                 },
                 {
                     name: "Paprika"
                 },
-                {
-                    name: "Thyme"
+                { 
+                    name: "Salt"
                 },
                 {
-                    name: "Organo"
+                    name: "Thyme"
                 },
             ])
         }
         else if (category === 'Condiments') {
             return (list = [
-                { 
-                    name: "Tomato Sauce"
-                },
                 {
                     name: "BBQ Sauce"
-                },
-                {
-                    name: "Mustard"
-                },
-                {
-                    name: "Mayo"
-                },
-                {
-                    name: "Sweet Chilli Sauce"
                 },
                 {
                     name: "Chilli Sauce"
@@ -214,10 +203,22 @@ function Banner(props) {
                     name: "Honey"
                 },
                 {
-                    name: "Vinegar"
+                    name: "Mayo"
+                },
+                {
+                    name: "Mustard"
                 },
                 {
                     name: "Soy Sauce"
+                },
+                {
+                    name: "Sweet Chilli"
+                },
+                { 
+                    name: "Tomato Sauce"
+                },
+                {
+                    name: "Vinegar"
                 },
             ])
         }
@@ -227,22 +228,19 @@ function Banner(props) {
                     name: "Bread"
                 },
                 {
-                    name: "Rice"
+                    name: "Dough"
                 },
                 {
                     name: "Penne"
                 },
                 {
-                    name: "Cumin"
+                    name: "Rice"
                 },
                 {
                     name: "Spaghetti"
                 },
                 {
                     name: "Tortillas"
-                },
-                {
-                    name: "Dough"
                 },
             ])
         }
@@ -252,47 +250,47 @@ function Banner(props) {
                     name: "Apple"
                 },
                 {
-                    name: "Orange"
-                },
-                {
                     name: "Banana"
-                },
-                {
-                    name: "Pomegranate"
-                },
-                {
-                    name: "Watermelon"
-                },
-                {
-                    name: "Rockmelon"
                 },
                 {
                     name: "Bittermelon"
                 },
                 {
-                    name: "Pear"
-                },
-                {
                     name: "Lemon"
                 },
                 {
+                    name: "Orange"
+                },
+                {
+                    name: "Pear"
+                },
+                {
+                    name: "Pomegranate"
+                },
+                {
+                    name: "Rockmelon"
+                },
+                {
                     name: "Strawberries"
+                },
+                {
+                    name: "Watermelon"
                 },
             ])
         }
         else if (category === 'Grains') {
             return (list = [
-                { 
-                    name: "Wheat"
-                },
                 {
-                    name: "Oats"
+                    name: "Barley"
                 },
                 {
                     name: "Maize"
                 },
                 {
-                    name: "Barley"
+                    name: "Oats"
+                },
+                { 
+                    name: "Wheat"
                 },
             ])
         }
@@ -302,19 +300,19 @@ function Banner(props) {
                     name: "Butter"
                 },
                 {
-                    name: "Margarine"
+                    name: "Coconut Oil"
                 },
                 {
                     name: "Ghee"
                 },
                 {
-                    name: "Olive Oil"
-                },
-                {
                     name: "Grapeseed Oil"
                 },
                 {
-                    name: "Coconut Oil"
+                    name: "Margarine"
+                },
+                {
+                    name: "Olive Oil"
                 },
                 {
                     name: "Seasame Oil"
@@ -323,17 +321,17 @@ function Banner(props) {
         }
         else if (category === 'Miscellaneous') {
             return (list = [
+                {
+                    name: "Dark Chocolate"
+                },
                 { 
                     name: "Ice"
                 },
                 {
-                    name: "Dark Chocolate"
+                    name: "Paper"
                 },
                 {
                     name: "Sugar"
-                },
-                {
-                    name: "Paper"
                 },
             ])
         }
@@ -433,6 +431,8 @@ function Banner(props) {
                 onClose={()=>{setCategoryModalOpen(false)}}
                 category={selectedCategory}
                 list={generateList(selectedCategory)}
+                ingredientList={ingredientList}
+                setIngredientList={()=>setIngredientList()}
             />
         </div>
     );

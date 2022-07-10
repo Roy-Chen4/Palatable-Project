@@ -9,10 +9,10 @@ export const ingredientSlice = createSlice({
     initialState: initialState,
     reducers: {
         add: (state, action) => {
-            return action.payload;
+            state.ingredients = [...state.ingredients, ...action.payload.ingredients]
         },
         remove: (state, action) => {
-            state.ingredients = state.ingredients.filter(i => i !== action.payload.items);
+            state.ingredients = state.ingredients.filter(i => i !== action.payload.ingredients);
         },
         clear: () => {
             return initialState;
