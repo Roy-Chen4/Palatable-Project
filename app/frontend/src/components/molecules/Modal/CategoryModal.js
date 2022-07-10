@@ -23,6 +23,7 @@ export default function CategoryModal(props) {
     const onIngredientSubmit = () => {
         dispatch(add({ingredients: ingredientList}));
         setIsSubmitting(true);
+        setIngredientList([])
         setTimeout(function() { 
             wipeColors();
             props.onClose();
@@ -61,7 +62,7 @@ export default function CategoryModal(props) {
         const newState ={...buttonColor,[i]:newColor}
         setButtonColor(newState);
         if (buttonColor[i] !== selected) {
-            if (!(ingredientList.some(i => i === ingredient)) || userAddedIngredients.length === 0) {
+            if (!(userAddedIngredients.some(i => i === ingredient)) || userAddedIngredients.length === 0) {
                 setIngredientList([...ingredientList, ingredient]);
             }
         } else {
@@ -120,7 +121,7 @@ export default function CategoryModal(props) {
                     <Button 
                         onClick={() => {
                             wipeColors();
-                            setIngredientList(userAddedIngredients);
+                            setIngredientList([]);
                             props.onClose();
                         }}
                         variant="contained"
