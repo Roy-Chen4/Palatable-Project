@@ -14,14 +14,13 @@ import PropTypes from 'prop-types';
 import './Modal.css';
 import { createTheme} from '@mui/material/styles';
 import { add } from "../../../reducers/userIngredients";
-import { setIn } from "formik";
 
 export default function CategoryModal(props) {
     const dispatch = useDispatch();
 
     const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-    const onDietSubmit = () => {
+    const onIngredientSubmit = () => {
         dispatch(add({ingredients: ingredientList}));
         setIsSubmitting(true);
         setTimeout(function() { 
@@ -130,7 +129,7 @@ export default function CategoryModal(props) {
                         Close 
                     </Button>
                     <Button 
-                        onClick={() => onDietSubmit()}
+                        onClick={() => onIngredientSubmit()}
                         variant="contained"
                         disabled={isSubmitting}
                         theme={primaryTheme}
