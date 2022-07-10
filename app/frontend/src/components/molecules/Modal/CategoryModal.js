@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { 
     DialogContent, 
@@ -50,11 +51,13 @@ export default function CategoryModal(props) {
 
     const unselected = '#ffffff';
     const selected = '#ffe8e8';
+    const preselected = '#c2c2c2';
     const userAddedIngredients = useSelector((state) => state.ingredients.ingredients);
     const [buttonColor, setButtonColor] = React.useState({});
     const [ingredientList, setIngredientList] = React.useState([]);
-    
+
     function handleClick(i, ingredient) {
+        // console.log(buttonColor)
         const newColor = buttonColor[i] === selected ? unselected : selected;
         const newState ={...buttonColor,[i]:newColor}
         setButtonColor(newState);
@@ -69,6 +72,15 @@ export default function CategoryModal(props) {
 
     function wipeColors() {
         setButtonColor(false);
+    }
+
+
+    function setInitialColor(i, item) {
+        if (userAddedIngredients.some(a => a === item)) {
+            return preselected;
+        } else {
+            return buttonColor[i];
+        }
     }
 
     return (
@@ -87,7 +99,7 @@ export default function CategoryModal(props) {
                         {props.list.map((item, i) => (
                             <Button
                                 style={{ 
-                                    backgroundColor: buttonColor[i], 
+                                    backgroundColor: setInitialColor(i, item.name), 
                                     height:"50px",
                                     fontSize: "1rem",
                                     color: "#df7b84",
