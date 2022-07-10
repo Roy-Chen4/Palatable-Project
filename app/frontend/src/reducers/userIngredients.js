@@ -9,7 +9,11 @@ export const ingredientSlice = createSlice({
     initialState: initialState,
     reducers: {
         add: (state, action) => {
-            state.ingredients = [...state.ingredients, ...action.payload.ingredients]
+            if (!(state.ingredients.some(a => a === action.payload.ingredients[0]))) {
+                state.ingredients = [...state.ingredients, ...action.payload.ingredients]
+            } else {
+                state.ingredients = [...state.ingredients]
+            }
         },
         remove: (state, action) => {
             state.ingredients = state.ingredients.filter(i => i !== action.payload.ingredients);
