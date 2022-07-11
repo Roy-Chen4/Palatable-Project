@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+// require('file-loader?name=[name].[ext]!./index.html')
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
