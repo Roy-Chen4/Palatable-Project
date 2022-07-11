@@ -65,17 +65,6 @@ function SearchBar() {
                 />
             </Stack>
             <Button onClick={()=> onIngredientSubmit()}>Enter</Button>
-            {/* add const dispatch = useDispatch(); at the top
-                const onIngredientSubmit = () => {
-                dispatch(add({ingredients: ingredientName}));
-                setIsSubmitting(true);
-                setTimeout(function() { 
-                wipeColors();
-                props.onClose();
-                setIsSubmitting(false);
-                }.bind(this), 1000)
-            } at the top above return
-            */}
         </div>
     );
 }
