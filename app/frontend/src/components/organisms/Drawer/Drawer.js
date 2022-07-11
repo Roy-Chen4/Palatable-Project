@@ -19,6 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { createTheme} from '@mui/material/styles';
 import AuthModal from '../../molecules/Modal/AuthModal';
 import DietModal from '../../molecules/Modal/DietModal';
+import FeedModal from '../../molecules/Modal/FeedModal';
 import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../../reducers/isLogged';
@@ -30,7 +31,10 @@ export default function CollapsableDrawer() {
   const loggedIn = useSelector((state) => state.user.value.isLogged);
 
   const [settingsOpen, setSettingsOpen] = React.useState(false);
+
   const [dietOpen, setDietOpen] = React.useState(false);
+
+  const [feedOpen, setFeedOpen] = React.useState(false);
 	
 	const [state, setState] = React.useState(false);
   
@@ -112,7 +116,7 @@ export default function CollapsableDrawer() {
           </ListItemButton>
         </ListItem>
 
-        <ListItem disablePadding>
+        <ListItem disablePadding onClick={() =>setFeedOpen(true)}>
           <ListItemButton>
             <ListItemIcon>
               <ForumOutlinedIcon />
@@ -121,14 +125,22 @@ export default function CollapsableDrawer() {
           </ListItemButton>
         </ListItem>
 
+        <FeedModal
+          open={feedOpen}
+          onClose={() => setFeedOpen(false)}
+          primaryTheme={primaryTheme}
+          secondaryTheme={secondaryTheme}
+        />
+
         <ListItem 
           disablePadding
           sx= {{
             display:
               loggedIn ? "flex" : "none",
           }}
-          onClick={() => handleSettingsOpen()}
+          onClick={() => handleSettingsOpen(true)}
         >
+
           <ListItemButton>
             <ListItemIcon>
               <SettingsOutlinedIcon />
