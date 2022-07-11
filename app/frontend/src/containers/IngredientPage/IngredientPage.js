@@ -1,4 +1,4 @@
-import { Divider } from '@mui/material';
+import { Divider, Typography, Button } from '@mui/material';
 import * as React from 'react';
 import IngredientCarousel from '../../components/organisms/Carousel/Carousel';
 import IngredientList from '../../components/organisms/IngredientList/IngredientList';
@@ -11,6 +11,7 @@ import SearchBar from './SearchBar';
 import Stack from "@mui/material/Stack";
 import { Autocomplete } from "@mui/material/Autocomplete";
 import { Box } from "@mui/system"; */
+import { NavLink } from "react-router-dom";
 
 
 
@@ -158,9 +159,18 @@ function IngredientPage() {
           ))}
         </Box>
       </div> */}
+      <Divider className="or-divider">or</Divider>
+      <div className='helper-text'>
+        <Typography>
+          SELECT INGREDIENTS FROM THE CAROUSEL
+        </Typography>
+      </div>
       <IngredientCarousel />
-      <Divider className="line-divider"/>
+      <Divider className="line-divider">YOUR INGREDIENTS</Divider>
       <IngredientList />
+      <NavLink to="/recipes" className={"next-page-button"}>
+        <Button>Search</Button>
+      </NavLink>
     </div>
   );
 }
