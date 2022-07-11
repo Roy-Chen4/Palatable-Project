@@ -23,6 +23,8 @@
 
 .next-page-button {
     position: absolute;
-    bottom: 0px;
-    right: 0px;
+    bottom: 3vh;
+    right: 3vh;
+    text-decoration: none;
 }
+

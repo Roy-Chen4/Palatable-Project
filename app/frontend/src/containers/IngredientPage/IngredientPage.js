@@ -169,7 +169,21 @@ function IngredientPage() {
       <Divider className="line-divider">YOUR INGREDIENTS</Divider>
       <IngredientList />
       <NavLink to="/recipes" className={"next-page-button"}>
-        <Button>Search</Button>
+        <Button 
+          variant="contained" 
+          size="large" 
+          sx={{
+            backgroundColor: "#df7b84", 
+            fontWeight: "700",
+            ":hover": {
+              backgroundColor: "white",
+              color: "#df7b84", 
+            }
+          }}
+          // onclick={() => {}}
+        >
+          Search
+        </Button>
       </NavLink>
     </div>
   );
