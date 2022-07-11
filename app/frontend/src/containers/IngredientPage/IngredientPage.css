@@ -1,9 +1,30 @@
 .TextInput {
     justify-content: center;
     display: flex;
-    padding: 6vh;
+    padding-top: 6vh;
+    padding-bottom: 2vh;
 }
 
 .line-divider {
     padding: 2vh;
+    color: #737373;
 }
+
+.or-divider {
+    padding-bottom: 2vh;
+    color: #737373;
+}
+
+.helper-text {
+    text-align: center;
+    padding-bottom: 2vh;
+    color: #737373;
+}
+
+.next-page-button {
+    position: absolute;
+    bottom: 3vh;
+    right: 3vh;
+    text-decoration: none;
+}
+
