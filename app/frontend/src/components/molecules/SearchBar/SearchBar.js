@@ -8,7 +8,7 @@ import {
 } 
 from '@mui/material';
 import { useDispatch } from "react-redux";
-import { add } from "../../reducers/userIngredients";
+import { add } from "../../../reducers/userIngredients";
 
 function SearchBar() {
 
@@ -31,7 +31,7 @@ function SearchBar() {
     .then((response) => response.json())
     .then((json) => setJsonResults(json.data))
     }, [])
-    console.log(jsonResults);
+    // console.log(jsonResults);
     return (
         <div>
             <Stack sx = {{width:300}}>

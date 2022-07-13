@@ -6,7 +6,7 @@ import IngredientList from '../../components/organisms/IngredientList/Ingredient
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search'; */
 import './IngredientPage.css';
-import SearchBar from './SearchBar';
+import SearchBar from '../../components/molecules/SearchBar/SearchBar';
 /* import React, { useState, useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import { Autocomplete } from "@mui/material/Autocomplete";
