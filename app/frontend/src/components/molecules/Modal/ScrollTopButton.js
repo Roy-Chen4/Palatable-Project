@@ -10,6 +10,7 @@ import {
     Select,
     MenuItem,
     DialogContentText,
+    makeStyles,
 } 
 from '@mui/material';
 import { Dialog } from '@mui/material';
@@ -76,6 +77,8 @@ const ScrollTopButton = (showBelow) => {
         window[`scrollTo`]({top: 0, behavior: `smooth`})
     }
 
+    const [show, setShow] = useState(showBelow ? false : true)
+
     const handleScroll = () => {
         if (window.pageYOffset > showBelow) {
             if (!show) setShow (true)
@@ -91,13 +94,14 @@ const ScrollTopButton = (showBelow) => {
         }
     })
 
-    const [show, setShow] = useState(showBelow ? false : true)
-
     return (
         <div>
-            <IconButton onClick={handleClick}>
-                <ExpandLessIcon/>
-            </IconButton>
+                <IconButton 
+                onClick={handleClick}
+                sx={{zIndex: "2", position: "fixed", bottom: "2vh", right: "2%", color: "#df7b84"}}
+                >
+                    <ExpandLessIcon/>
+                </IconButton>
         </div>
     )
 

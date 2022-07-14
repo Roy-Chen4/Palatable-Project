@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './reducers/isLogged';
 import ingredientReducer from './reducers/userIngredients';
+import FeedModal from './components/molecules/Modal/FeedModal'
 
 export default function App() {
   // Create redux store
@@ -27,6 +28,7 @@ export default function App() {
             <Route index element={<IngredientPage />} />
             <Route path="recipes" element={<RecipePage />} />
             {/* <Route path="*" element={<NoPage />} /> */}
+            <Route path="feed" element={<FeedModal />}/>
           </Route>
         </Routes>
       </BrowserRouter>

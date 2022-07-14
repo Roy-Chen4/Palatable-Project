@@ -24,6 +24,7 @@ import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../../reducers/isLogged';
 import './Drawer.css'
+import { NavLink } from "react-router-dom";
 
 export default function CollapsableDrawer() {
   const dispatch = useDispatch();
@@ -116,14 +117,16 @@ export default function CollapsableDrawer() {
           </ListItemButton>
         </ListItem>
 
-        <ListItem disablePadding onClick={() =>setFeedOpen(true)}>
-          <ListItemButton>
-            <ListItemIcon>
-              <ForumOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Feed'} />
-          </ListItemButton>
-        </ListItem>
+          <ListItem disablePadding>
+            <NavLink to="/feed">
+              <ListItemButton>
+                <ListItemIcon>
+                  <ForumOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Feed'} />
+              </ListItemButton>
+            </NavLink>
+          </ListItem>
 
         <FeedModal
           open={feedOpen}
