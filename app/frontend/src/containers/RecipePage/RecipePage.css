@@ -4,3 +4,10 @@
     right: 2vh;
     text-decoration: none;
 }
+
+.loading-spinner {
+    display:flex;
+    justify-content: center;
+    padding-top: 25vh;
+
+}
