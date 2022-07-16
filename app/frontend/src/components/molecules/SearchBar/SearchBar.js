@@ -9,6 +9,7 @@ import {
 from '@mui/material';
 import { useDispatch } from "react-redux";
 import { add } from "../../../reducers/userIngredients";
+import './SearchBar.css'
 
 function SearchBar() {
 
