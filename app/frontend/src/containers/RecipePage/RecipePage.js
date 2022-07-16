@@ -21,7 +21,7 @@ function RecipePage() {
 
     let options;
 
-    function getOptions () {
+    function getOptions (len) {
         if (userAddedIngredients.length === 0) {
             options = {
                 method: 'GET',
@@ -37,10 +37,10 @@ function RecipePage() {
                 method: 'GET',
                 url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
                 params: {
-                    ingredients: 'apples,flour,sugar',
-                    number: '10',
+                    ingredients: userAddedIngredients.toString(),
+                    number: len,
                     ignorePantry: 'true',
-                    ranking: '1'
+                    ranking: '2'
                 },
                 headers: {
                     'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
@@ -54,7 +54,7 @@ function RecipePage() {
     const [recipes, setRecipes] = React.useState([])
       
     React.useEffect(() => {
-        getOptions();
+        getOptions(10);
         getRecipes();
     }, []);
 
@@ -63,7 +63,7 @@ function RecipePage() {
             if (userAddedIngredients.length === 0) {
                 setRecipes([...recipes, ...response.data.recipes]);
             } else {
-                setRecipes([...recipes, ...response.data]);
+                setRecipes([...response.data]);
             }
             console.log("api-called");
         }).catch(function (error) {
@@ -73,12 +73,13 @@ function RecipePage() {
 
     const [hasMore, setHasMore] = React.useState("true");
     const fetchMoreData = () => {
-        if (recipes.length >= 100) {
+        if (recipes.length >= 50) {
           setHasMore(false);
           return;
         }
+        const len = recipes.length + 10;
         // React.useEffect(() => {
-            getOptions();
+            getOptions(len);
             getRecipes();
         // }, []);
       };

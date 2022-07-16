@@ -58,7 +58,6 @@ export default function CategoryModal(props) {
     const [ingredientList, setIngredientList] = React.useState([]);
 
     function handleClick(i, ingredient) {
-        console.log(userAddedIngredients);
         const newColor = buttonColor[i] === selected ? unselected : selected;
         const newState ={...buttonColor,[i]:newColor}
         setButtonColor(newState);
