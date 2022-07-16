@@ -15,10 +15,6 @@ function RecipePage() {
 
     const userAddedIngredients = useSelector((state) => state.ingredients.ingredients);
 
-    setTimeout(function() {
-        setIsLoading(false);
-    }.bind(this), 2500)
-
     let options;
 
     function getOptions (len) {
@@ -58,6 +54,10 @@ function RecipePage() {
         getRecipes();
     }, []);
 
+    setTimeout(function() {
+        setIsLoading(false);
+    }.bind(this), 2500)
+    
     const getRecipes = async () => {
         return axios.request(options).then(function (response) {
             if (userAddedIngredients.length === 0) {
