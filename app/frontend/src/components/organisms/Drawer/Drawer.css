@@ -52,3 +52,9 @@
     align-items: center;
     justify-content: center;
 }
+
+.recipe-page-button {
+    width: 100%;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.87);
+}

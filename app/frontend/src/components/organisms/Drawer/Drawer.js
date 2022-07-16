@@ -1,29 +1,30 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
+import KitchenOutlinedIcon from '@material-ui/icons/KitchenOutlined';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
+import MenuIcon from '@mui/icons-material/Menu';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { Dialog } from '@mui/material';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import MenuIcon from '@mui/icons-material/Menu';
-import KitchenOutlinedIcon from '@material-ui/icons/KitchenOutlined';
-import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
-import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { createTheme} from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from "react-router-dom";
+import { logout } from '../../../reducers/isLogged';
 import AuthModal from '../../molecules/Modal/AuthModal';
 import DietModal from '../../molecules/Modal/DietModal';
 import FeedModal from '../../molecules/Modal/FeedModal';
 import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../../reducers/isLogged';
-import './Drawer.css'
+import './Drawer.css';
 
 export default function CollapsableDrawer() {
   const dispatch = useDispatch();
@@ -116,14 +117,16 @@ export default function CollapsableDrawer() {
           </ListItemButton>
         </ListItem>
 
-        <ListItem disablePadding onClick={() =>setFeedOpen(true)}>
-          <ListItemButton>
-            <ListItemIcon>
-              <ForumOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Feed'} />
-          </ListItemButton>
-        </ListItem>
+          <ListItem disablePadding  onClick={()=> setState(false)}>
+            <NavLink to="/recipes" className={"recipe-page-button" }>
+              <ListItemButton>
+                <ListItemIcon>
+                  <ForumOutlinedIcon/>
+                </ListItemIcon>
+                <ListItemText primary={'Feed'}/>
+              </ListItemButton>
+            </NavLink>
+          </ListItem>
 
         <FeedModal
           open={feedOpen}
@@ -195,7 +198,7 @@ export default function CollapsableDrawer() {
             dispatch(logout());
           }}
         >
-          <ListItemButton>
+          <ListItemButton onClick={()=> setState(false)}>
             <ListItemIcon>
               <ExitToAppOutlinedIcon />
             </ListItemIcon>
