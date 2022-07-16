@@ -12,6 +12,12 @@
 
 }
 
+.loading-spinner-recipes {
+    padding-top: 1vh;
+    display:flex;
+    justify-content: center;
+}
+
 .title {
     text-align: center;
 }

@@ -75,7 +75,15 @@ function RecipePage() {
                     dataLength={recipes.length}
                     next={fetchMoreData}
                     hasMore={hasMore}
-                    loader={<h4>Loading...</h4>}
+                    loader={
+                    <div className="loading-spinner-recipes"> 
+                        <Oval
+                            color= "#df7b84"
+                            secondaryColor='#ffd4d8'
+                        >
+                        </Oval>
+                    </div>
+                    }
                     endMessage={
                         <p style={{ textAlign: "center" }}>
                         <b>Yay! You have seen it all</b>
