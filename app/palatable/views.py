@@ -146,5 +146,15 @@ def editpassword(request):
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-
+# edit dietary information on screen
+@api_view(['POST'])
+def editdiet(request):
+    if request.method =='POST':
+        serializer = EditDietSerializer(data = request.data)
+        if serializer.is_valid():
+            user = User.obects.get(diet = serializer.data['diet'])
+            user.diet = serializer.data['new_diet']
+            user.save
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
     

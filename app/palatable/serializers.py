@@ -39,3 +39,7 @@ class EditPasswordSerializer(serializers.Serializer):
     def validate(self, data):
         self.clean_new_password2(data['new_password1'], data['new_password2'])
         return super().validate(data)
+
+class EditDietSerializer(serializers.Serializer):
+    old_diet = serializers.CharField(max_length = 30)
+    new_diet = serializers.CharField(max_length = 30)
