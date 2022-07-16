@@ -10,6 +10,7 @@ import {
     Select,
     MenuItem,
     DialogContentText,
+    makeStyles,
 } 
 from '@mui/material';
 import { Dialog } from '@mui/material';
@@ -18,6 +19,8 @@ import { dietChange } from "../../../reducers/isLogged";
 import PropTypes from 'prop-types';
 import './Modal.css';
 import { useEffect, useState } from 'react';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import IconButton from "@mui/material/IconButton";
 
 /* function ScrollTopButton() {
     return (
@@ -27,8 +30,9 @@ import { useEffect, useState } from 'react';
 
 export default ScrollTopButton; */
 
-/* export const ScrollTopButton = () => { */
-function ScrollTopButton() {
+/* function ScrollTopButton() { */
+
+/* export const ScrollTopButton = () => {
     const [isVisible, setIsVisible] = useState(false)
 
     const toggleVisibility = () => {
@@ -52,10 +56,10 @@ function ScrollTopButton() {
         return () => {
             window.removeEventListener('scroll', toggleVisibility);
         };
-    }, [])
+    }, []);
 
     return (
-        <div /* className="fixedButton" */>
+        <div>
             <Button
                 variant="outlined"
                 onClick={scrollToTop}
@@ -63,8 +67,44 @@ function ScrollTopButton() {
                 HI
             </Button>
         </div>
+    );
+
+}; */
+
+const ScrollTopButton = (showBelow) => {
+
+    const handleClick = () => {
+        window[`scrollTo`]({top: 0, behavior: `smooth`})
+    }
+
+    const [show, setShow] = useState(showBelow ? false : true)
+
+    const handleScroll = () => {
+        if (window.pageYOffset > showBelow) {
+            if (!show) setShow (true)
+        } else {
+            if (show) setShow (false)
+        }
+    }
+
+    useEffect (() => {
+        if (showBelow) {
+            window.addEventListener(`scroll`, handleScroll)
+            return () => window.removeEventListener(`scroll`, handleScroll)
+        }
+    })
+
+    return (
+        <div>
+                <IconButton 
+                onClick={handleClick}
+                sx={{zIndex: "2", position: "fixed", bottom: "2vh", right: "2%", color: "#df7b84"}}
+                >
+                    <ExpandLessIcon/>
+                </IconButton>
+        </div>
     )
 
 }
 
-export default ScrollTopButton;
+export default ScrollTopButton
