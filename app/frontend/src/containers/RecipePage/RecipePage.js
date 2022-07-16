@@ -30,22 +30,19 @@ function RecipePage() {
     
     const [recipes, setRecipes] = React.useState([])
       
-    React.useEffect(async () => {
-        let controller = new AbortController();
-        axios.request(options).then(function (response) {
-        // console.log(response.data);
-        // console.log(response.data.recipes);
-        // console.log(response.data.recipes[0].image);
-            setRecipes([...response.data.recipes]);
-        // console.log("---------------")
-        console.log("api-called");
-            // return [...response.data.recipes];
+    React.useEffect(() => {
+        getRecipes();
+    }, []);
+
+    const getRecipes = async () => {
+        return axios.request(options).then(function (response) {
+                setRecipes([...response.data.recipes]);
+            console.log("api-called");
         }).catch(function (error) {
             console.error(error);
         });
-        console.log(recipes)
-        return () => controller?.abort();
-    }, []);
+    };
+
     if (isLoading) {
         return(
             <div className="loading-spinner"> 
