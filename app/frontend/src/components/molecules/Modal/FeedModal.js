@@ -263,9 +263,9 @@ export default class FeedModal extends React.Component {
     }
 
     render() {
-        if (this.state.loading) {
-            return <div>Loading</div>
-        }
+        // if (this.state.loading) {
+        //     return <div>Loading</div>
+        // }
 
         /* if (!this.state.ingredient.length) {
             return <div>No</div>
@@ -273,7 +273,7 @@ export default class FeedModal extends React.Component {
 
         return (
             <div>
-                <h1>Hi</h1>
+                {/* <h1>Hi</h1> */}
                 {/* {this.state.likes.map((place, index) => {
                     return (
                         <Grid key={index}>
