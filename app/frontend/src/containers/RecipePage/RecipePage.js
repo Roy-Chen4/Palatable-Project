@@ -13,14 +13,10 @@ import { PropTypes } from 'prop-types';
 function RecipePage() {
     const [isLoading, setIsLoading] = React.useState(true);
 
-    const location = useLocation()
-    const recipeState = location.state.recipes;
 
     setTimeout(function() {
         setIsLoading(false);
     }.bind(this), 2500)
-
-    // console.log(getRecipes())
 
     const options = {
         method: 'GET',
@@ -50,7 +46,6 @@ function RecipePage() {
         console.log(recipes)
         return () => controller?.abort();
     }, []);
-    console.log(recipeState)
     if (isLoading) {
         return(
             <div className="loading-spinner"> 
