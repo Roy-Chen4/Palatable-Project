@@ -22,33 +22,44 @@ function SearchBar() {
         }.bind(this), 1000)
     }
 
-    const [jsonResults, setJsonResults] = useState([]);
+    const [jsonResults, setJsonResults] = useState(['']);
 
     const [ingredientName, setIngredientName] = useState([]);
 
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
+            'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+        }
+    };
+
     useEffect(() => {
-    fetch("https://www.balldontlie.io/api/v1/players")
-    .then((response) => response.json())
-    .then((json) => setJsonResults(json.data))
+        fetch('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/search?query=a&number=100000', options)
+        .then(response => response.json())
+        .then(response => setJsonResults(response.results))
+        .then(console.log(jsonResults))
+        .catch(err => console.error(err)); 
     }, [])
     // console.log(jsonResults);
     return (
-        <div>
-            <Stack sx = {{width:300}}>
-                <Autocomplete 
+        <div className="container">
+            <Stack sx = {{width:550}}>
+                <Autocomplete className="a"
                     id="Name"
-                    getOptionLabel={(jsonResults) => `${jsonResults.first_name} ${jsonResults.last_name}`}
+                    getOptionLabel={(jsonResults) => `${jsonResults.name}`}
                     options={jsonResults}
-                    sx={{width:300}}
+                    sx={{width:550}}
                     isOptionEqualToValue={(option,value) => 
-                        option.first_name === value.first_name
+                        option.name === value.name
                     }
-                    noOptionsText={"No availabe selection"}
+                    noOptionsText={"No available selection"}
                     onChange={(e, value) => {
                         console.log(value);
-                        setIngredientName([value.first_name]);
+                        setIngredientName([value.name]);
                         console.log(ingredientName)
                     }}
+                    
                     renderOption={(props, jsonResults) => (
                         <Box 
                             component="li" {...props} 
@@ -58,13 +69,37 @@ function SearchBar() {
                             // }} 
                             key={jsonResults.id}
                         >
-                            {jsonResults.first_name} {jsonResults.last_name}
+                            {jsonResults.name}
                         </Box>
                     )}
-                    renderInput={(params) => <TextField {...params} value={ingredientName} label = "Input name"/>}
+                    renderInput={(params) => 
+                    <TextField 
+                    {...params} 
+                    value={ingredientName} 
+                    placeholder="Search for ingredient"
+                    />} 
                 />
             </Stack>
-            <Button onClick={()=> onIngredientSubmit()}>Enter</Button>
+            <div id="b">
+                <Button
+                    onClick={()=> onIngredientSubmit()}
+                    variant="contained"
+                    sx={{
+                        maxHeight: "100%",
+                        maxWidth: "100%",
+                        minHeight: "100%",
+                        minWidth: "100%",
+                        backgroundColor: "#df7b84", 
+                        fontWeight: "700",
+                        ":hover": {
+                        backgroundColor: "white",
+                        color: "#df7b84",
+                        }
+                    }}
+                >
+                Enter
+                </Button>
+                </div>
         </div>
     );
 }

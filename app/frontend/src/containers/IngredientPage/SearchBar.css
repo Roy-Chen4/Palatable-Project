@@ -1,0 +1,15 @@
+.a {
+    float: right;
+    width: 50%;
+}
+
+.b {
+    float: left;   
+    width: 50%;
+}
+
+.container {
+    display: flex;
+    clear: none;
+    display: inline-flex;
+}
