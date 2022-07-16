@@ -9,29 +9,31 @@ import {
     CardActions, 
     Button 
 } from '@material-ui/core';
+import './RecipeCard.css'
 
 
 export default function RecipeCard(props) {
     console.log(props.recipe);
     return (
-        <Card sx={{ width: 345 }}>
-            <CardMedia
-                component="img"
-                height="300"
-                width="300"
-                image={props.recipe.image}
-                // alt="green iguana"
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    {props.recipe.title}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small">Save</Button>
-                <Button size="small">Explore</Button>
-            </CardActions>
-      </Card>
+        <div className="recipe-cards">
+            <Card classname="recipe-container" variant="outlined" sx={{ width: "48vw" }}>
+                <CardMedia
+                    component="img"
+                    width="48vw"
+                    image={props.recipe.image}
+                    // alt="green iguana"
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {props.recipe.title}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button size="small">Save</Button>
+                    <Button size="small">Explore</Button>
+                </CardActions>
+        </Card>
+        </div>
     )
 
 }

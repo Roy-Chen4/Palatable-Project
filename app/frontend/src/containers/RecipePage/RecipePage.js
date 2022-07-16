@@ -1,4 +1,5 @@
-import { Button } from '@mui/material';
+/* eslint-disable no-unused-vars */
+import { Button, Grid, Box } from '@mui/material';
 import React from 'react';
 import { Oval } from 'react-loader-spinner';
 import { NavLink } from 'react-router-dom';
@@ -39,6 +40,12 @@ function RecipePage() {
         });
     };
 
+    const styles = () => ({
+        root: {
+            flexGrow: 1,
+        },
+    });
+
     if (isLoading) {
         return(
             <div className="loading-spinner"> 
@@ -53,18 +60,22 @@ function RecipePage() {
     else {
         return (
             <div>
-                <h1>Digital Dummies WAHAAHA</h1>
+                <h1 className='title'>Digital Dummies WAHAAHA</h1>
                 <NavLink to="/" className={"previous-page-button"}>
                     <Button>Return</Button>
                 </NavLink>
-                {recipes.map((item, index) => {
-                    return (
-                        <RecipeCard
-                            recipe={item}
-                            key={index}
-                        />
-                    );
-                })}
+                <Box className="grid-container" sx={{ flexGrow: 1 }}>
+                    <Grid container spacing={1}>
+                        {recipes.map((item, index) => (
+                            <Grid key={index} item>
+                                <RecipeCard
+                                recipe={item}
+                                key={index}
+                            />
+                            </Grid>
+                        ))}     
+                    </Grid>
+                </Box>
             </div>
         );
     }
