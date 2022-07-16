@@ -23,31 +23,41 @@ function SearchBar() {
         }.bind(this), 1000)
     }
 
-    const [jsonResults, setJsonResults] = useState([]);
+    const [jsonResults, setJsonResults] = useState(['']);
 
     const [ingredientName, setIngredientName] = useState([]);
 
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
+            'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+        }
+    };
+
     useEffect(() => {
-    fetch("https://www.balldontlie.io/api/v1/players")
-    .then((response) => response.json())
-    .then((json) => setJsonResults(json.data))
+        fetch('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/search?query=a&number=100000', options)
+        .then(response => response.json())
+        .then(response => setJsonResults(response.results))
+        .then(console.log(jsonResults))
+        .catch(err => console.error(err)); 
     }, [])
-    console.log(jsonResults);
+
     return (
         <div className="container">
             <Stack sx = {{width:550}}>
                 <Autocomplete className="a"
                     id="Name"
-                    getOptionLabel={(jsonResults) => `${jsonResults.first_name} ${jsonResults.last_name}`}
+                    getOptionLabel={(jsonResults) => `${jsonResults.name}`}
                     options={jsonResults}
                     sx={{width:550}}
                     isOptionEqualToValue={(option,value) => 
-                        option.first_name === value.first_name
+                        option.name === value.name
                     }
-                    noOptionsText={"No availabe selection"}
+                    noOptionsText={"No available selection"}
                     onChange={(e, value) => {
                         console.log(value);
-                        setIngredientName([value.first_name]);
+                        setIngredientName([value.name]);
                         console.log(ingredientName)
                     }}
                     
@@ -60,7 +70,7 @@ function SearchBar() {
                             // }} 
                             key={jsonResults.id}
                         >
-                            {jsonResults.first_name} {jsonResults.last_name}
+                            {jsonResults.name}
                         </Box>
                     )}
                     renderInput={(params) => 
@@ -91,55 +101,6 @@ function SearchBar() {
                 Enter
                 </Button>
                 </div>
-            {/* <Button
-                    onClick={()=> onIngredientSubmit()}
-                    variant="contained"
-                    sx={{
-                        backgroundColor: "#df7b84", 
-                        fontWeight: "700",
-                        ":hover": {
-                        backgroundColor: "white",
-                        color: "#df7b84",
-                        }
-                    }}
-                >
-                Enter
-                </Button> */}
-
-            {/* InputProps={{endAdornment: 
-                        <InputAdornment position="end">
-                            <Button 
-                                edge="end"
-                                onClick={()=> onIngredientSubmit()}
-                                variant="contained"
-                                sx={{
-                                    backgroundColor: "#df7b84", 
-                                    fontWeight: "700",
-                                    ":hover": {
-                                    backgroundColor: "white",
-                                    color: "#df7b84", 
-                                    }
-                                }}
-                            >
-                            Enter
-                            </Button>
-                        </InputAdornment> */}
-
-
-            {/* <Button 
-                onClick={()=> onIngredientSubmit()}
-                variant="contained"
-                sx={{
-                    backgroundColor: "#df7b84", 
-                    fontWeight: "700",
-                    ":hover": {
-                      backgroundColor: "white",
-                      color: "#df7b84", 
-                    }
-                  }}
-            >
-            Enter
-            </Button> */}
         </div>
     );
 }
