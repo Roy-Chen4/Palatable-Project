@@ -5,6 +5,7 @@ import { Oval } from 'react-loader-spinner';
 import { NavLink } from 'react-router-dom';
 import RecipeCard from '../../components/molecules/RecipeCard/RecipeCard';
 import axios from 'axios';
+import InfiniteScroll from "react-infinite-scroll-component";
 import './RecipePage.css';
 
 
@@ -33,18 +34,23 @@ function RecipePage() {
 
     const getRecipes = async () => {
         return axios.request(options).then(function (response) {
-                setRecipes([...response.data.recipes]);
+            setRecipes([...recipes, ...response.data.recipes]);
             console.log("api-called");
         }).catch(function (error) {
             console.error(error);
         });
     };
 
-    const styles = () => ({
-        root: {
-            flexGrow: 1,
-        },
-    });
+    const [hasMore, setHasMore] = React.useState("true");
+    const fetchMoreData = () => {
+        if (recipes.length >= 100) {
+          setHasMore(false);
+          return;
+        }
+        // React.useEffect(() => {
+            getRecipes();
+        // }, []);
+      };
 
     if (isLoading) {
         return(
@@ -65,16 +71,28 @@ function RecipePage() {
                     <Button>Return</Button>
                 </NavLink>
                 <Box className="grid-container" sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={1}>
-                        {recipes.map((item, index) => (
-                            <Grid key={index} item>
-                                <RecipeCard
-                                recipe={item}
-                                key={index}
-                            />
-                            </Grid>
-                        ))}     
-                    </Grid>
+                    <InfiniteScroll
+                    dataLength={recipes.length}
+                    next={fetchMoreData}
+                    hasMore={hasMore}
+                    loader={<h4>Loading...</h4>}
+                    endMessage={
+                        <p style={{ textAlign: "center" }}>
+                        <b>Yay! You have seen it all</b>
+                        </p>
+                    }
+                    >
+                        <Grid container spacing={1}>
+                            {recipes.map((item, index) => (
+                                <Grid key={index} item>
+                                    <RecipeCard
+                                    recipe={item}
+                                    key={index}
+                                />
+                                </Grid>
+                            ))}     
+                        </Grid>
+                    </InfiniteScroll>
                 </Box>
             </div>
         );
