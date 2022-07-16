@@ -71,6 +71,11 @@ python3 manage.py runserver
    ```sh
    git clone https://github.com/unsw-cse-comp3900-9900-22T2/capstone-project-3900-w16a-digital-dummies.git
    ```
+2. Install requirements.txt
+   ```sh
+   pip install -r requirements.txt
+   brew install postgresql
+   ```
 3. Install NPM packages
    ```sh
    cd app/frontend
