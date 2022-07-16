@@ -80,19 +80,12 @@ function IngredientPage() {
   
   return (
     <div className="IngredientPage">
+      <div className='helper-text1'>
+        <Typography>
+          SEARCH FOR INGREDIENTS IN THE SEARCHBAR
+        </Typography>
+      </div>
       <div className='TextInput'>
-          {/* <TextField
-          variant='outlined'
-          margin='normal'
-          sx={{position: "relative", display: "flex", justifyContent: "center", alignContent: "center", width: "30%", backgroundColor: "white"}}
-          InputProps={{
-              endAdornment: (
-                  <InputAdornment>
-                      <SearchIcon/>
-                  </InputAdornment>
-              )
-          }}
-          /> */}
         <SearchBar/>
       </div>
         {/* <div
