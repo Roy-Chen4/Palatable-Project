@@ -1,18 +1,14 @@
-/* eslint-disable no-unused-vars */
 import { Button } from '@mui/material';
 import React from 'react';
 import { Oval } from 'react-loader-spinner';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import RecipeCard from '../../components/molecules/RecipeCard/RecipeCard';
 import axios from 'axios';
 import './RecipePage.css';
-import { PropTypes } from 'prop-types';
-
 
 
 function RecipePage() {
     const [isLoading, setIsLoading] = React.useState(true);
-
 
     setTimeout(function() {
         setIsLoading(false);
