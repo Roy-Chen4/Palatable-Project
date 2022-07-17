@@ -8,6 +8,7 @@ import axios from 'axios';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from 'react-redux';
 import './RecipePage.css';
+import FilterBar from '../../components/molecules/FilterBar/FilterBar';
 
 
 function RecipePage() {
@@ -102,6 +103,7 @@ function RecipePage() {
     else {
         return (
             <div>
+                <FilterBar visible={userAddedIngredients.length===0 || isFeed}/>
                 <h1 className='title'>{(userAddedIngredients.length===0 || isFeed) ? "Feed" : "Search"}</h1>
                 <NavLink to="/" className={"previous-page-button"}>
                     <Button onClick={()=>setRecipes([])}>Return</Button>
