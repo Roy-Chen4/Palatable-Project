@@ -106,7 +106,7 @@ function RecipePage() {
                 <NavLink to="/" className={"previous-page-button"}>
                     <Button onClick={()=>setRecipes([])}>Return</Button>
                 </NavLink>
-                <Box className="grid-container" sx={{ flexGrow: 1 }}>
+                <Box className="grid-container" sx={{"&&":{ flexGrow: 1 }}}>
                     <InfiniteScroll
                     dataLength={recipes.length}
                     next={fetchMoreData}

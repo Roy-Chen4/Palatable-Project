@@ -60,7 +60,7 @@ export default function DietModal(props) {
                             value={newUserDiet}
                             label="diet"
                             onChange={handleChange}
-                            sx={{width:"100%"}}
+                            sx={{"&&":{width:"100%"}}}
                         >
                             <MenuItem value={"vegetarian"}>Vegetarian</MenuItem>
                             <MenuItem value={"vegan"}>Vegan</MenuItem>
@@ -73,6 +73,13 @@ export default function DietModal(props) {
                         onClick={() => props.onClose()}
                         variant="contained"
                         theme={props.secondaryTheme}
+                        sx={{ "&&": {
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "#df7b84",
+                                color: "white", 
+                            }
+                        }}}
                     > 
                         Close 
                     </Button>
@@ -81,7 +88,14 @@ export default function DietModal(props) {
                         variant="contained"
                         disabled={isSubmitting}
                         theme={props.primaryTheme}
-                        sx={{color:"white"}}
+                        sx={{"&&":{
+                            color:"white",
+                            backgroundColor: "#df7b84",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "#df7b84", 
+                            }
+                        }}}
                     > 
                         Save
                     </Button> 

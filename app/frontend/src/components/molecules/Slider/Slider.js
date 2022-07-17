@@ -7,9 +7,9 @@ import {
   ButtonBase
 } from "@material-ui/core";
 import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';
 import CategoryModal from "../Modal/CategoryModal";
 import './Slider.css'
+import { styled } from '@mui/material/styles';
 
 function Banner(props) {
     const totalItems = props.length ? props.length : 3;
@@ -360,12 +360,12 @@ function Banner(props) {
                         component="span"
                         variant="h5"
                         color="inherit"
-                        sx={{
+                        sx={{"&&":{
                             position: 'relative',
                             fontSize: '1.4rem', 
                             fontWeight: '700', 
                             pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
-                        }}
+                        }}}
                     >
                         {props.ingredient.name}
                         <ImageMarked className="MuiImageMarked-root" />
@@ -399,12 +399,12 @@ function Banner(props) {
                             component="span"
                             variant="h5"
                             color="inherit"
-                            sx={{
+                            sx={{"&&":{
                                 position: 'relative',
                                 fontSize: '1.4rem',
                                 fontWeight: '700', 
                                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
-                            }}
+                            }}}
                         >
                             {ingredient.name}
                             <ImageMarked className="MuiImageMarked-root" />

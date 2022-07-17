@@ -45,12 +45,12 @@ function IngredientList() {
                                     endAdornment: 
                                         <InputAdornment position="end">
                                             <DeleteIcon 
-                                                sx={{
+                                                sx={{"&&":{
                                                     ":hover": {
                                                         color: "#df7b84",
                                                         cursor: "pointer"
                                                     }
-                                                }}
+                                                }}}
                                                 onClick= { () =>
                                                     removeItem(value)
                                                 }

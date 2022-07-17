@@ -102,11 +102,11 @@ const form = props => {
                 }}
                 variant={toggleEmailPass ? "contained" : "outlined"}
                 theme={secondaryTheme}
-                sx={{
+                sx={{"&&":{
                     color:"black",
                     fontWeight: toggleEmailPass ? "bold" : "normal",
                     width:"20%"
-                }}
+                }}}
                 control={<Radio />} 
             > 
                 Email
@@ -122,11 +122,11 @@ const form = props => {
                 }}
                 variant={toggleEmailPass ? "outlined" : "contained"}
                 theme={secondaryTheme}
-                sx={{
+                sx={{"&&":{
                     color:"black",
                     fontWeight: toggleEmailPass ? "normal" : "bold",
-                    width:"20%"
-                }}
+                    width:"20%",
+                }}}
             > 
                 Password 
             </Button> 
@@ -135,10 +135,10 @@ const form = props => {
                     id="toggle"
                     defaultValue={true}
                     value={values.toggle}
-                    sx={{
+                    sx={{"&&":{
                         display: 'none',
                         width:"70%"
-                    }}
+                    }}}
                 />
                 <TextField
                     id="email"
@@ -152,10 +152,10 @@ const form = props => {
                     error={(touched.email && Boolean(errors.email))}
                     margin="normal"
                     variant="outlined"
-                    sx={{
+                    sx={{"&&":{
                         display: toggleEmailPass ? "inline-flex" : "none",
                         width:"70%"
-                    }}
+                    }}}
                     disabled={editDisable}
                     InputProps={{endAdornment: <EditFieldButton onClick={() => setEditDisable(false)}/>}}
                 />
@@ -170,10 +170,10 @@ const form = props => {
                     error={touched.password1 && Boolean(errors.password1)}
                     margin="normal"
                     variant="outlined"
-                    sx={{
+                    sx={{"&&":{
                         visibility: toggleEmailPass ? "hidden" : "visible",
                         width:"70%"
-                    }}
+                    }}}
                     disabled={editDisable}
                     InputProps={{endAdornment: <EditFieldButton onClick={() => setEditDisable(false)}/>}}
                 />
@@ -188,10 +188,10 @@ const form = props => {
                     error={touched.password2 && Boolean(errors.password2)}
                     margin="normal"
                     variant="outlined"
-                    sx={{
+                    sx={{"&&":{
                         display: toggleEmailPass ? "none" : "inline-flex",
                         width:"70%"
-                    }}
+                    }}}
                     disabled={editDisable}
                 />
             </DialogContent>
@@ -201,6 +201,10 @@ const form = props => {
                     onClick={() => onClose()}
                     variant="contained"
                     theme={secondaryTheme}
+                    sx={{"&&":{
+                        color:"#df7b84",
+                        backgroundColor: "white",
+                    }}}
                 > 
                     Close 
                 </Button>
@@ -210,10 +214,11 @@ const form = props => {
                     variant="contained"
                     disabled={isSubmitting || errors.email}
                     theme={primaryTheme}
-                    sx={{
+                    sx={{"&&":{
                         display: toggleEmailPass ? "inline-flex" : "none",
-                        color:"white"
-                    }}
+                        color:"white",
+                        backgroundColor: "#df7b84",
+                    }}}
                     > 
                     Save 
                 </Button> 
@@ -223,10 +228,11 @@ const form = props => {
                     variant="contained"
                     disabled={isSubmitting || errors.password}
                     theme={primaryTheme}
-                    sx={{
+                    sx={{"&&":{
                         display: toggleEmailPass ? "none" : "inline-flex",
-                        color:"white"
-                    }}
+                        color:"white",
+                        backgroundColor: "#df7b84",
+                    }}}
                 > 
                     Save 
                 </Button> 

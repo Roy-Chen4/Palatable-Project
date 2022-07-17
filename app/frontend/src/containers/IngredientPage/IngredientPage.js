@@ -49,14 +49,14 @@ function IngredientPage() {
         <Button 
           variant="contained" 
           size="large" 
-          sx={{
+          sx={{"&&":{
             backgroundColor: "#df7b84", 
             fontWeight: "700",
             ":hover": {
               backgroundColor: "white",
               color: "#df7b84", 
             }
-          }}
+          }}}
           // onClick={() => console.log()}
         >
           Search

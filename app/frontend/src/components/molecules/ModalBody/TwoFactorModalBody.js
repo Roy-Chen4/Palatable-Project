@@ -79,7 +79,7 @@ const form = props => {
                     onBlur={handleBlur}
                     margin="dense"
                     // variant="outlined"
-                    sx={{width:"70%"}}
+                    sx={{"&&":{width:"70%"}}}
                 />
             </DialogContent>
             <p1 className="error-text" style={{visibility: codeError ? "visible" : "hidden"}}>Invalid Code</p1>
@@ -88,6 +88,14 @@ const form = props => {
                     onClick={() => {onClose()}}
                     variant="contained"
                     theme={secondaryTheme}
+                    sx={{"&&":{
+                        color:"white",
+                        backgroundColor: "#df7b84",
+                        ":hover": {
+                            color: "#df7b84", 
+                            backgroundColor: "white",
+                        }
+                    }}}
                 > 
                     Close 
                 </Button>
@@ -96,7 +104,14 @@ const form = props => {
                     variant="contained"
                     disabled={isSubmitting || codeError}
                     theme={primaryTheme}
-                    sx={{color:"white"}}
+                    sx={{"&&":{
+                        color:"white",
+                        backgroundColor: "#df7b84",
+                        ":hover": {
+                            color: "#df7b84", 
+                            backgroundColor: "white",
+                        }
+                    }}}
                 > 
                     Submit
                 </Button> 

@@ -83,8 +83,10 @@ const form = props => {
                     error={touched.password1 && Boolean(errors.password1)}
                     margin="normal"
                     variant="outlined"
-                    sx={{
-                        width:"70%"
+                    sx={{ 
+                        "&&":{
+                            width:"70%"
+                        }
                     }}
                 />
                 <TextField
@@ -99,7 +101,9 @@ const form = props => {
                     margin="normal"
                     variant="outlined"
                     sx={{
-                        width:"70%"
+                        "&&":{
+                            width:"70%"
+                        }
                     }}
                 />
             </DialogContent>
@@ -109,6 +113,15 @@ const form = props => {
                     onClick={() => onClose()}
                     variant="contained"
                     theme={secondaryTheme}
+                    sx={{"&&":{
+                        color:"#df7b84",
+                        backgroundColor: "white",
+                        ":hover": {
+                            backgroundColor: "#df7b84",
+                            color: "#white", 
+                        }
+                    }}}
+
                 > 
                     Close 
                 </Button>
@@ -118,9 +131,14 @@ const form = props => {
                     variant="contained"
                     disabled={isSubmitting || errors.password}
                     theme={primaryTheme}
-                    sx={{
-                        color:"white"
-                    }}
+                    sx={{"&&":{
+                        color:"white",
+                        backgroundColor: "#df7b84",
+                        ":hover": {
+                            backgroundColor: "white",
+                            color: "#df7b84", 
+                        }
+                    }}}
                 > 
                     Save 
                 </Button> 

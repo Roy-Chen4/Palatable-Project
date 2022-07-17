@@ -85,7 +85,7 @@ function SearchBar() {
                 <Button
                     onClick={()=> onIngredientSubmit()}
                     variant="contained"
-                    sx={{
+                    sx={{"&&":{
                         maxHeight: "100%",
                         maxWidth: "100%",
                         minHeight: "100%",
@@ -96,7 +96,7 @@ function SearchBar() {
                         backgroundColor: "white",
                         color: "#df7b84",
                         }
-                    }}
+                    }}}
                 >
                 Enter
                 </Button>
