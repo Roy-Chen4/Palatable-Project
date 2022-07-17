@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types';
-import * as React from 'react';
+/* import * as React from 'react'; */
 import { 
     Card, 
     CardContent, 
@@ -13,13 +13,35 @@ import {
 import './RecipeCard.css';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CardHeader from '@mui/material/CardHeader';
+import { useDispatch } from "react-redux";
+import { add } from "../../../reducers/isFavourited";
+import React, { useState, useEffect } from "react";
 
 
 export default function RecipeCard(props) {
+
     console.log(props.recipe);
+
+    const dispatch = useDispatch();
+
+    /* const [recipeName, setRecipeName] = useState(['']); */
+
+    /* onChange={(e, props) => {
+        setRecipeName([props.recipe.title]);
+    }} */
+
+    const onRecipeFavourite = () => {
+        /* setRecipeName(props.recipe.title) */
+        dispatch(add({favourited: [props.recipe.title]}));
+        /* setIsSubmitting(true); */
+        setTimeout(function() { 
+        /* setIsSubmitting(false); */
+        }.bind(this), 1000)
+    }
+
     return (
         <div className="recipe-cards">
-            <Card classname="recipe-container" variant="outlined" sx={{ width: "48vw" }}>
+            <Card classname="recipe-container" variant="outlined" sx={{ width: "48vw" }} >
                 {/* <CardMedia
                     component="img"
                     width="48vw"
@@ -38,7 +60,9 @@ export default function RecipeCard(props) {
                 <CardHeader
                     title={props.recipe.title}
                     action={
-                        <IconButton aria-label="add to favorites"
+                        <IconButton 
+                        aria-label="add to favorites"
+                        onClick = {() => onRecipeFavourite()}
                         >
                             <FavoriteIcon />
                         </IconButton>

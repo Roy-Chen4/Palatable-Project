@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    favourited: [],
+    favourited: '',
 }
 
 export const favouriteSlice = createSlice({
