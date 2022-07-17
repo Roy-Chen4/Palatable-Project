@@ -2,7 +2,7 @@
 import { Button, Grid, Box } from '@mui/material';
 import React from 'react';
 import { Oval } from 'react-loader-spinner';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import RecipeCard from '../../components/molecules/RecipeCard/RecipeCard';
 import axios from 'axios';
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -15,10 +15,14 @@ function RecipePage() {
 
     const userAddedIngredients = useSelector((state) => state.ingredients.ingredients);
 
+    const location = useLocation();
+
+    const isFeed = location.state.feed;
+
     let options;
 
     function getOptions (len) {
-        if (userAddedIngredients.length === 0) {
+        if (userAddedIngredients.length === 0 || isFeed) {
             options = {
                 method: 'GET',
                 url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
@@ -60,7 +64,7 @@ function RecipePage() {
     
     const getRecipes = async () => {
         return axios.request(options).then(function (response) {
-            if (userAddedIngredients.length === 0) {
+            if (userAddedIngredients.length === 0 || isFeed) {
                 setRecipes([...recipes, ...response.data.recipes]);
             } else {
                 setRecipes([...response.data]);
@@ -98,11 +102,11 @@ function RecipePage() {
     else {
         return (
             <div>
-                <h1 className='title'>{userAddedIngredients.length===0 ? "Feed" : "Search"}</h1>
+                <h1 className='title'>{(userAddedIngredients.length===0 || isFeed) ? "Feed" : "Search"}</h1>
                 <NavLink to="/" className={"previous-page-button"}>
                     <Button onClick={()=>setRecipes([])}>Return</Button>
                 </NavLink>
-                <Box className="grid-container" sx={{ flexGrow: 1 }}>
+                <Box className="grid-container" sx={{"&&":{ flexGrow: 1 }}}>
                     <InfiniteScroll
                     dataLength={recipes.length}
                     next={fetchMoreData}

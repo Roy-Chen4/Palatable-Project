@@ -12,9 +12,11 @@ const EditFieldButton = (props) => {
             onClick={onClick}
             variant="outlined"
             sx={{
-                color:"#df7b84",
-                // fontWeight: "",
-                width:"8%"
+                "&&":{
+                    color:"#df7b84",
+                    // fontWeight: "",
+                    width:"8%"
+                }
             }}
         > 
             <EditIcon />

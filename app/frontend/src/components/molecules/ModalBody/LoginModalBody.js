@@ -81,7 +81,7 @@ const form = props => {
                     helperText={touched.email ? errors.email : ""}
                     error={(touched.email && Boolean(errors.email))}
                     margin="normal"
-                    sx={{width:"70%"}}
+                    sx={{"&&":{width:"70%"}}}
                 />
                 <TextField
                     id="password"
@@ -93,7 +93,7 @@ const form = props => {
                     helperText={touched.password ? errors.password : ""}
                     error={(touched.password && Boolean(errors.password))}
                     margin="normal"
-                    sx={{width:"70%"}}
+                    sx={{"&&":{width:"70%"}}}
                 />
             </DialogContent>
             <p1 className="error-text" style={{visibility: accountError ? "visible" : "hidden"}}>Invalid Email or Password</p1>
@@ -115,6 +115,10 @@ const form = props => {
                     onClick={() => onClose()}
                     variant="contained"
                     theme={secondaryTheme}
+                    sx={{"&&":{
+                        color:"#df7b84",
+                        backgroundColor: "white",
+                    }}}
                 > 
                     Close 
                 </Button>
@@ -123,7 +127,10 @@ const form = props => {
                     variant="contained"
                     disabled={isSubmitting || errors.email || errors.password || accountError}
                     theme={primaryTheme}
-                    sx={{color:"white"}}
+                    sx={{"&&":{
+                        color:"white",
+                        backgroundColor: "#df7b84",
+                    }}}
                 > 
                     Log In 
                 </Button> 

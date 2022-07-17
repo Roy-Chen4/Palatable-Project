@@ -98,7 +98,7 @@ const ScrollTopButton = (showBelow) => {
         <div>
                 <IconButton 
                 onClick={handleClick}
-                sx={{zIndex: "2", position: "fixed", bottom: "2vh", right: "2%", color: "#df7b84"}}
+                sx={{"&&":{zIndex: "2", position: "fixed", bottom: "2vh", right: "2%", color: "#df7b84"}}}
                 >
                     <ExpandLessIcon/>
                 </IconButton>

@@ -15,16 +15,16 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { createTheme } from '@mui/material/styles';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from '../../../reducers/isLogged';
 import AuthModal from '../../molecules/Modal/AuthModal';
 import DietModal from '../../molecules/Modal/DietModal';
-import FeedModal from '../../molecules/Modal/FeedModal';
 import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
+import { createTheme } from '@mui/material/styles';
 import './Drawer.css';
+import { makeStyles } from '@material-ui/core';
 
 export default function CollapsableDrawer() {
   const dispatch = useDispatch();
@@ -35,8 +35,6 @@ export default function CollapsableDrawer() {
 
   const [dietOpen, setDietOpen] = React.useState(false);
 
-  const [feedOpen, setFeedOpen] = React.useState(false);
-	
 	const [state, setState] = React.useState(false);
   
 	const [regOpen, setRegOpen] = React.useState(false);
@@ -70,9 +68,25 @@ export default function CollapsableDrawer() {
     },
   });
 
+  let navigate = useNavigate();
+
+  function changeLocation(placeToGo){
+      navigate(placeToGo, { replace: true });
+      window.location.reload();
+  }
+
+  const useStyles = makeStyles(() => ({
+    buttonRoot: {
+      "& .MuiButtonBase-root": {
+      }
+    }
+  }));
+
+  const classes = useStyles();
+
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{"&&":{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}}
       role="presentation"
     >
       <List>
@@ -81,14 +95,21 @@ export default function CollapsableDrawer() {
         </IconButton>
 
         <div className="login_reg_button">
-          <Button theme={primaryTheme}
+          <Button 
             variant="contained"
             onClick={handleClickOpen}
-            sx={{
+            sx={{"&&":{
               color:"white",
               display:
-                loggedIn ? "none" : "flex",
-            }} 
+              loggedIn ? "none" : "flex",
+              backgroundColor: "#df7b84",
+              ":hover": {
+                backgroundColor: "white",
+                color: "#df7b84", 
+              }
+              
+            }}}
+            theme={primaryTheme}
           >
             Register/Login
           </Button>
@@ -104,12 +125,12 @@ export default function CollapsableDrawer() {
 
         <ListItem 
           disablePadding
-          sx= {{
+          sx= {{"&&":{
             display:
               loggedIn ? "flex" : "none",
-          }}
+          }}}
         >
-          <ListItemButton>
+          <ListItemButton className={classes.buttonRoot}>
             <ListItemIcon>
               <FavoriteBorderOutlinedIcon />
             </ListItemIcon>
@@ -118,8 +139,17 @@ export default function CollapsableDrawer() {
         </ListItem>
 
           <ListItem disablePadding  onClick={()=> setState(false)}>
-            <NavLink to="/recipes" className={"recipe-page-button" }>
-              <ListItemButton>
+            <NavLink 
+              to={{
+                pathname: "/recipes",
+              }}
+              state= {{
+                feed: true,
+              }}
+              onClick={()=> changeLocation('/recipes')}
+              className={"recipe-page-button" }
+            >
+              <ListItemButton className={classes.buttonRoot}>
                 <ListItemIcon>
                   <ForumOutlinedIcon/>
                 </ListItemIcon>
@@ -128,23 +158,16 @@ export default function CollapsableDrawer() {
             </NavLink>
           </ListItem>
 
-        <FeedModal
-          open={feedOpen}
-          onClose={() => setFeedOpen(false)}
-          primaryTheme={primaryTheme}
-          secondaryTheme={secondaryTheme}
-        />
-
         <ListItem 
           disablePadding
-          sx= {{
+          sx= {{"&&":{
             display:
               loggedIn ? "flex" : "none",
-          }}
+          }}}
           onClick={() => handleSettingsOpen(true)}
         >
 
-          <ListItemButton>
+          <ListItemButton className={classes.buttonRoot}>
             <ListItemIcon>
               <SettingsOutlinedIcon />
             </ListItemIcon>
@@ -154,13 +177,13 @@ export default function CollapsableDrawer() {
         
         <ListItem 
           disablePadding
-          sx= {{
+          sx= {{"&&":{
             display:
               loggedIn ? "flex" : "none",
-          }}
+          }}}
           onClick={() => setDietOpen(true)}
         >
-          <ListItemButton>
+          <ListItemButton className={classes.buttonRoot}>
             <ListItemIcon>
               <KitchenOutlinedIcon />
             </ListItemIcon>
@@ -190,15 +213,15 @@ export default function CollapsableDrawer() {
 
         <ListItem 
           disablePadding
-          sx= {{
+          sx= {{"&&":{
             display:
               loggedIn ? "flex" : "none",
-          }}
+          }}}
           onClick={() => {
             dispatch(logout());
           }}
         >
-          <ListItemButton onClick={()=> setState(false)}>
+          <ListItemButton onClick={()=> setState(false)} className={classes.buttonRoot}>
             <ListItemIcon>
               <ExitToAppOutlinedIcon />
             </ListItemIcon>

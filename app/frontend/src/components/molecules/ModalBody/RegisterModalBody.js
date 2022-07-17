@@ -78,7 +78,7 @@ const form = props => {
                     error={touched.email && Boolean(errors.email)}
                     margin="normal"
                     // variant="outlined"
-                    sx={{width:"65%", paddingLeft: "10vmin"}}
+                    sx={{"&&":{width:"65%", paddingLeft: "10vmin"}}}
                 />
                 <TextField
                     id="password1"
@@ -91,7 +91,7 @@ const form = props => {
                     error={touched.password1 && Boolean(errors.password1)}
                     margin="normal"
                     // variant="outlined"
-                    sx={{width:"65%", paddingLeft: "10vmin"}}
+                    sx={{"&&":{width:"65%", paddingLeft: "10vmin"}}}
                 />
                 <TextField
                     id="password2"
@@ -104,7 +104,7 @@ const form = props => {
                     error={touched.password2 && Boolean(errors.password2)}
                     margin="normal"
                     // variant="outlined"
-                    sx={{width:"65%", paddingLeft: "10vmin"}}
+                    sx={{"&&":{width:"65%", paddingLeft: "10vmin"}}}
                 />
             </DialogContent>
             <p1 className="error-text" style={{visibility: accountError ? "visible" : "hidden"}}>Account already exists</p1>
@@ -114,6 +114,10 @@ const form = props => {
                     onClick={() => onClose()}
                     variant="contained"
                     theme={secondaryTheme}
+                    sx={{"&&":{
+                        color:"#df7b84",
+                        backgroundColor: "white",
+                    }}}
                 > 
                     Close 
                 </Button>
@@ -122,7 +126,10 @@ const form = props => {
                     variant="contained"
                     disabled={isSubmitting || errors.email || errors.password || accountError}
                     theme={primaryTheme}
-                    sx={{color:"white"}}
+                    sx={{"&&":{
+                        color:"white",
+                        backgroundColor: "#df7b84",
+                    }}}
                 > 
                     Register
                 </Button> 

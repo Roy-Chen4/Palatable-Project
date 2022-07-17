@@ -64,7 +64,7 @@ function IngredientCarousel() {
   return ( 
     <div className='IngredientDisplay'>
         <Carousel
-            sx={{width:"100vw"}}
+            sx={{"&&":{width:"100vw"}}}
             className="ingredient-carousel"
             animation="slide" 
             autoPlay={false}

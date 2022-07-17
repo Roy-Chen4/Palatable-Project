@@ -21,7 +21,7 @@ from palatable import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include('frontend.urls')),
-    path('', TemplateView.as_view(template_name='index.html')),
+    # path('', TemplateView.as_view(template_name='index.html')),
     ##path('register/', views.register,name='register'), 
     path('test/', views.test),
     path('login/', views.login),
@@ -29,4 +29,5 @@ urlpatterns = [
     path('editemail/', views.editemail),
     path('editpassword/', views.editpassword),
     path('twofac/', views.twofac),
+    path('', include('frontend.urls')),
 ]
