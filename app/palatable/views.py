@@ -117,9 +117,6 @@ def twofac(request):
             if (vcode == code):
                 return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
-
-                
-    
     
 # edit email in settings
 @api_view(['POST'])

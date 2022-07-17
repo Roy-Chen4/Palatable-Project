@@ -35,6 +35,7 @@ class User(AbstractUser):
     email = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     dietary = models.CharField(max_length=100, default='none')
+    favourites = models.CharField(max_length=10000, blank=True)
     username = models.CharField(max_length=100, blank=True)
 
     USERNAME_FIELD = 'email'
