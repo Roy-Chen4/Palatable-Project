@@ -19,8 +19,13 @@ const givenTags = [
     'Vegatarian',
     'Vegan',
     'Pescatarian',
-    'GF',
-    'etc',
+    'Gluten-Free',
+    'Breakfast',
+    'Lunch',
+    'Dinner',
+    'Drinks',
+    'Appetizer',
+    'Dessert',
 ];
 
 function FilterBar (props) {
