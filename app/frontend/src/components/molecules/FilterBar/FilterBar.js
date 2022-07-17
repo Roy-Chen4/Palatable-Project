@@ -32,36 +32,45 @@ const getMealType = () => {
         return [
             'Breakfast',
             'Lunch',
+            'Snacks',
             'Dinner',
             'Dessert',
-            'Snacks',
             'Drinks',
         ];
     } else if (time >= 11 && time < 15) {
         return [
             'Lunch',
+            'Snacks',
             'Dinner',
             'Dessert',
-            'Snacks',
             'Drinks',
             'Breakfast',
+        ];
+    } else if (time >= 15 && time < 17) {
+        return [
+            'Snacks',
+            'Dinner',
+            'Dessert',
+            'Drinks',
+            'Breakfast',
+            'Lunch',
         ];
     } else if (time >= 17 && time < 22) {
         return [
             'Dinner',
             'Dessert',
-            'Snacks',
             'Drinks',
             'Breakfast',
             'Lunch',
+            'Snacks',
         ];
     } else {
         return [
             'Dessert',
-            'Snacks',
             'Drinks',
             'Breakfast',
             'Lunch',
+            'Snacks',
             'Dinner',
         ];
     }
@@ -75,6 +84,8 @@ const getSuggest = () => {
         return 'Breakfast'
     } else if (time >= 11 && time < 15) {
         return 'Lunch'
+    } else if (time >= 15 && time < 17) {
+        return 'Snacks'
     } else if (time >= 17 && time < 22) {
         return 'Dinner'
     } else {
