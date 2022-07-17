@@ -1,48 +1,79 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { 
-    AppBar, 
-    FormControl, 
-    MenuItem, 
-    Select, 
-    Toolbar,
-    Box,
-    Checkbox,
-    ListItemText,
-    InputLabel,
+import {
+    AppBar, Box, FormControl, InputLabel, MenuItem,
+    Select,
+    Toolbar
 } from "@material-ui/core";
-import PropTypes from 'prop-types';
 import { Button } from "@mui/material";
-import './FilterBar.css'
+import PropTypes from 'prop-types';
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import './FilterBar.css';
 
-const mealType = [
-    'Breakfast',
-    'Lunch',
-    'Dinner',
-    'Drinks',
-    'Appetizer',
-    'Dessert',
+const dietType =[  
+    'Vegetarian',
+    'Vegan',
+    'Pescatarian',
 ];
+
 
 const cuisineType = [
     'Pasta',
     'Burger',
     'Pizza',
-]
+];
 
-const dietType = [
-    'Vegetarian',
-    'Vegan',
-    'Pescatarian',
-]
+
+const getMealType = () => {
+    var today = new Date();
+    var time = Number(today.getHours());
+    console.log(time);
+    if (time >= 6 && time < 11) {
+        return [
+            'Breakfast',
+            'Lunch',
+            'Dinner',
+            'Dessert',
+            'Snacks',
+            'Drinks',
+        ];
+    } else if (time >= 11 && time < 15) {
+        return [
+            'Lunch',
+            'Dinner',
+            'Dessert',
+            'Snacks',
+            'Drinks',
+            'Breakfast',
+        ];
+    } else if (time >= 17 && time < 22) {
+        return [
+            'Dinner',
+            'Dessert',
+            'Snacks',
+            'Drinks',
+            'Breakfast',
+            'Lunch',
+        ];
+    } else {
+        return [
+            'Dessert',
+            'Snacks',
+            'Drinks',
+            'Breakfast',
+            'Lunch',
+            'Dinner',
+        ];
+    }
+}
+
+
 
 function FilterBar (props) {
 
     const [mealTypeName, setMealTypeName] = React.useState([]);
     const [cuisineName, setCuisineName] = React.useState([]);
     const [dietName, setDietName] = React.useState([]);
-    const [filter, setFilter] = React.useState([]);
 
     const handleMealChange = (event) => {
         const {
@@ -98,7 +129,7 @@ function FilterBar (props) {
                                     onChange={handleMealChange}
                                     renderValue={(selected) => selected}
                                 >
-                                    {mealType.map((name) => (
+                                    {getMealType().map((name) => (
                                         <MenuItem key={name} value={name}>
                                             {name}
                                         </MenuItem>
