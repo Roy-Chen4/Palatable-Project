@@ -18,7 +18,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { createTheme } from '@mui/material/styles';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from '../../../reducers/isLogged';
 import AuthModal from '../../molecules/Modal/AuthModal';
 import DietModal from '../../molecules/Modal/DietModal';
@@ -34,7 +34,6 @@ export default function CollapsableDrawer() {
 
   const [dietOpen, setDietOpen] = React.useState(false);
 
-	
 	const [state, setState] = React.useState(false);
   
 	const [regOpen, setRegOpen] = React.useState(false);
@@ -67,6 +66,13 @@ export default function CollapsableDrawer() {
         },
     },
   });
+
+  let navigate = useNavigate();
+
+  function changeLocation(placeToGo){
+      navigate(placeToGo, { replace: true });
+      window.location.reload();
+  }
 
   const list = (anchor) => (
     <Box
@@ -122,9 +128,8 @@ export default function CollapsableDrawer() {
               }}
               state= {{
                 feed: true,
-                // loading: {isSubmitting},
-                // recipes: recipes
               }}
+              onClick={()=> changeLocation('/recipes')}
               className={"recipe-page-button" }
             >
               <ListItemButton>
