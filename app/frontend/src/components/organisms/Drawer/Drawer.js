@@ -22,7 +22,6 @@ import { NavLink } from "react-router-dom";
 import { logout } from '../../../reducers/isLogged';
 import AuthModal from '../../molecules/Modal/AuthModal';
 import DietModal from '../../molecules/Modal/DietModal';
-import FeedModal from '../../molecules/Modal/FeedModal';
 import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
 import './Drawer.css';
 
@@ -35,7 +34,6 @@ export default function CollapsableDrawer() {
 
   const [dietOpen, setDietOpen] = React.useState(false);
 
-  const [feedOpen, setFeedOpen] = React.useState(false);
 	
 	const [state, setState] = React.useState(false);
   
@@ -118,7 +116,17 @@ export default function CollapsableDrawer() {
         </ListItem>
 
           <ListItem disablePadding  onClick={()=> setState(false)}>
-            <NavLink to="/recipes" className={"recipe-page-button" }>
+            <NavLink 
+              to={{
+                pathname: "/recipes",
+              }}
+              state= {{
+                feed: true,
+                // loading: {isSubmitting},
+                // recipes: recipes
+              }}
+              className={"recipe-page-button" }
+            >
               <ListItemButton>
                 <ListItemIcon>
                   <ForumOutlinedIcon/>
@@ -127,13 +135,6 @@ export default function CollapsableDrawer() {
               </ListItemButton>
             </NavLink>
           </ListItem>
-
-        <FeedModal
-          open={feedOpen}
-          onClose={() => setFeedOpen(false)}
-          primaryTheme={primaryTheme}
-          secondaryTheme={secondaryTheme}
-        />
 
         <ListItem 
           disablePadding

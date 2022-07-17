@@ -35,6 +35,7 @@ function IngredientPage() {
           pathname: "/recipes",
         }}
         state= {{
+          feed: false,
           // loading: {isSubmitting},
           // recipes: recipes
         }}
