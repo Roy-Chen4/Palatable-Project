@@ -9,6 +9,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from 'react-redux';
 import './RecipePage.css';
 import FilterBar from '../../components/molecules/FilterBar/FilterBar';
+import ScrollTopButton from '../../components/molecules/modal/ScrollTopButton'
 
 
 function RecipePage() {
@@ -113,9 +114,30 @@ function RecipePage() {
             <div>
                 <FilterBar visible={userAddedIngredients.length===0 || isFeed}/>
                 <h1 className='title'>{(userAddedIngredients.length===0 || isFeed) ? "Feed" : "Search"}</h1>
-                <NavLink to="/" className={"previous-page-button"}>
-                    <Button onClick={()=>setRecipes([])}>Return</Button>
-                </NavLink>
+                <div className='buttons'>
+                    <NavLink to="/" className={"previous-page-button"}>
+                        <Button 
+                        onClick={()=>setRecipes([])}
+                        variant="contained"
+                        sx={{"&&":{
+                            maxHeight: "100%",
+                            maxWidth: "100%",
+                            minHeight: "100%",
+                            minWidth: "100%",
+                            backgroundColor: "#df7b84", 
+                            fontWeight: "700",
+                            ":hover": {
+                            backgroundColor: "white",
+                            color: "#df7b84",
+                            }
+                        }}}
+                        >
+                        Return</Button>
+                    </NavLink>
+                <div className='scroll-button'>
+                    <ScrollTopButton/>
+                </div>
+                </div>
                 <Box className="grid-container" sx={{"&&":{ flexGrow: 1 }}}>
                     <InfiniteScroll
                     dataLength={recipes.length}
