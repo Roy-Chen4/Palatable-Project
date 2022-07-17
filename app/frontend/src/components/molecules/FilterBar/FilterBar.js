@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { 
     AppBar, 
@@ -15,11 +16,7 @@ import { Button } from "@mui/material";
 import './FilterBar.css'
 import { NavLink, useNavigate } from "react-router-dom";
 
-const givenTags = [
-    'Vegatarian',
-    'Vegan',
-    'Pescatarian',
-    'Gluten-Free',
+const mealType = [
     'Breakfast',
     'Lunch',
     'Dinner',
@@ -28,18 +25,53 @@ const givenTags = [
     'Dessert',
 ];
 
+const cuisineType = [
+    'Pasta',
+    'Burger',
+    'Pizza',
+]
+
+const dietType = [
+    'Vegetarian',
+    'Vegan',
+    'Pescatarian',
+]
+
 function FilterBar (props) {
 
-    const [tagName, setTagName] = React.useState([]);
+    const [mealTypeName, setMealTypeName] = React.useState([]);
+    const [cuisineName, setCuisineName] = React.useState([]);
+    const [dietName, setDietName] = React.useState([]);
+    const [filter, setFilter] = React.useState([]);
 
-    const handleChange = (event) => {
+    const handleMealChange = (event) => {
         const {
             target: { value },
         } = event;
-        setTagName(
-            typeof value === 'string' ? value.split(',') : value,
+        setMealTypeName(
+            [value.toString().toLowerCase()]
         );
     };
+    const handleCuisinChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setCuisineName(
+            [value.toString().toLowerCase()]
+        );
+    };
+    const handleDietChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setDietName(
+            [value.toString().toLowerCase()]
+        );
+    };
+
+    function getFilter () {
+        return [...mealTypeName, ...cuisineName, ...dietName];
+    }
 
     let navigate = useNavigate();
 
@@ -56,21 +88,55 @@ function FilterBar (props) {
                         <div className="select-contents">
                             <div className="filter-text">Filters:&nbsp;</div>
                             <FormControl variant="filled" className="dropdown" size="small">
-                            <InputLabel>
-                                Tags
-                            </InputLabel>
+                                <InputLabel>
+                                    Meal
+                                </InputLabel>
+                                <Select
+                                    id="user-meal"
+                                    label="meal"
+                                    value={mealTypeName}
+                                    onChange={handleMealChange}
+                                    renderValue={(selected) => selected}
+                                >
+                                    {mealType.map((name) => (
+                                        <MenuItem key={name} value={name}>
+                                            {name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl variant="filled" className="dropdown" size="small">
+                                <InputLabel>
+                                    Cuisine
+                                </InputLabel>
+                                <Select
+                                    id="user-cuisine"
+                                    label="cuisine"
+                                    value={cuisineName}
+                                    onChange={handleCuisinChange}
+                                    // renderValue={(selected) => selected.join(', ')}
+                                >
+                                    {cuisineType.map((name) => (
+                                        <MenuItem key={name} value={name}>
+                                            {name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl variant="filled" className="dropdown" size="small">
+                                <InputLabel>
+                                    Diet
+                                </InputLabel>
                                 <Select
                                     id="user-diet"
                                     label="diet"
-                                    multiple
-                                    value={tagName}
-                                    onChange={handleChange}
-                                    renderValue={(selected) => selected.join(', ')}
+                                    value={dietName}
+                                    onChange={handleDietChange}
+                                    // renderValue={(selected) => selected.join(', ')}
                                 >
-                                    {givenTags.map((name) => (
+                                    {dietType.map((name) => (
                                         <MenuItem key={name} value={name}>
-                                        <Checkbox checked={tagName.indexOf(name) > -1} />
-                                        <ListItemText primary={name} />
+                                            {name}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -83,14 +149,13 @@ function FilterBar (props) {
                         }}
                         state= {{
                             feed: true,
-                            filter: tagName.toString(),
+                            filter: getFilter(),
                         }}
                         onClick={()=> changeLocation('/recipes')}
                         className={"filter-button" }
                         >
                             <Button 
-                                // onClick={() => {
-                                // }}
+                                onClick={() => getFilter()}
                                 variant="contained"
                                 sx={{ "&&": {
                                     backgroundColor: "white",

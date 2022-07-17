@@ -19,6 +19,7 @@ import FilterBar from '../../components/molecules/FilterBar/FilterBar';
 function IngredientPage() {
   return (
     <div className="IngredientPage">
+      <FilterBar visible/>
       <div className='helper-text1'>
         <Typography>
           SEARCH FOR INGREDIENTS IN THE SEARCHBAR
@@ -43,7 +44,7 @@ function IngredientPage() {
         state= {{
           feed: false,
           // loading: {isSubmitting},
-          // recipes: recipes
+          filter: [],
         }}
         className={"next-page-button"}
       >

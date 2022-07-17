@@ -22,26 +22,37 @@ function RecipePage() {
 
     let options;
 
-    console.log(location.state.filter);
+    // console.log(location.state.filter.toString());
+
+    const filter = location.state.filter.toString();
 
     function getOptions (len) {
         if (userAddedIngredients.length === 0 || isFeed) {
-            let param;
-            if (location.state.filter !== undefined) {
-                param = {tags: location.state.filter, number:'10'}
+            if (location.state.filter.length !== 0) {
+                console.log("filters applied")
+                const getParam = {tags: filter, number: '10'}
+                options = {
+                    method: 'GET',
+                    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
+                    params: getParam,
+                    headers: {
+                      'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
+                      'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+                    }
+                  };
             } else {
-                param = {number: '10'}
+                options = {
+                    method: 'GET',
+                    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
+                    params: {tag: 'Dinner', number:'10'},
+                    headers: {
+                      'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
+                      'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+                    }
+                };
             }
-            options = {
-                method: 'GET',
-                url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
-                params: {param},
-                headers: {
-                  'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
-                  'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-                }
-            };
         } else {
+            console.log(userAddedIngredients.toString())
             options = {
                 method: 'GET',
                 url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
@@ -57,6 +68,7 @@ function RecipePage() {
                 }
             };
         }
+        console.log("returned options: ")
         return options;
     }
     
@@ -118,34 +130,34 @@ function RecipePage() {
                 </NavLink>
                 <Box className="grid-container" sx={{"&&":{ flexGrow: 1 }}}>
                     <InfiniteScroll
-                    dataLength={recipes.length}
-                    next={fetchMoreData}
-                    hasMore={hasMore}
-                    loader={
-                    <div className="loading-spinner-recipes"> 
-                        <Oval
-                            color= "#df7b84"
-                            secondaryColor='#ffd4d8'
+                        dataLength={recipes.length}
+                        next={fetchMoreData}
+                        hasMore={hasMore}
+                        loader={
+                        <div className="loading-spinner-recipes"> 
+                            <Oval
+                                color= "#df7b84"
+                                secondaryColor='#ffd4d8'
+                            >
+                            </Oval>
+                        </div>
+                        }
+                        endMessage={
+                            <p style={{ textAlign: "center" }}>
+                            <b>Yay! You have seen it all</b>
+                            </p>
+                        }
                         >
-                        </Oval>
-                    </div>
-                    }
-                    endMessage={
-                        <p style={{ textAlign: "center" }}>
-                        <b>Yay! You have seen it all</b>
-                        </p>
-                    }
-                    >
-                        <Grid container spacing={1}>
-                            {recipes.map((item, index) => (
-                                <Grid key={index} item>
-                                    <RecipeCard
-                                    recipe={item}
-                                    key={index}
-                                />
-                                </Grid>
-                            ))}     
-                        </Grid>
+                            <Grid container spacing={1}>
+                                {recipes.map((item, index) => (
+                                    <Grid key={index} item>
+                                        <RecipeCard
+                                        recipe={item}
+                                        key={index}
+                                    />
+                                    </Grid>
+                                ))}     
+                            </Grid>
                     </InfiniteScroll>
                 </Box>
             </div>
