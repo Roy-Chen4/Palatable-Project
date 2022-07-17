@@ -8,6 +8,7 @@ import axios from 'axios';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from 'react-redux';
 import './RecipePage.css';
+import FilterBar from '../../components/molecules/FilterBar/FilterBar';
 
 
 function RecipePage() {
@@ -21,12 +22,20 @@ function RecipePage() {
 
     let options;
 
+    console.log(location.state.filter);
+
     function getOptions (len) {
         if (userAddedIngredients.length === 0 || isFeed) {
+            let param;
+            if (location.state.filter !== undefined) {
+                param = {tags: location.state.filter, number:'10'}
+            } else {
+                param = {number: '10'}
+            }
             options = {
                 method: 'GET',
                 url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
-                params: {number: '10'},
+                params: {param},
                 headers: {
                   'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
                   'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
@@ -102,6 +111,7 @@ function RecipePage() {
     else {
         return (
             <div>
+                <FilterBar visible={userAddedIngredients.length===0 || isFeed}/>
                 <h1 className='title'>{(userAddedIngredients.length===0 || isFeed) ? "Feed" : "Search"}</h1>
                 <NavLink to="/" className={"previous-page-button"}>
                     <Button onClick={()=>setRecipes([])}>Return</Button>
