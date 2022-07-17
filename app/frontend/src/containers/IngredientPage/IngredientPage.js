@@ -12,14 +12,11 @@ import SearchBar from '../../components/molecules/SearchBar/SearchBar';
 import Stack from "@mui/material/Stack";
 import { Autocomplete } from "@mui/material/Autocomplete";
 import { Box } from "@mui/system"; */
-import axios from 'axios';
 import { NavLink } from "react-router-dom";
-import FilterBar from '../../components/molecules/FilterBar/FilterBar';
 
 function IngredientPage() {
   return (
     <div className="IngredientPage">
-      <FilterBar visible/>
       <div className='helper-text1'>
         <Typography>
           SEARCH FOR INGREDIENTS IN THE SEARCHBAR
