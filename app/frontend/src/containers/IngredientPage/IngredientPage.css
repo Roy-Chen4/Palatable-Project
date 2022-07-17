@@ -1,7 +1,7 @@
 .TextInput {
     justify-content: center;
     display: flex;
-    padding-top: 6vh;
+    padding-top: 0vh;
     padding-bottom: 2vh;
 }
 
@@ -18,6 +18,13 @@
 .helper-text {
     text-align: center;
     padding-bottom: 2vh;
+    color: #737373;
+}
+
+.helper-text1 {
+    text-align: center;
+    padding-bottom: 2vh;
+    padding-top: 2vh;
     color: #737373;
 }
 

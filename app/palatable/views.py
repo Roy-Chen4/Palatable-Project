@@ -7,7 +7,7 @@ from .forms import *
 from rest_framework.decorators import api_view
 from .serializers import *
 from rest_framework.response import Response
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from rest_framework import status
 from django.contrib.auth import authenticate
 import random
@@ -15,6 +15,7 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+from palatable.models import User
 
 def generate_code(length = 5):
     global code
@@ -144,5 +145,6 @@ def editpassword(request):
             user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
+
 
     

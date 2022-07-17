@@ -18,6 +18,11 @@ import { NavLink } from "react-router-dom";
 function IngredientPage() {
   return (
     <div className="IngredientPage">
+      <div className='helper-text1'>
+        <Typography>
+          SEARCH FOR INGREDIENTS IN THE SEARCHBAR
+        </Typography>
+      </div>
       <div className='TextInput'>
         <SearchBar/>
       </div>
