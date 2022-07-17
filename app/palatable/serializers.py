@@ -43,3 +43,7 @@ class EditPasswordSerializer(serializers.Serializer):
 class EditDietSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length = 30)
     new_diet = serializers.CharField(max_length = 30)
+
+class FavouriteSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length = 30)
+    new_favourite = serializers.CharField(max_length = 100)

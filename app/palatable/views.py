@@ -165,3 +165,19 @@ def editdiet(request):
 def dietstatus(request):
     if request.method == 'GET':
 '''
+
+# favourite a recipe
+@api_view(['POST'])
+def favourites(request):
+    if request.method =='POST':
+        serializer = FavouriteSerializer(data = request.data)
+        if serializer.is_valid():
+            user = User.objects.get(email = serializer.data['email'])
+            if user.favourites == '':
+                user.favourites = (serializer.data['new_favourite'])
+                user.save()
+            else:
+                user.favourites = (user.favourites + ', ' + serializer.data['new_favourite'])
+                user.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
