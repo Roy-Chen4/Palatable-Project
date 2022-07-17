@@ -29,5 +29,6 @@ urlpatterns = [
     path('editemail/', views.editemail),
     path('editpassword/', views.editpassword),
     path('twofac/', views.twofac),
+    path('editdiet/', views.editdiet),
     path('', include('frontend.urls')),
 ]
