@@ -13,6 +13,7 @@ import {
 import PropTypes from 'prop-types';
 import { Button } from "@mui/material";
 import './FilterBar.css'
+import { NavLink, useNavigate } from "react-router-dom";
 
 const givenTags = [
     'Vegatarian',
@@ -34,6 +35,14 @@ function FilterBar (props) {
             typeof value === 'string' ? value.split(',') : value,
         );
     };
+
+    let navigate = useNavigate();
+
+    function changeLocation(placeToGo){
+        navigate(placeToGo, { replace: true });
+        window.location.reload();
+    }
+
     if (props.visible) {
         return (
             <Box sx={{"&&":{ flexGrow: 1 }}}>
@@ -63,6 +72,17 @@ function FilterBar (props) {
                             </FormControl>
                         </div>
                         <div className="button-contents">
+                        <NavLink 
+                        to={{
+                            pathname: "/recipes",
+                        }}
+                        state= {{
+                            feed: true,
+                            filter: tagName.toString(),
+                        }}
+                        onClick={()=> changeLocation('/recipes')}
+                        className={"filter-button" }
+                        >
                             <Button 
                                 // onClick={() => {
                                 // }}
@@ -78,6 +98,8 @@ function FilterBar (props) {
                             > 
                                 Apply 
                             </Button>
+                        </NavLink>
+                            
                         </div>
                     </Toolbar>
                 </AppBar>

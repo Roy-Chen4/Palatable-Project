@@ -29,3 +29,8 @@
     display: flex;
 }
 
+.filter-button {
+    width: 100% !important;
+    text-decoration: none !important;
+    color: rgba(0, 0, 0, 0.87);
+}

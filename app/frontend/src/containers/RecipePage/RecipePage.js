@@ -22,12 +22,20 @@ function RecipePage() {
 
     let options;
 
+    console.log(location.state.filter);
+
     function getOptions (len) {
         if (userAddedIngredients.length === 0 || isFeed) {
+            let param;
+            if (location.state.filter !== undefined) {
+                param = {tags: location.state.filter, number:'10'}
+            } else {
+                param = {number: '10'}
+            }
             options = {
                 method: 'GET',
                 url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
-                params: {number: '10'},
+                params: {param},
                 headers: {
                   'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
                   'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
