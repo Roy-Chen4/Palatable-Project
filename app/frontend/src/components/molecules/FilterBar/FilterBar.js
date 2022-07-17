@@ -67,13 +67,30 @@ const getMealType = () => {
     }
 }
 
-
+const getSuggest = () => {
+    var today = new Date();
+    var time = Number(today.getHours());
+    console.log(time);
+    if (time >= 6 && time < 11) {
+        return 'Breakfast'
+    } else if (time >= 11 && time < 15) {
+        return 'Lunch'
+    } else if (time >= 17 && time < 22) {
+        return 'Dinner'
+    } else {
+        return 'Dessert'
+    }
+}
 
 function FilterBar (props) {
 
     const [mealTypeName, setMealTypeName] = React.useState([]);
     const [cuisineName, setCuisineName] = React.useState([]);
     const [dietName, setDietName] = React.useState([]);
+
+    React.useEffect(() => {
+        setMealTypeName([getSuggest()]);
+    }, []);
 
     const handleMealChange = (event) => {
         const {
@@ -127,7 +144,6 @@ function FilterBar (props) {
                                     label="meal"
                                     value={mealTypeName}
                                     onChange={handleMealChange}
-                                    renderValue={(selected) => selected}
                                 >
                                     {getMealType().map((name) => (
                                         <MenuItem key={name} value={name}>
