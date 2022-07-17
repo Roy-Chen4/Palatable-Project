@@ -145,6 +145,7 @@ export default function CollapsableDrawer() {
               }}
               state= {{
                 feed: true,
+                filter: [],
               }}
               onClick={()=> changeLocation('/recipes')}
               className={"recipe-page-button" }
