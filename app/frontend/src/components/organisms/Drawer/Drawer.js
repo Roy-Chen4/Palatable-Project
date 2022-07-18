@@ -25,6 +25,7 @@ import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
 import { createTheme } from '@mui/material/styles';
 import './Drawer.css';
 import { makeStyles } from '@material-ui/core';
+import { clear } from '../../../reducers/userIngredients';
 
 export default function CollapsableDrawer() {
   const dispatch = useDispatch();
@@ -220,6 +221,7 @@ export default function CollapsableDrawer() {
           }}}
           onClick={() => {
             dispatch(logout());
+            dispatch(clear());
           }}
         >
           <ListItemButton onClick={()=> setState(false)} className={classes.buttonRoot}>
