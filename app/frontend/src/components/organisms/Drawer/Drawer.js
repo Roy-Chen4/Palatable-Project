@@ -52,6 +52,7 @@ export default function CollapsableDrawer() {
     setSettingsOpen(true);
 	};
   
+  // Primary colour theme for buttons
   const primaryTheme = createTheme({
     palette: {
       primary: {
