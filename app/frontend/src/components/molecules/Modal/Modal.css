@@ -13,3 +13,23 @@
     color: #282c34;
 }
 
+.instructions {
+    text-align: left;
+    display: inline-block;
+}
+
+.card-title {
+    text-align: center;
+}
+
+.recipe-card-contents {
+    text-align: center;
+}
+
+.recipe-dialog-content {
+    padding-top: 0px;
+}
+
+.instruction-title {
+    padding-top: 2vh;
+}
