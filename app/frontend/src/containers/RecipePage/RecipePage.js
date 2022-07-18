@@ -23,7 +23,7 @@ function RecipePage() {
 
     let options;
 
-    const filter = [...location.state.filter, userDiet].toString();
+    const filter = [...location.state.filter, userDiet].toString().toLowerCase();
 
     function getOptions (len) {
         if (userAddedIngredients.length === 0 || isFeed) {

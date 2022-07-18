@@ -73,6 +73,7 @@ export default function DietModal(props) {
                             onChange={handleChange}
                             sx={{"&&":{width:"100%"}}}
                         >
+                            <MenuItem value={"none"}>None</MenuItem>
                             <MenuItem value={"vegetarian"}>Vegetarian</MenuItem>
                             <MenuItem value={"vegan"}>Vegan</MenuItem>
                             <MenuItem value={"pescatarian"}>Pescatarian</MenuItem>
