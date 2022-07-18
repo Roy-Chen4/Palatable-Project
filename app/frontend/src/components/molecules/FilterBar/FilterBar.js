@@ -7,6 +7,7 @@ import {
 import { Button } from "@mui/material";
 import PropTypes from 'prop-types';
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import './FilterBar.css';
 
@@ -99,8 +100,26 @@ function FilterBar (props) {
     const [cuisineName, setCuisineName] = React.useState([]);
     const [dietName, setDietName] = React.useState([]);
 
+    const userDiet = useSelector((state) => state.user.value.diet);
+
+    const capitalise = str => {
+        if (str === "vegetarian") {
+            return "Vegetarian";
+        }
+        if (str === "vegan") {
+            return "Vegan";
+        }
+        if (str === "pescatarian") {
+            return "Pescatarian";
+        }
+    };
+
     React.useEffect(() => {
         setMealTypeName([getSuggest()]);
+        if (userDiet !== "") {
+            capitalise(userDiet);
+            setDietName([userDiet]);
+        }
     }, []);
 
     const handleMealChange = (event) => {
