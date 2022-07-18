@@ -13,7 +13,7 @@
     color: #282c34;
 }
 
-.instructions {
+.align-left {
     text-align: left;
     display: inline-block;
 }
@@ -30,6 +30,18 @@
     padding-top: 0px;
 }
 
-.instruction-title {
+.top-divider {
+    margin-bottom: 1vh;
+}
+
+.bot-divider {
+    margin-bottom: 2vh;
+}
+
+.ingredient-list {
+    padding-bottom: 2vh;
+}
+
+.instruciton-list {
     padding-top: 2vh;
 }

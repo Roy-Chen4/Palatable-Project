@@ -9,8 +9,8 @@ import {
     CardMedia,
     CardContent,
     Typography,
-    CardActions,
     IconButton,
+    Divider,
 } 
 from '@mui/material';
 import { Dialog } from '@mui/material';
@@ -20,13 +20,10 @@ import './Modal.css';
 
 export default function RecipeModal(props) {
 
-    let instructions = props.recipe.instructions
-    if (instructions.contains("<li>")) {
-        instructions = instructions.replace(/['"]+/g, '')
-    } else {
-        //split into list
-        instructions
-    }
+    var instructions = props.recipe.instructions
+        .replace(/<[^>]+>/g, '')
+        .split(".")
+        .filter(function(e){return e}); 
 
     return (
         <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth="lg" overflow='scroll'>
@@ -60,21 +57,31 @@ export default function RecipeModal(props) {
                         </Card>
                     </div>
                     <CardContent className="recipe-card-contents">
+                        <Divider className="top-divider"></Divider>
                         <Typography gutterBottom variant="h5" component="div">
                             Ingredients
                         </Typography>
-                        <div className="instructions">
+                        <Divider className="bottom-divider"></Divider>
+                        <div className={`${"align-left"} ${"ingredient-list"}`}>
                             {props.recipe.extendedIngredients.map((item, index) => (
                                 <div key={index}>
                                     &#8226;{" " + item.name}
                                 </div>
                             ))}  
                         </div> 
+                        <Divider className="top-divider"></Divider>
                         <Typography gutterBottom variant="h5" component="div" className="instruction-title">
                             Instructions
                         </Typography>
-                        <Typography gutterBottom variant="p1" component="div">
-                            {instructions}
+                        <Divider className="bot-divider"></Divider>
+                        <Typography gutterBottom variant="p1" component="div" className="instruction-list">
+                            <div className="align-left">
+                                {instructions.map((item, index) => (
+                                    <div key={index}>
+                                        {index+1 + ". "+item}
+                                    </div>
+                                ))}
+                            </div>
                         </Typography>
                     </CardContent>
             </DialogContent>
@@ -84,10 +91,11 @@ export default function RecipeModal(props) {
                     variant="contained"
                     theme={props.primaryTheme}
                     sx={{ "&&": {
-                        backgroundColor: "white",
+                        backgroundColor: "#df7b84",
+                        color: "white", 
                         ":hover": {
-                            backgroundColor: "#df7b84",
-                            color: "white", 
+                            backgroundColor: "white",
+                            color: "#df7b84", 
                         }
                     }}}
                 > 
