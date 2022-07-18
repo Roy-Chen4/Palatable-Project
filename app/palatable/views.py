@@ -73,7 +73,7 @@ def login(request):
             user = authenticate(username = serializer.data['email'], password = serializer.data['password'])
             if user is not None:
                 # The backend authenticated the credentials
-                return Response(serializer.data)
+                return Response(user.dietary)
         # No backend authenticated the credentials
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 
