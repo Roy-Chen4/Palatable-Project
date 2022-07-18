@@ -35,9 +35,43 @@ class User(AbstractUser):
     email = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     dietary = models.CharField(max_length=100, default='none')
+    favourites = models.CharField(max_length=10000)
     username = models.CharField(max_length=100, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = MyUserManager()
+
+class Ingredients(models.Model):
+    name = models.CharField(max_length=50)
+    category = models.CharField(max_length=50)
+    
+class Recipes(models.Model):
+    MEAL_CHOICES = [
+        ('BF', 'Breakfast'),
+        ('LH', 'Lunch'),
+        ('DN', 'Dinner'),
+        ('SK', 'Snack')
+    ]
+    DIETARY_CHOICES = [
+        ('NO', 'None'),
+        ('PT', 'Pescatarian'),
+        ('VE', 'Vegetarian'),
+        ('VG', 'Vegan')
+    ]
+
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True)
+    meal_type = models.CharField(
+        max_length = 2,
+        choices = MEAL_CHOICES,
+        default = 'BF',
+    )
+    contributor = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.DecimalField(max_digits=4, decimal_places=2)
+    dietary = models.CharField(
+        max_length = 2,
+        choices = DIETARY_CHOICES,
+        default = 'NO',
+    )

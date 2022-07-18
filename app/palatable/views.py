@@ -147,4 +147,37 @@ def editpassword(request):
         return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
-    
+# edit diet status
+@api_view(['POST'])
+def editdiet(request):
+    if request.method =='POST':
+        serializer = EditDietSerializer(data = request.data)
+        if serializer.is_valid():
+            user = User.objects.get(email = serializer.data['email'])
+            user.dietary = serializer.data['new_diet']
+            user.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+'''
+# send diet status to frontend 
+@api_view(['GET'])
+def dietstatus(request):
+    if request.method == 'GET':
+'''
+
+# favourite a recipe
+@api_view(['POST'])
+def favourites(request):
+    if request.method =='POST':
+        serializer = FavouriteSerializer(data = request.data)
+        if serializer.is_valid():
+            user = User.objects.get(email = serializer.data['email'])
+            if user.favourites == '':
+                user.favourites = (serializer.data['new_favourite'])
+                user.save()
+            else:
+                user.favourites = (user.favourites + ', ' + serializer.data['new_favourite'])
+                user.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
