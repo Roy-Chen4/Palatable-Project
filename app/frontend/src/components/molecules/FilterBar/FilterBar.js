@@ -80,7 +80,6 @@ const getMealType = () => {
 const getSuggest = () => {
     var today = new Date();
     var time = Number(today.getHours());
-    console.log(time);
     if (time >= 6 && time < 11) {
         return 'Breakfast'
     } else if (time >= 11 && time < 15) {
@@ -104,7 +103,6 @@ function FilterBar (props) {
 
     const capitalise = str => {
         if (str === "vegetarian") {
-            console.log('hello')
             return 'Vegetarian';
         }
         if (str === "vegan") {

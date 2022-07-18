@@ -22,6 +22,8 @@ export default function AuthModal(props) {
     
     // state of alert modal
     const [successModalOpen, setSuccessModalOpen] = React.useState(false);
+    // state of alert modal
+    const [failModalOpen, setFailModalOpen] = React.useState(false);
 
     // state of TwoFactorModal
     // TWOFACTORMODAL REFACTORED
@@ -48,6 +50,11 @@ export default function AuthModal(props) {
             <Dialog open={successModalOpen} onClose={() => setSuccessModalOpen(false)}>                
                 <Alert severity="success" spacing={2}>
                     <AlertTitle>Your Password has been changed</AlertTitle>
+                </Alert>
+            </Dialog>
+            <Dialog open={failModalOpen} onClose={() => setFailModalOpen(false)}>                
+                <Alert severity="error" spacing={2}>
+                    <AlertTitle>Account already exists</AlertTitle>
                 </Alert>
             </Dialog>
 
@@ -95,6 +102,8 @@ export default function AuthModal(props) {
                         registerClose={() => setRegOpen(false)}
                         primaryTheme={props.primaryTheme} 
                         secondaryTheme={props.secondaryTheme}
+                        openAlert={() => setFailModalOpen(true)}
+                        closeAlert={() => setFailModalOpen(false)}
                     />
                 </div>
             </Dialog>

@@ -104,6 +104,12 @@ const form = props => {
                 <Button 
                     className="error-text" 
                     onClick={() => {
+                        axios
+                            .post("/sendtwofac/", {email: values.email})
+                            .then((res) => console.log(res))
+                            .catch((err) => {
+                                console.log(err.request);
+                        })
                         openForgottenPass();
                         openTwoFactor();
                     }}
@@ -130,10 +136,10 @@ const form = props => {
                     variant="contained"
                     disabled={isSubmitting || errors.email || errors.password || accountError}
                     theme={primaryTheme}
-                    sx={{"&&":{
+                    sx={{
                         color:"white",
                         backgroundColor: "#df7b84",
-                    }}}
+                    }}
                 > 
                     Log In 
                 </Button> 

@@ -26,7 +26,9 @@ const form = props => {
         registerClose,
         resetForm,
         primaryTheme,
-        secondaryTheme
+        secondaryTheme,
+        openAlert,
+        closeAlert,
     } = props;
 
     const dispatch = useDispatch();
@@ -42,7 +44,7 @@ const form = props => {
         setIsSubmitting(true);
         // console.log(values)
         axios
-            .post("/twofac/", values)
+            .post("/twofacregister/", values)
             .then((res) => console.log(res))
             .then(() => resetForm())
             .then(() => onSubmit())
@@ -50,10 +52,32 @@ const form = props => {
             .then(() => setIsSubmitting(false))
             .then(() => dispatch(login({ isLogged: true, email: userEmail})))
             .catch((err) => {
-                setCodeError(true);
-                setIsSubmitting(false);
-                console.log(err.request);
+                if (err.request.response === 'incorrectcode') {
+                    setCodeError(true);
+                    setIsSubmitting(false);
+                    console.log(err.request);
+                } else {
+                    onClose()
+                    openAlert()
+                    setTimeout(function() { 
+                        closeAlert()
+                    }.bind(this), 2000)
+                    // account does not exist popup
+                }
         });
+        // if (regValue !== '') {
+        //     axios
+        //         .post("/register/", regValue)
+        //         .then((res) => console.log(res))
+        //         .then(() => dispatch(login({ isLogged: true, email: regValue.email})))
+        //         // .then(() => props.registerClose())
+        //         .then(() => setRegValue(''))
+        //         .catch((err) => {
+        //             // setAccountError(true);
+        //             // setIsSubmitting(false)
+        //             console.log(err.request);
+        //     })
+        // }
     }
 
     return (
@@ -105,11 +129,11 @@ const form = props => {
                     disabled={isSubmitting || codeError}
                     theme={primaryTheme}
                     sx={{"&&":{
-                        color:"white",
-                        backgroundColor: "#df7b84",
+                        color: "#df7b84", 
+                        backgroundColor: "white",
                         ":hover": {
-                            color: "#df7b84", 
-                            backgroundColor: "white",
+                            color:"white",
+                            backgroundColor: "#df7b84",
                         }
                     }}}
                 > 
