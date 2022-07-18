@@ -69,7 +69,7 @@ const form = props => {
         setIsSubmitting(true);
         const editPassword = {
             email: userEmail,
-            new_password1: values.email,
+            new_password1: values.password1,
             new_password2: values.password2,
         }
         axios
@@ -214,11 +214,11 @@ const form = props => {
                     variant="contained"
                     disabled={isSubmitting || errors.email}
                     theme={primaryTheme}
-                    sx={{"&&":{
+                    sx={{
                         display: toggleEmailPass ? "inline-flex" : "none",
                         color:"white",
                         backgroundColor: "#df7b84",
-                    }}}
+                    }}
                     > 
                     Save 
                 </Button> 
@@ -226,13 +226,13 @@ const form = props => {
                     id="passwordSubmit"
                     onClick={() => onPasswordSubmit()}
                     variant="contained"
-                    disabled={isSubmitting || errors.password}
+                    disabled={isSubmitting || errors.password1 || errors.password2}
                     theme={primaryTheme}
-                    sx={{"&&":{
+                    sx={{
                         display: toggleEmailPass ? "none" : "inline-flex",
                         color:"white",
                         backgroundColor: "#df7b84",
-                    }}}
+                    }}
                 > 
                     Save 
                 </Button> 

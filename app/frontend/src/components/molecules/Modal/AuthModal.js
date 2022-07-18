@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 import LoginModalBody from '../ModalBody/LoginModalBody';
 import RegisterModalBody from '../ModalBody/RegisterModalBody';
-import TwoFactorModalBody from '../ModalBody/TwoFactorModalBody';
+import TwoFactorRegisterModalBody from '../ModalBody/TwoFactor/TwoFactorModalRegisterBody';
+import TwoFactorPassModalBody from '../ModalBody/TwoFactor/TwoFactorPassModalBody';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../reducers/isLogged';
 import ForgottenPassModalBody from '../ModalBody/ForgottenPassModalBody';
@@ -27,7 +28,8 @@ export default function AuthModal(props) {
 
     // state of TwoFactorModal
     // TWOFACTORMODAL REFACTORED
-    const [twoFactorOpen, setTwoFactorOpen] = React.useState(false);
+    const [twoFactorRegOpen, setTwoFactorRegOpen] = React.useState(false);
+    const [twoFactorPassOpen, setTwoFactorPassOpen] = React.useState(false);
 
     // set LoginModal closed when RegisterModal opens
     const toggleLoginModal = () => {
@@ -63,7 +65,7 @@ export default function AuthModal(props) {
                     <LoginModalBody 
                         onClose={props.onClose} 
                         onToggle={() => toggleLoginModal()} 
-                        openTwoFactor={() => setTwoFactorOpen(true)}
+                        openTwoFactor={() => setTwoFactorPassOpen(true)}
                         openForgottenPass={() => setForgottenPassOpen(true)}
                         failCount={loginFailCount}
                         resetFailCount={() => setLoginFailCount(0)}
@@ -90,20 +92,35 @@ export default function AuthModal(props) {
                 </div>
             </Dialog>
 
-            <Dialog open={twoFactorOpen} fullWidth='true' maxWidth='md'>
+            <Dialog open={twoFactorRegOpen} fullWidth='true' maxWidth='md'>
                 <div className="confirmation_ui">
-                    <TwoFactorModalBody 
+                    <TwoFactorRegisterModalBody 
                         onClose={() => {
-                            setTwoFactorOpen(false);
+                            setTwoFactorRegOpen(false);
                             setForgottenPassOpen(false);
                             dispatch(logout());
                         }} 
-                        onSubmit={() => setTwoFactorOpen(false)}
+                        onSubmit={() => setTwoFactorRegOpen(false)}
                         registerClose={() => setRegOpen(false)}
                         primaryTheme={props.primaryTheme} 
                         secondaryTheme={props.secondaryTheme}
                         openAlert={() => setFailModalOpen(true)}
                         closeAlert={() => setFailModalOpen(false)}
+                    />
+                </div>
+            </Dialog>
+
+            <Dialog open={twoFactorPassOpen} fullWidth='true' maxWidth='md'>
+                <div className="confirmation_ui">
+                    <TwoFactorPassModalBody 
+                        onClose={() => {
+                            setTwoFactorPassOpen(false);
+                            setForgottenPassOpen(false);
+                            dispatch(logout());
+                        }} 
+                        onSubmit={() => setTwoFactorPassOpen(false)}
+                        primaryTheme={props.primaryTheme} 
+                        secondaryTheme={props.secondaryTheme}
                     />
                 </div>
             </Dialog>
@@ -118,7 +135,7 @@ export default function AuthModal(props) {
                     <RegisterModalBody 
                         onClose={() => setRegOpen(false)} 
                         onToggle={() => toggleRegisterModal()} 
-                        openTwoFactor={() => setTwoFactorOpen(true)}
+                        openTwoFactor={() => setTwoFactorRegOpen(true)}
                         primaryTheme={props.primaryTheme} 
                         secondaryTheme={props.secondaryTheme}
                     />   

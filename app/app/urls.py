@@ -29,7 +29,7 @@ urlpatterns = [
     path('sendtwofac/', views.email),
     path('editemail/', views.editemail),
     path('editpassword/', views.editpassword),
-    path('twofac/', views.twofac),
+    path('twofacpassword/', views.twofacpassword),
     path('twofacregister/', views.twofacregister),
     path('editdiet/', views.editdiet),
     path('favourites/', views.favourites),
