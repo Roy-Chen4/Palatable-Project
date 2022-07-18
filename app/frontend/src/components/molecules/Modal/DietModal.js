@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { dietChange } from "../../../reducers/isLogged";
 import PropTypes from 'prop-types';
 import './Modal.css';
+import axios from "axios";
 
 export default function DietModal(props) {
     const dispatch = useDispatch();
@@ -30,12 +31,22 @@ export default function DietModal(props) {
         setNewDiet(event.target.value);
     };
 
+    const userEmail = useSelector((state) => state.user.value.email);
+
     const onDietSubmit = () => {
         setIsSubmitting(true);
         setTimeout(function() { 
             setIsSubmitting(false);
             dispatch(dietChange({newUserDiet}))
-            props.onClose();
+            axios
+            .post("/editdiet/", {email: userEmail, new_diet: newUserDiet})
+            .then((res) => {
+                console.log(res)
+            })
+            .then(() => props.onClose())
+            .catch((err) => {
+                console.log(err.request);
+            });
         }.bind(this), 1000)
     }
 
