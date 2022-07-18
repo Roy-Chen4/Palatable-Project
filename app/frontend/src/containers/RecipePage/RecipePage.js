@@ -7,14 +7,15 @@ import RecipeCard from '../../components/molecules/RecipeCard/RecipeCard';
 import axios from 'axios';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from 'react-redux';
-import './RecipePage.css';
 import FilterBar from '../../components/molecules/FilterBar/FilterBar';
+import './RecipePage.css';
 
 
 function RecipePage() {
     const [isLoading, setIsLoading] = React.useState(true);
 
     const userAddedIngredients = useSelector((state) => state.ingredients.ingredients);
+    const userDiet = useSelector((state) => state.user.value.diet);
 
     const location = useLocation();
 
@@ -22,13 +23,11 @@ function RecipePage() {
 
     let options;
 
-    // console.log(location.state.filter.toString());
-
-    const filter = location.state.filter.toString();
+    const filter = [...location.state.filter, userDiet].toString();
 
     function getOptions (len) {
         if (userAddedIngredients.length === 0 || isFeed) {
-            if (location.state.filter.length !== 0) {
+            if (location.state.filter.length !== 0 || userDiet !== "") {
                 console.log("filters applied")
                 const getParam = {tags: filter, number: '10'}
                 options = {
@@ -44,7 +43,7 @@ function RecipePage() {
                 options = {
                     method: 'GET',
                     url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
-                    params: {tag: 'Dinner', number:'10'},
+                    params: {number:'10'},
                     headers: {
                       'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
                       'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
@@ -124,10 +123,28 @@ function RecipePage() {
         return (
             <div>
                 <FilterBar visible={userAddedIngredients.length===0 || isFeed}/>
-                <h1 className='title'>{(userAddedIngredients.length===0 || isFeed) ? "Feed" : "Search"}</h1>
-                <NavLink to="/" className={"previous-page-button"}>
-                    <Button onClick={()=>setRecipes([])}>Return</Button>
-                </NavLink>
+                <div className="top-contents">
+                    <div className="title-content">
+                        <h1 className='title'>{(userAddedIngredients.length===0 || isFeed) ? "Feed" : "Search"}</h1>
+                    </div>
+                    <div className="button-content">
+                        <NavLink to="/" className={"previous-page-button"}>
+                            <Button 
+                                onClick={()=>setRecipes([])}
+                                sx={{ "&&": {
+                                    backgroundColor: "#df7b84",
+                                    color: "white", 
+                                    ":hover": {
+                                        backgroundColor: "white",
+                                        color: "#df7b84", 
+                                    }
+                                }}}
+                            >
+                                Return
+                            </Button>
+                        </NavLink>
+                    </div>
+                </div>
                 <Box className="grid-container" sx={{"&&":{ flexGrow: 1 }}}>
                     <InfiniteScroll
                         dataLength={recipes.length}

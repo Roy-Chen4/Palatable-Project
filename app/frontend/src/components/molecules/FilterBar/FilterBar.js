@@ -101,9 +101,23 @@ function FilterBar (props) {
     const [dietName, setDietName] = React.useState([]);
 
     const userDiet = useSelector((state) => state.user.value.diet);
+
+    const capitalise = str => {
+        if (str === "vegetarian") {
+            return "Vegetarian";
+        }
+        if (str === "vegan") {
+            return "Vegan";
+        }
+        if (str === "pescatarian") {
+            return "Pescatarian";
+        }
+    };
+
     React.useEffect(() => {
         setMealTypeName([getSuggest()]);
         if (userDiet !== "") {
+            capitalise(userDiet);
             setDietName([userDiet]);
         }
     }, []);

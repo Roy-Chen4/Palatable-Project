@@ -1,7 +1,4 @@
 .previous-page-button {
-    position: absolute;
-    bottom: 2vh;
-    right: 2vh;
     text-decoration: none;
 }
 
@@ -24,4 +21,23 @@
 
 .grid-container {
     padding-left: 1.5vw;
+}
+
+.top-contents {
+    justify-content: center;
+    width: 100%;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.title-content {
+    width: 100%;
+}
+
+.button-content {
+    justify-content: center;
+    display: flex;
+    width:100%;
+    padding-bottom: 1vh;
 }
