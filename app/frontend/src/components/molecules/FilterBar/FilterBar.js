@@ -104,21 +104,21 @@ function FilterBar (props) {
 
     const capitalise = str => {
         if (str === "vegetarian") {
-            return "Vegetarian";
+            console.log('hello')
+            return 'Vegetarian';
         }
         if (str === "vegan") {
-            return "Vegan";
+            return 'Vegan';
         }
         if (str === "pescatarian") {
-            return "Pescatarian";
+            return 'Pescatarian';
         }
     };
 
     React.useEffect(() => {
         setMealTypeName([getSuggest()]);
         if (userDiet !== "") {
-            capitalise(userDiet);
-            setDietName([userDiet]);
+            setDietName([capitalise(userDiet)]);
         }
     }, []);
 
