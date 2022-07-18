@@ -28,7 +28,6 @@ const cuisineType = [
 const getMealType = () => {
     var today = new Date();
     var time = Number(today.getHours());
-    console.log(time);
     if (time >= 6 && time < 11) {
         return [
             'Breakfast',
@@ -80,7 +79,6 @@ const getMealType = () => {
 const getSuggest = () => {
     var today = new Date();
     var time = Number(today.getHours());
-    console.log(time);
     if (time >= 6 && time < 11) {
         return 'Breakfast'
     } else if (time >= 11 && time < 15) {
@@ -100,11 +98,10 @@ function FilterBar (props) {
     const [cuisineName, setCuisineName] = React.useState([]);
     const [dietName, setDietName] = React.useState([]);
 
-    const userDiet = useSelector((state) => state.user.value.diet);
+    const userDiet = "";
 
     const capitalise = str => {
         if (str === "vegetarian") {
-            console.log('hello')
             return 'Vegetarian';
         }
         if (str === "vegan") {
@@ -118,8 +115,10 @@ function FilterBar (props) {
     React.useEffect(() => {
         setMealTypeName([getSuggest()]);
         if (userDiet !== "") {
-            setDietName([capitalise(userDiet)]);
-        }
+            if (userDiet !== 'none') {
+                setDietName([capitalise(userDiet)]);
+            }
+        } 
     }, []);
 
     const handleMealChange = (event) => {
@@ -127,7 +126,7 @@ function FilterBar (props) {
             target: { value },
         } = event;
         setMealTypeName(
-            [value.toString().toLowerCase()]
+            [value]
         );
     };
     const handleCuisinChange = (event) => {
@@ -135,7 +134,7 @@ function FilterBar (props) {
             target: { value },
         } = event;
         setCuisineName(
-            [value.toString().toLowerCase()]
+            [value]
         );
     };
     const handleDietChange = (event) => {
@@ -143,7 +142,7 @@ function FilterBar (props) {
             target: { value },
         } = event;
         setDietName(
-            [value.toString().toLowerCase()]
+            [value]
         );
     };
 
@@ -191,7 +190,6 @@ function FilterBar (props) {
                                     label="cuisine"
                                     value={cuisineName}
                                     onChange={handleCuisinChange}
-                                    // renderValue={(selected) => selected.join(', ')}
                                 >
                                     {cuisineType.map((name) => (
                                         <MenuItem key={name} value={name}>
@@ -209,7 +207,6 @@ function FilterBar (props) {
                                     label="diet"
                                     value={dietName}
                                     onChange={handleDietChange}
-                                    // renderValue={(selected) => selected.join(', ')}
                                 >
                                     {dietType.map((name) => (
                                         <MenuItem key={name} value={name}>

@@ -93,35 +93,56 @@ def register(request):
         
 @api_view(['POST'])
 def register(request):
-    form = NewUserForm1()
+    global data
+    data = NewUserForm1()
     if request.method == 'POST':
-        serializer = RegisterSerializer(data = request.data)
-        if serializer.is_valid():
-            form = NewUserForm1(request.data)
-            if form.is_valid():
-                form.save()
-                fname = serializer.data['email']
-                email_address = fname
-                apple = generate_code()
-                sender = 'imdabest564@gmail.com'
-                receiver = email_address
-                email_generate(sender, receiver, apple)
-                return Response(serializer.data)
-        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+        userSerializer = RegisterSerializer(data = request.data)
+        if userSerializer.is_valid():
+            receiver = userSerializer.data['email']
+            apple = generate_code()
+            sender = 'imdabest564@gmail.com'
+            email_generate(sender, receiver, apple)
+            data = NewUserForm1(request.data)
+            return Response(userSerializer.data)
+        return Response(userSerializer.errors, status = status.HTTP_403_FORBIDDEN)
 
 @api_view(['POST'])
-def twofac(request):
+def email(request):
+    receiver = request.data['email']
+    apple = generate_code()
+    sender = 'imdabest564@gmail.com'
+    email_generate(sender, receiver, apple)
+    return Response("Email has been sent")
+
+
+@api_view(['POST'])
+def twofacpassword(request):
     if request.method == 'POST':
         serializer = CodeSerializer(data = request.data)
         if serializer.is_valid():
             vcode=serializer.data['codeDetail']
             if (vcode == code):
+                user.save()
                 return Response(serializer.data)
+            else:
+                return Response(data = "incorrectcode", status = status.HTTP_403_FORBIDDEN)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+@api_view(['POST'])
+def twofacregister(request):
+    if request.method == 'POST':
+        serializer = CodeSerializer(data = request.data)
+        if serializer.is_valid():
+            vcode=serializer.data['codeDetail']
+            if (vcode == code):
+                if data.is_valid():
+                    data.save()
+                    return Response(serializer.data)
+            else:
+                return Response(data = "incorrectcode", status = status.HTTP_403_FORBIDDEN)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 
                 
-    
-    
 # edit email in settings
 @api_view(['POST'])
 def editemail(request):
@@ -137,13 +158,19 @@ def editemail(request):
 # edit password in settings
 @api_view(['POST'])
 def editpassword(request):
+    global user
+    print(request.data)
     if request.method == 'POST':
         serializer = EditPasswordSerializer(data = request.data)
         if serializer.is_valid():
+            receiver = serializer.data['email']
+            apple = generate_code()
+            sender = 'imdabest564@gmail.com'
+            email_generate(sender, receiver, apple)
             user = User.objects.get(email = serializer.data['email'])
             password_validation.validate_password(serializer.data['new_password1'], user)
             user.set_password(serializer.data['new_password1'])
-            user.save()
+            # user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
 
