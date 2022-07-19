@@ -80,6 +80,7 @@ function RecipePage() {
     }
     
     const [recipes, setRecipes] = React.useState([])
+    /* console.log(recipes) */
       
     React.useEffect(() => {
         getFilter()

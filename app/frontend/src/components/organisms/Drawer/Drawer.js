@@ -133,7 +133,15 @@ export default function CollapsableDrawer() {
           </ListItemButton>
         </ListItem> */}
 
-          <ListItem disablePadding  onClick={()=> setState(false)}>
+          {/* <ListItem disablePadding  onClick={()=> setState(false)}> */}
+          <ListItem 
+          disablePadding
+          sx= {{"&&":{
+            display:
+              loggedIn ? "flex" : "none",
+          }}}
+          onClick={() => setState(true)}
+        >
             <NavLink 
               to={{
                 pathname: "/favourites",
