@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import forms  
 from django.shortcuts import redirect  
 from django.contrib import messages  
-from django.contrib.auth.forms import UserCreationForm  
+from django.contrib.auth.forms import UserCreationForm 
 from .forms import *
 from rest_framework.decorators import api_view
 from .serializers import *
@@ -15,7 +15,8 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-from palatable.models import User
+from palatable.models import User, Ingredients
+from django.http import JsonResponse
 
 def generate_code(length = 5):
     global code
@@ -209,3 +210,9 @@ def favourites(request):
                 user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+# returns all ingredient names within database
+@api_view(['GET'])
+def get_ingredient(request):
+    result = list(Ingredients.objects.values('name'))
+    return JsonResponse({'data': result})

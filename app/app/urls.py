@@ -33,5 +33,6 @@ urlpatterns = [
     path('twofacregister/', views.twofacregister),
     path('editdiet/', views.editdiet),
     path('favourites/', views.favourites),
+    path('ingredients/', views.get_ingredient),
     path('', include('frontend.urls')),
 ]
