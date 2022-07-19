@@ -10,6 +10,7 @@ from '@mui/material';
 import { useDispatch } from "react-redux";
 import { add } from "../../../reducers/userIngredients";
 import './SearchBar.css'
+import SuggestionBar from "../SuggestionBar/SuggestionBar";
 
 function SearchBar() {
 
@@ -17,6 +18,7 @@ function SearchBar() {
 
     const onIngredientSubmit = () => {
         dispatch(add({ingredients: ingredientName}));
+        setIngredientName([]);
         /* setIsSubmitting(true); */
         setTimeout(function() { 
         /* setIsSubmitting(false); */
@@ -100,7 +102,7 @@ function SearchBar() {
                 >
                 Enter
                 </Button>
-                </div>
+            </div>
         </div>
     );
 }

@@ -51,9 +51,9 @@ function IngredientList() {
                                                         cursor: "pointer"
                                                     }
                                                 }}}
-                                                onClick= { () =>
-                                                    removeItem(value)
-                                                }
+                                                onClick= { () => {
+                                                    removeItem(value);
+                                                }}
                                             />
                                         </InputAdornment>,
                                 }}
