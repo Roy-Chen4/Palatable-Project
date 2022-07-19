@@ -21,8 +21,8 @@ import './Modal.css';
 export default function RecipeModal(props) {
 
     console.log(props.recipe)
-    console.log(props.recipe.instructions)
-    if (props.recipe.instruction !== undefined) {
+    console.log(props.showInstructions)
+    if (props.showInstructions === true) {
         var instructions = props.recipe.instructions
             .replace(/<[^>]+>/g, '')
             .split(".")

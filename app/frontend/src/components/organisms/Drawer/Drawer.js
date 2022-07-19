@@ -25,6 +25,7 @@ import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
 import { createTheme } from '@mui/material/styles';
 import './Drawer.css';
 import { clear } from '../../../reducers/userIngredients';
+import { empty } from '../../../reducers/isFavourited';
 
 export default function CollapsableDrawer() {
   const dispatch = useDispatch();
@@ -132,7 +133,15 @@ export default function CollapsableDrawer() {
           </ListItemButton>
         </ListItem> */}
 
-          <ListItem disablePadding  onClick={()=> setState(false)}>
+          {/* <ListItem disablePadding  onClick={()=> setState(false)}> */}
+          <ListItem 
+          disablePadding
+          sx= {{"&&":{
+            display:
+              loggedIn ? "flex" : "none",
+          }}}
+          onClick={() => setState(true)}
+        >
             <NavLink 
               to={{
                 pathname: "/favourites",
@@ -235,6 +244,7 @@ export default function CollapsableDrawer() {
           onClick={() => {
             dispatch(logout());
             dispatch(clear());
+            dispatch(empty());
           }}
         >
           <ListItemButton onClick={()=> setState(false)}>

@@ -19,13 +19,13 @@ import React, { useState, useEffect } from "react";
 import { DialogTitle } from '@mui/material';
 import { useSelector } from 'react-redux';
 import RecipeModal from '../Modal/RecipeModal';
+import axios from 'axios';
 import { createTheme } from '@mui/material';
 import './RecipeCard.css'
 
 
-
 export default function RecipeCard(props) {
-    
+     
     
     const dispatch = useDispatch();
     
@@ -47,17 +47,39 @@ export default function RecipeCard(props) {
     }} */
 
     const [open, setOpen] = React.useState(false);
+    
+    const userEmail = useSelector((state) => state.user.value)
 
-    /* const rname = useSelector((state) => state.favourited) */
 
-    const onRecipeFavourite = () => {
-        /* setRecipeName(props.recipe.title) */
+
+  /*   console.log(rname) */
+
+    /* function handleOnClick */ /*2 funcs and axios to call the view
+    
+    */
+
+    function handleOnClick(){
+
+        const values = {email: userEmail.email, new_favourite: props.recipe}
+        console.log(props.recipe[0])
+        console.log(props.recipe)
+        console.log(values)
         dispatch(add({favourited: [props.recipe]}));
         /* setIsSubmitting(true); */
         setTimeout(function() { 
         /* setIsSubmitting(false); */
         }.bind(this), 1000)
+        setOpen(true);
+            axios
+            .post("/favourites/", values)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err.request);
+        });
     }
+
 
     return (
         <div className="recipe-cards">
@@ -66,9 +88,10 @@ export default function RecipeCard(props) {
                     component="img"
                     width="48vw"
                     image={props.recipe.image}
+                    // alt="green iguana"
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div" className="card-title">
+                    <Typography gutterBottom variant="h5" component="div">
                         {props.recipe.title}
                     </Typography>
                 </CardContent>
@@ -81,7 +104,7 @@ export default function RecipeCard(props) {
                     action={
                         <IconButton 
                         aria-label="add to favorites"
-                        onClick = {() => {onRecipeFavourite(); setOpen(true)}}
+                        onClick = {() => {handleOnClick()}}
                         >
                             <FavoriteIcon />
                         </IconButton>
@@ -94,12 +117,13 @@ export default function RecipeCard(props) {
                     image={props.recipe.image}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">  
+                    {/* <Typography gutterBottom variant="h5" component="div">  
                         Dietary requirements: {props.recipe.diets}
-                    </Typography>
+                    </Typography> */}
                 </CardContent>
-                <CardActions>
-                    <Button size="small" onClick={() => setRecipeOpen(true)}>Explore</Button>
+                {/* <div className = "explore-button"> */}
+                <CardActions className = "explore-button">
+                    <Button size="small" onClick={()=>{setRecipeOpen(true)}}>Explore</Button>
                 </CardActions>
         </Card>
         <RecipeModal 

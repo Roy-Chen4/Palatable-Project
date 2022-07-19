@@ -17,6 +17,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 from palatable.models import User, Ingredients
 from django.http import JsonResponse
+import json
 
 def generate_code(length = 5):
     global code
@@ -36,7 +37,7 @@ def email_generate(sender, receiver, apple):
 
     s = smtplib.SMTP_SSL(host = 'smtp.gmail.com', port = 465)
     s.ehlo()
-    s.login(user = sender, password = 'nptjkuhikqtprucq')
+    s.login(user = sender, password = 'yxgvdrumjrgwgvdc')
     s.sendmail(sender, receiver, message.as_string())
     print('email has been sent')
     s.close()
@@ -72,6 +73,7 @@ def login(request):
         serializer = LoginSerializer(data = request.data)
         if serializer.is_valid():  
             user = authenticate(username = serializer.data['email'], password = serializer.data['password'])
+            print(user.favourites)
             dict = {'diet': user.dietary, 'favourites': user.favourites}
             if user is not None:
                 # The backend authenticated the credentials
@@ -101,7 +103,7 @@ def register(request):
         if userSerializer.is_valid():
             receiver = userSerializer.data['email']
             apple = generate_code()
-            sender = 'imdabest564@gmail.com'
+            sender = 'palatableltd@gmail.com'
             email_generate(sender, receiver, apple)
             data = NewUserForm1(request.data)
             return Response(userSerializer.data)
@@ -111,7 +113,7 @@ def register(request):
 def email(request):
     receiver = request.data['email']
     apple = generate_code()
-    sender = 'imdabest564@gmail.com'
+    sender = 'palatableltd@gmail.com'
     email_generate(sender, receiver, apple)
     return Response("Email has been sent")
 
@@ -166,7 +168,7 @@ def editpassword(request):
         if serializer.is_valid():
             receiver = serializer.data['email']
             apple = generate_code()
-            sender = 'imdabest564@gmail.com'
+            sender = 'palatableltd@gmail.com'
             email_generate(sender, receiver, apple)
             user = User.objects.get(email = serializer.data['email'])
             password_validation.validate_password(serializer.data['new_password1'], user)
@@ -198,15 +200,23 @@ def dietstatus(request):
 # favourite a recipe
 @api_view(['POST'])
 def favourites(request):
+    print(request.data)
     if request.method =='POST':
+        print(1)
         serializer = FavouriteSerializer(data = request.data)
         if serializer.is_valid():
+            print(2)
             user = User.objects.get(email = serializer.data['email'])
             if user.favourites == '':
+                print(3)
                 user.favourites = (serializer.data['new_favourite'])
                 user.save()
             else:
-                user.favourites = (user.favourites + ', ' + serializer.data['new_favourite'])
+                print(4)
+                saved = json.dumps(serializer.data['new_favourite'])
+                ''' user.favourites = saved.append(serializer.data['new_favourite'][0]) '''
+                ''' user.favourites = (saved) '''
+                user.favourites = (user.favourites + ', ' + saved)
                 user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)

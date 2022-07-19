@@ -27,7 +27,7 @@ function RecipePage() {
     let options;
 
     function getFilter() {
-        if (userDiet !== 'none') {
+        if (userDiet !== "none") {
             setFilter([...location.state.filter, userDiet].toString().toLowerCase());
         } else {
             setFilter([...location.state.filter].toString().toLowerCase());
@@ -79,7 +79,15 @@ function RecipePage() {
         return options;
     }
     
+    function getInstructions () {
+        if (userAddedIngredients.length === 0 || isFeed) {
+            return true;
+        }
+        return false;
+    }
+
     const [recipes, setRecipes] = React.useState([])
+    /* console.log(recipes) */
       
     React.useEffect(() => {
         getFilter()
@@ -182,7 +190,7 @@ function RecipePage() {
                                 {recipes.map((item, index) => (
                                     <Grid key={index} item>
                                         <RecipeCard
-                                        instructions={(userAddedIngredients.length === 0 || isFeed)}
+                                        instructions={getInstructions()}
                                         recipe={item}
                                         key={index}
                                     />

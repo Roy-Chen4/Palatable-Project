@@ -15,12 +15,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import './FilterBar.css';
 
 const dietType =[  
+    'None',
     'Vegetarian',
     'Vegan',
     'Pescatarian',
 ];
 
 const cuisineType = [
+    'None',
     'Pasta',
     'Burger',
     'Pizza',
@@ -31,6 +33,7 @@ const getMealType = () => {
     var time = Number(today.getHours());
     if (time >= 6 && time < 11) {
         return [
+            'None',
             'Breakfast',
             'Lunch',
             'Snacks',
@@ -40,6 +43,7 @@ const getMealType = () => {
         ];
     } else if (time >= 11 && time < 15) {
         return [
+            'None',
             'Lunch',
             'Snacks',
             'Dinner',
@@ -49,6 +53,7 @@ const getMealType = () => {
         ];
     } else if (time >= 15 && time < 17) {
         return [
+            'None',
             'Snacks',
             'Dinner',
             'Dessert',
@@ -58,6 +63,7 @@ const getMealType = () => {
         ];
     } else if (time >= 17 && time < 22) {
         return [
+            'None',
             'Dinner',
             'Dessert',
             'Drinks',
@@ -67,6 +73,7 @@ const getMealType = () => {
         ];
     } else {
         return [
+            'None',
             'Dessert',
             'Drinks',
             'Breakfast',
@@ -88,8 +95,10 @@ const getSuggest = () => {
         return 'Snacks'
     } else if (time >= 17 && time < 22) {
         return 'Dinner'
-    } else {
+    } else if (time >= 22 && time < 24) {
         return 'Dessert'
+    } else {
+        return []
     }
 }
 
@@ -126,25 +135,31 @@ function FilterBar (props) {
         const {
             target: { value },
         } = event;
-        setMealTypeName(
-            [value]
-        );
+        if (value === 'None') {
+            setMealTypeName([])
+        } else {
+            setMealTypeName([value]);
+        }
     };
     const handleCuisinChange = (event) => {
         const {
             target: { value },
         } = event;
-        setCuisineName(
-            [value]
-        );
+        if (value === 'None') {
+            setCuisineName([])
+        } else {
+            setCuisineName([value]);
+        }
     };
     const handleDietChange = (event) => {
         const {
             target: { value },
         } = event;
-        setDietName(
-            [value]
-        );
+        if (value === 'None') {
+            setDietName([])
+        } else {
+            setDietName([value]);
+        }
     };
 
     function getFilter () {
