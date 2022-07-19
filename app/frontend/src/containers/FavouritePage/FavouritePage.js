@@ -7,29 +7,33 @@ import RecipeCard from '../../components/molecules/RecipeCard/RecipeCard';
 
 function FavouritePage() {
 
-    /* const MyComponent = (props) => {
-        return ({props.title})
-    } */
-
-    /* const rname = useSelector((state) => state.favourited)
-    console.log(rname.favourited) */
-
-    /* const rname = useSelector(state => state.props.recipe.title) */
-
     const favouritedRecipe = useSelector(state => state.favourited)
     console.log(favouritedRecipe)
-    
+
+    /* const [recipes, setRecipes] = React.useState([])
+
+    React.useEffect(() => {
+
+        if (favouritedRecipe.length > 1) {
+            setRecipes([...favouritedRecipe])
+        }
+    }, []); */
+
+    /* const isFeed = location.state.feed; */
+
     return(
         <div>
             <Grid container spacing={1}>
-            {favouritedRecipe.map((item, index) => (
-                <Grid key={index} item>
-                    <RecipeCard
-                    recipe={item}
-                    key={index}
-                />
-                </Grid>
-            ))}     
+                {favouritedRecipe.favourited.map((item, index) => (
+                    <Grid key={index} item>
+                        <RecipeCard
+                        /* instructions={(favouritedRecipe.length === 0 || isFeed)} */
+                        instructions={true}
+                        recipe={item}
+                        key={index}
+                    />
+                    </Grid>
+                ))}     
             </Grid>
             <NavLink to="/" className={"previous-page-button"}>
                         <Button 

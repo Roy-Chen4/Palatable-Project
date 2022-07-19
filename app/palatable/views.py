@@ -37,7 +37,7 @@ def email_generate(sender, receiver, apple):
 
     s = smtplib.SMTP_SSL(host = 'smtp.gmail.com', port = 465)
     s.ehlo()
-    s.login(user = sender, password = 'nptjkuhikqtprucq')
+    s.login(user = sender, password = 'yxgvdrumjrgwgvdc')
     s.sendmail(sender, receiver, message.as_string())
     print('email has been sent')
     s.close()
@@ -103,7 +103,7 @@ def register(request):
         if userSerializer.is_valid():
             receiver = userSerializer.data['email']
             apple = generate_code()
-            sender = 'imdabest564@gmail.com'
+            sender = 'palatableltd@gmail.com'
             email_generate(sender, receiver, apple)
             data = NewUserForm1(request.data)
             return Response(userSerializer.data)
@@ -113,7 +113,7 @@ def register(request):
 def email(request):
     receiver = request.data['email']
     apple = generate_code()
-    sender = 'imdabest564@gmail.com'
+    sender = 'palatableltd@gmail.com'
     email_generate(sender, receiver, apple)
     return Response("Email has been sent")
 
@@ -184,7 +184,7 @@ def editpassword(request):
         if serializer.is_valid():
             receiver = serializer.data['email']
             apple = generate_code()
-            sender = 'imdabest564@gmail.com'
+            sender = 'palatableltd@gmail.com'
             email_generate(sender, receiver, apple)
             user = User.objects.get(email = serializer.data['email'])
             password_validation.validate_password(serializer.data['new_password1'], user)
