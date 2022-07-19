@@ -21,11 +21,11 @@ from palatable import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html')),
-    path('test/', views.test),
-    path('login/', views.login),
-    path('register/', views.register),
-    path('editemail/', views.editemail),
-    path('editpassword/', views.editpassword),
-    path('twofac/', views.twofac),
-    path('editdiet/', views.editdiet),
+    #path('test/', views.test),
+    #path('login/', views.login),
+    #path('register/', views.register),
+    #path('editemail/', views.editemail),
+    #path('editpassword/', views.editpassword),
+    #path('twofac/', views.twofac),
+    path('api/', include('palatable.urls'))
 ]
