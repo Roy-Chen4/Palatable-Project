@@ -1,21 +1,18 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { 
-    DialogContent, 
-    DialogTitle, 
-    TextField,
-    DialogActions, 
-    Button
-} 
-from '@mui/material';
-import validationLogin from "../../../validation/loginSchema";
-import { withFormik } from "formik";
-import * as yup from "yup";
+import {
+    Button, DialogActions, DialogContent,
+    DialogTitle,
+    TextField
+} from '@mui/material';
 import axios from 'axios';
+import { withFormik } from "formik";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { dietChange, login } from "../../../reducers/isLogged";
+import * as yup from "yup";
 import { set } from "../../../reducers/isFavourited";
-import "./ModalBody.css"
+import { dietChange, login } from "../../../reducers/isLogged";
+import validationLogin from "../../../validation/loginSchema";
+import "./ModalBody.css";
 
 
 const form = props => {
@@ -53,11 +50,18 @@ const form = props => {
             .then((res) => {
                 console.log(res)
                 dispatch(dietChange({newUserDiet: res.data.diet}))
-                /* 
-                const jsonRecipe = JSON.parse(res.data.favourites)
-                console.log(jsonRecipe) */
-                console.log(res.data.favourites)
-                dispatch(set({new_favourite: "hello"}))
+                // let jsonRecipe = ''
+                // console.log(res.data.favourites.replace(/'/g, '"'))
+                // console.log(res.data.favourites.length)
+                // if (res.data.favourites.length > 1) {
+
+                //     console.log("hello")
+                //     console.log(JSON.parse(res.data.favourites.toString().replace(/'/g, '"')))
+                //     jsonRecipe = JSON.parse(res.data.favourites.replace(/'/g, '"'))
+                //     console.log(jsonRecipe)
+                // }
+                /* console.log(jsonRecipe) */ 
+                dispatch(set({new_favourite: [res.data.favourites]}))
             })
             .then(() => dispatch(login({ isLogged: true, email: values.email})))
             .then(() => resetForm())

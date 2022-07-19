@@ -48,11 +48,10 @@ export default function RecipeCard(props) {
 
     function handleOnClick(){
 
-        const values = {email: userEmail.email, new_favourite: props.recipe[0]}
+        const values = {email: userEmail.email, new_favourite: props.recipe}
         console.log(props.recipe[0])
         console.log(props.recipe)
         console.log(values)
-        console.log("hello")
         dispatch(add({favourited: [props.recipe]}));
         /* setIsSubmitting(true); */
         setTimeout(function() { 
