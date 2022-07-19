@@ -123,7 +123,7 @@ export default function RecipeCard(props) {
                 </CardContent>
                 {/* <div className = "explore-button"> */}
                 <CardActions className = "explore-button">
-                    <Button size="small">Explore</Button>
+                    <Button size="small" onClick={()=>{setRecipeOpen(true)}}>Explore</Button>
                 </CardActions>
         </Card>
         <RecipeModal 
