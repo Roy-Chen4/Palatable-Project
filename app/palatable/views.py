@@ -161,11 +161,13 @@ def editemail(request):
 
 @api_view(['POST'])
 def edituserpass(request):
-    global user
+    print(request.data)
     print(request.data)
     if request.method == 'POST':
+        print(1)
         serializer = EditPasswordSerializer(data = request.data)
         if serializer.is_valid():
+            print(2)
             user = User.objects.get(email = serializer.data['email'])
             password_validation.validate_password(serializer.data['new_password1'], user)
             user.set_password(serializer.data['new_password1'])
