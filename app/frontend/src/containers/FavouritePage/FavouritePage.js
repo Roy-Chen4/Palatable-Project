@@ -10,21 +10,21 @@ function FavouritePage() {
     const favouritedRecipe = useSelector(state => state.favourited)
     console.log(favouritedRecipe)
 
-    const [recipes, setRecipes] = React.useState([])
+    /* const [recipes, setRecipes] = React.useState([])
 
     React.useEffect(() => {
+
         if (favouritedRecipe.length > 1) {
             setRecipes([...favouritedRecipe])
-            console.log(favouritedRecipe)
         }
-    }, []);
+    }, []); */
 
     /* const isFeed = location.state.feed; */
 
     return(
         <div>
             <Grid container spacing={1}>
-                {recipes.map((item, index) => (
+                {favouritedRecipe.favourited.map((item, index) => (
                     <Grid key={index} item>
                         <RecipeCard
                         /* instructions={(favouritedRecipe.length === 0 || isFeed)} */
