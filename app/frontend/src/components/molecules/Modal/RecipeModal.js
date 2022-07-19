@@ -20,6 +20,8 @@ import './Modal.css';
 
 export default function RecipeModal(props) {
 
+    console.log(props.recipe)
+    console.log(props.recipe.instructions)
     var instructions = props.recipe.instructions
         .replace(/<[^>]+>/g, '')
         .split(".")

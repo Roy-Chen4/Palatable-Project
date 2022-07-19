@@ -9,13 +9,13 @@ import {
     CardActions, 
     Button,
     IconButton, 
-} from '@material-ui/core';
+    Dialog,
+} from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CardHeader from '@mui/material/CardHeader';
 import { useDispatch } from "react-redux";
 import { add } from "../../../reducers/isFavourited";
 import React, { useState, useEffect } from "react";
-import Dialog from "@material-ui/core/Dialog";
 import { DialogTitle } from '@mui/material';
 import { useSelector } from 'react-redux';
 import RecipeModal from '../Modal/RecipeModal';
@@ -103,11 +103,11 @@ export default function RecipeCard(props) {
                 </CardActions>
         </Card>
         <RecipeModal 
-                open={recipeOpen}
-                recipe={props.recipe}
-                onClose={() => setRecipeOpen(false)} 
-                primaryTheme={primaryTheme} 
-            />
+            open={recipeOpen}
+            recipe={props.recipe}
+            onClose={() => setRecipeOpen(false)} 
+            primaryTheme={primaryTheme} 
+        />
 
         <Dialog open={open}>
             <DialogTitle>{props.recipe.title} has been added to your favourites</DialogTitle>

@@ -12,7 +12,7 @@ import * as yup from "yup";
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../reducers/isLogged";
-import Radio from '@material-ui/core/Radio';
+import Radio from '@mui/material/Radio';
 import EditFieldButton from "../../atoms/EditFieldButton/EditFieldButton";
 import validationSettings from "../../../validation/settingSchema";
 import "./ModalBody.css"

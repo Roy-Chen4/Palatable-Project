@@ -39,7 +39,7 @@ function IngredientList() {
                                 variant="outlined" 
                                 size="small"
                                 sx = {{
-                                    width: "15vw",
+                                    width: "17vw",
                                 }}
                                 InputProps={{
                                     endAdornment: 

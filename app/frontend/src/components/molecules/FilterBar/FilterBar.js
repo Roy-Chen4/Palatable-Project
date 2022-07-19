@@ -1,13 +1,16 @@
 /* eslint-disable no-unused-vars */
 import {
-    AppBar, Box, FormControl, InputLabel, MenuItem,
+    AppBar, 
+    Box, 
+    FormControl, 
+    InputLabel, 
+    MenuItem,
     Select,
-    Toolbar
-} from "@material-ui/core";
-import { Button } from "@mui/material";
+    Toolbar,
+    Button
+} from "@mui/material";
 import PropTypes from 'prop-types';
 import React from "react";
-import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import './FilterBar.css';
 
@@ -17,13 +20,11 @@ const dietType =[
     'Pescatarian',
 ];
 
-
 const cuisineType = [
     'Pasta',
     'Burger',
     'Pizza',
 ];
-
 
 const getMealType = () => {
     var today = new Date();
@@ -160,7 +161,7 @@ function FilterBar (props) {
     if (props.visible) {
         return (
             <Box sx={{"&&":{ flexGrow: 1 }}}>
-                <AppBar position="static" className={"appbar"} color="#ffd4d8">
+                <AppBar position="static" className={"appbar"} backgroundColor="#ffd4d8" color="grey">
                     <Toolbar className="toolbar">
                         <div className="select-contents">
                             <div className="filter-text">Filters:&nbsp;</div>
