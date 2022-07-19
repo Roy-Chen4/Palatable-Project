@@ -20,10 +20,18 @@ import './Modal.css';
 
 export default function RecipeModal(props) {
 
-    var instructions = props.recipe.instructions
-        .replace(/<[^>]+>/g, '')
-        .split(".")
-        .filter(function(e){return e}); 
+    console.log(props.recipe)
+    console.log(props.recipe.instructions)
+    if (props.recipe.instruction !== undefined) {
+        var instructions = props.recipe.instructions
+            .replace(/<[^>]+>/g, '')
+            .split(".")
+            .filter(function(e){return e}); 
+        var ingredients = props.recipe.extendedIngredients;
+    } else {
+        instructions = []
+        ingredients = [...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients]
+    }
 
     return (
         <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth="lg" overflow='scroll'>
@@ -63,7 +71,7 @@ export default function RecipeModal(props) {
                         </Typography>
                         <Divider className="bottom-divider"></Divider>
                         <div className={`${"align-left"} ${"ingredient-list"}`}>
-                            {props.recipe.extendedIngredients.map((item, index) => (
+                            {ingredients.map((item, index) => (
                                 <div key={index}>
                                     &#8226;{" " + item.name}
                                 </div>
@@ -112,4 +120,5 @@ RecipeModal.propTypes = {
     recipe: PropTypes.any,
     onClose: PropTypes.func,
     primaryTheme: PropTypes.func,
+    showInstructions: PropTypes.bool,
 }

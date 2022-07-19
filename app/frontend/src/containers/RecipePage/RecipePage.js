@@ -15,8 +15,10 @@ import './RecipePage.css';
 function RecipePage() {
     const [isLoading, setIsLoading] = React.useState(true);
 
+    
     const userAddedIngredients = useSelector((state) => state.ingredients.ingredients);
     const userDiet = useSelector((state) => state.user.value.diet);
+    const [filter, setFilter] = React.useState([])
 
     const location = useLocation();
 
@@ -24,7 +26,13 @@ function RecipePage() {
 
     let options;
 
-    const filter = [...location.state.filter, userDiet].toString().toLowerCase();
+    function getFilter() {
+        if (userDiet !== 'none') {
+            setFilter([...location.state.filter, userDiet].toString().toLowerCase());
+        } else {
+            setFilter([...location.state.filter].toString().toLowerCase());
+        }
+    } 
 
     function getOptions (len) {
         if (userAddedIngredients.length === 0 || isFeed) {
@@ -52,7 +60,6 @@ function RecipePage() {
                 };
             }
         } else {
-            console.log(userAddedIngredients.toString())
             options = {
                 method: 'GET',
                 url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
@@ -68,13 +75,14 @@ function RecipePage() {
                 }
             };
         }
-        console.log("returned options: ")
+        console.log("returned options")
         return options;
     }
     
     const [recipes, setRecipes] = React.useState([])
       
     React.useEffect(() => {
+        getFilter()
         getOptions(10);
         getRecipes();
     }, []);
@@ -174,6 +182,7 @@ function RecipePage() {
                                 {recipes.map((item, index) => (
                                     <Grid key={index} item>
                                         <RecipeCard
+                                        instructions={(userAddedIngredients.length === 0 || isFeed)}
                                         recipe={item}
                                         key={index}
                                     />

@@ -13,8 +13,10 @@ import Stack from "@mui/material/Stack";
 import { Autocomplete } from "@mui/material/Autocomplete";
 import { Box } from "@mui/system"; */
 import { NavLink } from "react-router-dom";
+import SuggestionBar from '../../components/molecules/SuggestionBar/SuggestionBar';
 
 function IngredientPage() {
+
   return (
     <div className="IngredientPage">
       <div className='helper-text1'>
@@ -24,6 +26,9 @@ function IngredientPage() {
       </div>
       <div className='TextInput'>
         <SearchBar/>
+      </div>
+      <div className='TextInput'>
+        <SuggestionBar visible/>
       </div>
       <Divider className="or-divider">or</Divider>
       <div className='helper-text'>

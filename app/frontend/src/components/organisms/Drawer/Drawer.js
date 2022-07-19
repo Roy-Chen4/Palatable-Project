@@ -1,4 +1,4 @@
-import KitchenOutlinedIcon from '@material-ui/icons/KitchenOutlined';
+import KitchenOutlinedIcon from '@mui/icons-material/KitchenOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -24,7 +24,6 @@ import DietModal from '../../molecules/Modal/DietModal';
 import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
 import { createTheme } from '@mui/material/styles';
 import './Drawer.css';
-import { makeStyles } from '@material-ui/core';
 import { clear } from '../../../reducers/userIngredients';
 import { empty } from '../../../reducers/isFavourited';
 
@@ -78,14 +77,7 @@ export default function CollapsableDrawer() {
       window.location.reload();
   }
 
-  const useStyles = makeStyles(() => ({
-    buttonRoot: {
-      "& .MuiButtonBase-root": {
-      }
-    }
-  }));
 
-  const classes = useStyles();
 
   const list = (anchor) => (
     <Box
@@ -152,7 +144,7 @@ export default function CollapsableDrawer() {
               onClick={()=> changeLocation('/favourites')}
               className={"recipe-page-button" }
             >
-              <ListItemButton className={classes.buttonRoot}>
+              <ListItemButton>
                 <ListItemIcon>
                   <FavoriteBorderOutlinedIcon/>
                 </ListItemIcon>
@@ -173,7 +165,7 @@ export default function CollapsableDrawer() {
               onClick={()=> changeLocation('/recipes')}
               className={"recipe-page-button" }
             >
-              <ListItemButton className={classes.buttonRoot}>
+              <ListItemButton>
                 <ListItemIcon>
                   <ForumOutlinedIcon/>
                 </ListItemIcon>
@@ -191,7 +183,7 @@ export default function CollapsableDrawer() {
           onClick={() => handleSettingsOpen(true)}
         >
 
-          <ListItemButton className={classes.buttonRoot}>
+          <ListItemButton>
             <ListItemIcon>
               <SettingsOutlinedIcon />
             </ListItemIcon>
@@ -207,7 +199,7 @@ export default function CollapsableDrawer() {
           }}}
           onClick={() => setDietOpen(true)}
         >
-          <ListItemButton className={classes.buttonRoot}>
+          <ListItemButton>
             <ListItemIcon>
               <KitchenOutlinedIcon />
             </ListItemIcon>
@@ -247,7 +239,7 @@ export default function CollapsableDrawer() {
             dispatch(empty());
           }}
         >
-          <ListItemButton onClick={()=> setState(false)} className={classes.buttonRoot}>
+          <ListItemButton onClick={()=> setState(false)}>
             <ListItemIcon>
               <ExitToAppOutlinedIcon />
             </ListItemIcon>

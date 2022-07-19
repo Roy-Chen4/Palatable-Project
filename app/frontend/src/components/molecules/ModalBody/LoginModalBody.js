@@ -116,6 +116,7 @@ const form = props => {
                 <Button 
                     className="error-text" 
                     onClick={() => {
+                        dispatch(login({ isLogged: false, email: values.email}));
                         axios
                             .post("/sendtwofac/", {email: values.email})
                             .then((res) => console.log(res))
