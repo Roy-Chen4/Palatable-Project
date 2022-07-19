@@ -1,5 +1,18 @@
+/* .previous-page-button {
+    position: absolute;
+    bottom: 2vh;
+    right: 2vh;
+}
 .previous-page-button {
     text-decoration: none;
+} */
+
+.previous-page-button {
+    padding-right: 3.5vw;
+    bottom: 2vh;
+    right: 2vh;
+    text-decoration: none;
+    position: fixed;
 }
 
 .loading-spinner {
@@ -23,6 +36,16 @@
     padding-left: 1.5vw;
 }
 
+.buttons {
+    display: flex;
+    clear: none;
+    display: inline-flex;
+}
+
+.scroll-button {
+    width: 50%;
+}
+
 .top-contents {
     justify-content: center;
     width: 100%;
@@ -38,6 +61,7 @@
 .button-content {
     justify-content: center;
     display: flex;
+    clear: none;
     width:100%;
     padding-bottom: 1vh;
 }

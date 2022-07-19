@@ -9,14 +9,18 @@ import {
 from '@mui/material';
 import { useDispatch } from "react-redux";
 import { add } from "../../../reducers/userIngredients";
+import axios from 'axios';
 import './SearchBar.css'
 
 function SearchBar() {
 
     const dispatch = useDispatch();
+    const [render, setRender] = useState(1)
 
     const onIngredientSubmit = () => {
         dispatch(add({ingredients: ingredientName}));
+        setRender(2);
+        setIngredientName('');
         /* setIsSubmitting(true); */
         setTimeout(function() { 
         /* setIsSubmitting(false); */
@@ -25,22 +29,18 @@ function SearchBar() {
 
     const [jsonResults, setJsonResults] = useState(['']);
 
-    const [ingredientName, setIngredientName] = useState([]);
+    const [ingredientName, setIngredientName] = useState('');
 
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
-            'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-        }
-    };
 
     useEffect(() => {
-        fetch('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/search?query=a&number=100000', options)
-        .then(response => response.json())
-        .then(response => setJsonResults(response.results))
-        .then(console.log(jsonResults))
-        .catch(err => console.error(err)); 
+        axios
+            .get("/ingredients/")
+            .then((res) => {
+                setJsonResults([...res.data.data])
+            })
+            .catch((err) => {
+                console.log(err.request);
+        });
     }, [])
     // console.log(jsonResults);
     return (
@@ -60,7 +60,7 @@ function SearchBar() {
                         setIngredientName([value.name]);
                         console.log(ingredientName)
                     }}
-                    
+                    key={render}
                     renderOption={(props, jsonResults) => (
                         <Box 
                             component="li" {...props} 
@@ -100,7 +100,7 @@ function SearchBar() {
                 >
                 Enter
                 </Button>
-                </div>
+            </div>
         </div>
     );
 }

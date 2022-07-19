@@ -8,14 +8,17 @@ import axios from 'axios';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from 'react-redux';
 import FilterBar from '../../components/molecules/FilterBar/FilterBar';
+import ScrollTopButton from '../../components/atoms/Button/ScrollTopButton';
 import './RecipePage.css';
 
 
 function RecipePage() {
     const [isLoading, setIsLoading] = React.useState(true);
 
+    
     const userAddedIngredients = useSelector((state) => state.ingredients.ingredients);
     const userDiet = useSelector((state) => state.user.value.diet);
+    const [filter, setFilter] = React.useState([])
 
     const location = useLocation();
 
@@ -23,7 +26,13 @@ function RecipePage() {
 
     let options;
 
-    const filter = [...location.state.filter, userDiet].toString().toLowerCase();
+    function getFilter() {
+        if (userDiet !== 'none') {
+            setFilter([...location.state.filter, userDiet].toString().toLowerCase());
+        } else {
+            setFilter([...location.state.filter].toString().toLowerCase());
+        }
+    } 
 
     function getOptions (len) {
         if (userAddedIngredients.length === 0 || isFeed) {
@@ -51,7 +60,6 @@ function RecipePage() {
                 };
             }
         } else {
-            console.log(userAddedIngredients.toString())
             options = {
                 method: 'GET',
                 url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
@@ -67,13 +75,14 @@ function RecipePage() {
                 }
             };
         }
-        console.log("returned options: ")
+        console.log("returned options")
         return options;
     }
     
     const [recipes, setRecipes] = React.useState([])
       
     React.useEffect(() => {
+        getFilter()
         getOptions(10);
         getRecipes();
     }, []);
@@ -132,6 +141,7 @@ function RecipePage() {
                             <Button 
                                 onClick={()=>setRecipes([])}
                                 sx={{ "&&": {
+                                    fontWeight: "700",
                                     backgroundColor: "#df7b84",
                                     color: "white", 
                                     ":hover": {
@@ -143,6 +153,9 @@ function RecipePage() {
                                 Return
                             </Button>
                         </NavLink>
+                    </div>
+                    <div className='scroll-button'>
+                        <ScrollTopButton/>
                     </div>
                 </div>
                 <Box className="grid-container" sx={{"&&":{ flexGrow: 1 }}}>

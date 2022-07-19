@@ -49,7 +49,7 @@ const form = props => {
             .post("/login/", values)
             .then((res) => {
                 console.log(res)
-                dispatch(dietChange({newUserDiet: res.data}))
+                dispatch(dietChange({newUserDiet: res.data.diet}))
             })
             .then(() => dispatch(login({ isLogged: true, email: values.email})))
             .then(() => resetForm())
@@ -104,6 +104,7 @@ const form = props => {
                 <Button 
                     className="error-text" 
                     onClick={() => {
+                        dispatch(login({ isLogged: false, email: values.email}));
                         axios
                             .post("/sendtwofac/", {email: values.email})
                             .then((res) => console.log(res))
