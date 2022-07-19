@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { 
     DialogContent,
@@ -26,7 +27,6 @@ const form = props => {
         onToggle,
         onClose,
         openTwoFactor,
-        // resetForm,
         primaryTheme,
         secondaryTheme
     } = props;
@@ -35,24 +35,21 @@ const form = props => {
 
 
     const [accountError, setAccountError] = React.useState(false);
+    const [errorText, setErrorText] = React.useState('');
 
-    const [isSubmitting, setIsSubmitting] = React.useState(false);
+    // const [isSubmitting, setIsSubmitting] = React.useState(false);
 
     // register user calling register API
     const onRegisterSubmit = () => {
-        axios
-            .post("/register/", values)
+        axios.post("/register/", values)
             .then((res) => console.log(res))
-            .then(() => dispatch(login({ isLogged: true, email: values.email})))
-            // .then(() => resetForm())
-            // .then(() => props.registerClose())
-            .then(() => setIsSubmitting(false))
             .catch((err) => {
-                // setAccountError(true);
-                // setIsSubmitting(false)
                 console.log(err.request);
-        })
-        openTwoFactor()
+                setAccountError(true)
+                setErrorText('Account Already Exists')
+            })
+        openTwoFactor();
+        
     }
 
     return (
@@ -85,8 +82,17 @@ const form = props => {
                     placeholder="Password"
                     type="password"
                     value={values.password1}
-                    onChange={(e) => {handleChange(e); setAccountError(false)}}
-                    onBlur={handleBlur}
+                    onChange={(e) => {
+                        handleChange(e); 
+                        setAccountError(false)
+                    }}
+                    onBlur={(e) => {
+                        handleBlur(e); 
+                        // if (values.password1 !== values.password2 && values.password1 !== '' && values.password2 !== '' ) {
+                        //     setAccountError(true)
+                        //     setErrorText('Passwords Do Not Match')
+                        // }
+                    }}
                     helperText={touched.password1 ? errors.password1 : ""}
                     error={touched.password1 && Boolean(errors.password1)}
                     margin="normal"
@@ -98,8 +104,17 @@ const form = props => {
                     placeholder="Confirm Password"
                     type="password"
                     value={values.password2}
-                    onChange={(e) => {handleChange(e); setAccountError(false)}}
-                    onBlur={handleBlur}
+                    onChange={(e) => {
+                        handleChange(e); 
+                        setAccountError(false)
+                    }}
+                    onBlur={(e) => {
+                        handleBlur(e); 
+                        // if (values.password1 !== values.password2 && values.password1 !== '' && values.password2 !== '' ) {
+                        //     setAccountError(true)
+                        //     setErrorText('Passwords Do Not Match')
+                        // }
+                    }}
                     helperText={touched.password2 ? errors.password2 : ""}
                     error={touched.password2 && Boolean(errors.password2)}
                     margin="normal"
@@ -107,7 +122,7 @@ const form = props => {
                     sx={{"&&":{width:"65%", paddingLeft: "10vmin"}}}
                 />
             </DialogContent>
-            <p1 className="error-text" style={{visibility: accountError ? "visible" : "hidden"}}>Account already exists</p1>
+            <p1 className="error-text" style={{visibility: accountError ? "visible" : "hidden"}}>{errorText}</p1>
             <DialogActions>
                 <Button onClick={onToggle}>Already have an account?</Button>
                 <Button 
@@ -124,7 +139,7 @@ const form = props => {
                 <Button 
                     onClick={() => onRegisterSubmit()}
                     variant="contained"
-                    disabled={isSubmitting || errors.email || errors.password || accountError}
+                    disabled={errors.email || errors.password || accountError}
                     theme={primaryTheme}
                     sx={{"&&":{
                         color:"white",

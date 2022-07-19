@@ -10,7 +10,6 @@ import {
     Button,
     IconButton, 
 } from '@material-ui/core';
-import './RecipeCard.css';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CardHeader from '@mui/material/CardHeader';
 import { useDispatch } from "react-redux";
@@ -19,14 +18,28 @@ import React, { useState, useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import { DialogTitle } from '@mui/material';
 import { useSelector } from 'react-redux';
+import RecipeModal from '../Modal/RecipeModal';
+import { createTheme } from '@mui/material';
+import './RecipeCard.css'
+
 
 
 export default function RecipeCard(props) {
     
+    
+    const dispatch = useDispatch();
+    
+    const [recipeOpen, setRecipeOpen] = React.useState(false);
+    
     console.log(props.recipe);
 
-    const dispatch = useDispatch();
-
+    const primaryTheme = createTheme({
+        palette: {
+          primary: {
+            main: '#df7b84',
+          },
+        },
+      });
     /* const [recipeName, setRecipeName] = useState(['']); */
 
     /* onChange={(e, props) => {
@@ -53,10 +66,9 @@ export default function RecipeCard(props) {
                     component="img"
                     width="48vw"
                     image={props.recipe.image}
-                    // alt="green iguana"
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h5" component="div" className="card-title">
                         {props.recipe.title}
                     </Typography>
                 </CardContent>
@@ -87,9 +99,15 @@ export default function RecipeCard(props) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">Explore</Button>
+                    <Button size="small" onClick={() => setRecipeOpen(true)}>Explore</Button>
                 </CardActions>
         </Card>
+        <RecipeModal 
+                open={recipeOpen}
+                recipe={props.recipe}
+                onClose={() => setRecipeOpen(false)} 
+                primaryTheme={primaryTheme} 
+            />
 
         <Dialog open={open}>
             <DialogTitle>{props.recipe.title} has been added to your favourites</DialogTitle>

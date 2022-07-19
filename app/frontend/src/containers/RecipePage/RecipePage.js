@@ -7,15 +7,16 @@ import RecipeCard from '../../components/molecules/RecipeCard/RecipeCard';
 import axios from 'axios';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from 'react-redux';
-import './RecipePage.css';
 import FilterBar from '../../components/molecules/FilterBar/FilterBar';
-import ScrollTopButton from '../../components/molecules/modal/ScrollTopButton';
+import ScrollTopButton from '../../components/atoms/Button/ScrollTopButton';
+import './RecipePage.css';
 
 
 function RecipePage() {
     const [isLoading, setIsLoading] = React.useState(true);
 
     const userAddedIngredients = useSelector((state) => state.ingredients.ingredients);
+    const userDiet = useSelector((state) => state.user.value.diet);
 
     const location = useLocation();
 
@@ -23,26 +24,35 @@ function RecipePage() {
 
     let options;
 
-    console.log(location.state.filter);
+    const filter = [...location.state.filter, userDiet].toString().toLowerCase();
 
     function getOptions (len) {
         if (userAddedIngredients.length === 0 || isFeed) {
-            let param;
-            if (location.state.filter !== undefined) {
-                param = {tags: location.state.filter, number:'10'}
+            if (location.state.filter.length !== 0 || userDiet !== "") {
+                console.log("filters applied")
+                const getParam = {tags: filter, number: '10'}
+                options = {
+                    method: 'GET',
+                    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
+                    params: getParam,
+                    headers: {
+                      'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
+                      'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+                    }
+                  };
             } else {
-                param = {number: '10'}
+                options = {
+                    method: 'GET',
+                    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
+                    params: {number:'10'},
+                    headers: {
+                      'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
+                      'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+                    }
+                };
             }
-            options = {
-                method: 'GET',
-                url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',
-                params: {param},
-                headers: {
-                  'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
-                  'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-                }
-            };
         } else {
+            console.log(userAddedIngredients.toString())
             options = {
                 method: 'GET',
                 url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
@@ -58,6 +68,7 @@ function RecipePage() {
                 }
             };
         }
+        console.log("returned options: ")
         return options;
     }
     
@@ -113,61 +124,62 @@ function RecipePage() {
         return (
             <div>
                 <FilterBar visible={userAddedIngredients.length===0 || isFeed}/>
-                <h1 className='title'>{(userAddedIngredients.length===0 || isFeed) ? "Feed" : "Search"}</h1>
-                <div className='buttons'>
-                    <NavLink to="/" className={"previous-page-button"}>
-                        <Button 
-                        onClick={()=>setRecipes([])}
-                        variant="contained"
-                        sx={{"&&":{
-                            maxHeight: "100%",
-                            maxWidth: "100%",
-                            minHeight: "100%",
-                            minWidth: "100%",
-                            backgroundColor: "#df7b84", 
-                            fontWeight: "700",
-                            ":hover": {
-                            backgroundColor: "white",
-                            color: "#df7b84",
-                            }
-                        }}}
-                        >
-                        Return</Button>
-                    </NavLink>
-                <div className='scroll-button'>
-                    <ScrollTopButton/>
-                </div>
+                <div className="top-contents">
+                    <div className="title-content">
+                        <h1 className='title'>{(userAddedIngredients.length===0 || isFeed) ? "Feed" : "Search"}</h1>
+                    </div>
+                    <div className="button-content">
+                        <NavLink to="/" className={"previous-page-button"}>
+                            <Button 
+                                onClick={()=>setRecipes([])}
+                                sx={{ "&&": {
+                                    fontWeight: "700",
+                                    backgroundColor: "#df7b84",
+                                    color: "white", 
+                                    ":hover": {
+                                        backgroundColor: "white",
+                                        color: "#df7b84", 
+                                    }
+                                }}}
+                            >
+                                Return
+                            </Button>
+                        </NavLink>
+                    </div>
+                    <div className='scroll-button'>
+                        <ScrollTopButton/>
+                    </div>
                 </div>
                 <Box className="grid-container" sx={{"&&":{ flexGrow: 1 }}}>
                     <InfiniteScroll
-                    dataLength={recipes.length}
-                    next={fetchMoreData}
-                    hasMore={hasMore}
-                    loader={
-                    <div className="loading-spinner-recipes"> 
-                        <Oval
-                            color= "#df7b84"
-                            secondaryColor='#ffd4d8'
+                        dataLength={recipes.length}
+                        next={fetchMoreData}
+                        hasMore={hasMore}
+                        loader={
+                        <div className="loading-spinner-recipes"> 
+                            <Oval
+                                color= "#df7b84"
+                                secondaryColor='#ffd4d8'
+                            >
+                            </Oval>
+                        </div>
+                        }
+                        endMessage={
+                            <p style={{ textAlign: "center" }}>
+                            <b>Yay! You have seen it all</b>
+                            </p>
+                        }
                         >
-                        </Oval>
-                    </div>
-                    }
-                    endMessage={
-                        <p style={{ textAlign: "center" }}>
-                        <b>Yay! You have seen it all</b>
-                        </p>
-                    }
-                    >
-                        <Grid container spacing={1}>
-                            {recipes.map((item, index) => (
-                                <Grid key={index} item>
-                                    <RecipeCard
-                                    recipe={item}
-                                    key={index}
-                                />
-                                </Grid>
-                            ))}     
-                        </Grid>
+                            <Grid container spacing={1}>
+                                {recipes.map((item, index) => (
+                                    <Grid key={index} item>
+                                        <RecipeCard
+                                        recipe={item}
+                                        key={index}
+                                    />
+                                    </Grid>
+                                ))}     
+                            </Grid>
                     </InfiniteScroll>
                 </Box>
             </div>

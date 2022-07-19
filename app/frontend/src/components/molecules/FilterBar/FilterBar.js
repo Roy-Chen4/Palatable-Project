@@ -1,45 +1,154 @@
-import React from "react";
-import { 
-    AppBar, 
-    FormControl, 
-    MenuItem, 
-    Select, 
-    Toolbar,
-    Box,
-    Checkbox,
-    ListItemText,
-    InputLabel,
+/* eslint-disable no-unused-vars */
+import {
+    AppBar, Box, FormControl, InputLabel, MenuItem,
+    Select,
+    Toolbar
 } from "@material-ui/core";
-import PropTypes from 'prop-types';
 import { Button } from "@mui/material";
-import './FilterBar.css'
+import PropTypes from 'prop-types';
+import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import './FilterBar.css';
 
-const givenTags = [
-    'Vegatarian',
+const dietType =[  
+    'Vegetarian',
     'Vegan',
     'Pescatarian',
-    'Gluten-Free',
-    'Breakfast',
-    'Lunch',
-    'Dinner',
-    'Drinks',
-    'Appetizer',
-    'Dessert',
 ];
+
+
+const cuisineType = [
+    'Pasta',
+    'Burger',
+    'Pizza',
+];
+
+
+const getMealType = () => {
+    var today = new Date();
+    var time = Number(today.getHours());
+    if (time >= 6 && time < 11) {
+        return [
+            'Breakfast',
+            'Lunch',
+            'Snacks',
+            'Dinner',
+            'Dessert',
+            'Drinks',
+        ];
+    } else if (time >= 11 && time < 15) {
+        return [
+            'Lunch',
+            'Snacks',
+            'Dinner',
+            'Dessert',
+            'Drinks',
+            'Breakfast',
+        ];
+    } else if (time >= 15 && time < 17) {
+        return [
+            'Snacks',
+            'Dinner',
+            'Dessert',
+            'Drinks',
+            'Breakfast',
+            'Lunch',
+        ];
+    } else if (time >= 17 && time < 22) {
+        return [
+            'Dinner',
+            'Dessert',
+            'Drinks',
+            'Breakfast',
+            'Lunch',
+            'Snacks',
+        ];
+    } else {
+        return [
+            'Dessert',
+            'Drinks',
+            'Breakfast',
+            'Lunch',
+            'Snacks',
+            'Dinner',
+        ];
+    }
+}
+
+const getSuggest = () => {
+    var today = new Date();
+    var time = Number(today.getHours());
+    if (time >= 6 && time < 11) {
+        return 'Breakfast'
+    } else if (time >= 11 && time < 15) {
+        return 'Lunch'
+    } else if (time >= 15 && time < 17) {
+        return 'Snacks'
+    } else if (time >= 17 && time < 22) {
+        return 'Dinner'
+    } else {
+        return 'Dessert'
+    }
+}
 
 function FilterBar (props) {
 
-    const [tagName, setTagName] = React.useState([]);
+    const [mealTypeName, setMealTypeName] = React.useState([]);
+    const [cuisineName, setCuisineName] = React.useState([]);
+    const [dietName, setDietName] = React.useState([]);
 
-    const handleChange = (event) => {
+    const userDiet = "";
+
+    const capitalise = str => {
+        if (str === "vegetarian") {
+            return 'Vegetarian';
+        }
+        if (str === "vegan") {
+            return 'Vegan';
+        }
+        if (str === "pescatarian") {
+            return 'Pescatarian';
+        }
+    };
+
+    React.useEffect(() => {
+        setMealTypeName([getSuggest()]);
+        if (userDiet !== "") {
+            if (userDiet !== 'none') {
+                setDietName([capitalise(userDiet)]);
+            }
+        } 
+    }, []);
+
+    const handleMealChange = (event) => {
         const {
             target: { value },
         } = event;
-        setTagName(
-            typeof value === 'string' ? value.split(',') : value,
+        setMealTypeName(
+            [value]
         );
     };
+    const handleCuisinChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setCuisineName(
+            [value]
+        );
+    };
+    const handleDietChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setDietName(
+            [value]
+        );
+    };
+
+    function getFilter () {
+        return [...mealTypeName, ...cuisineName, ...dietName];
+    }
 
     let navigate = useNavigate();
 
@@ -56,21 +165,52 @@ function FilterBar (props) {
                         <div className="select-contents">
                             <div className="filter-text">Filters:&nbsp;</div>
                             <FormControl variant="filled" className="dropdown" size="small">
-                            <InputLabel>
-                                Tags
-                            </InputLabel>
+                                <InputLabel>
+                                    Meal
+                                </InputLabel>
+                                <Select
+                                    id="user-meal"
+                                    label="meal"
+                                    value={mealTypeName}
+                                    onChange={handleMealChange}
+                                >
+                                    {getMealType().map((name) => (
+                                        <MenuItem key={name} value={name}>
+                                            {name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl variant="filled" className="dropdown" size="small">
+                                <InputLabel>
+                                    Cuisine
+                                </InputLabel>
+                                <Select
+                                    id="user-cuisine"
+                                    label="cuisine"
+                                    value={cuisineName}
+                                    onChange={handleCuisinChange}
+                                >
+                                    {cuisineType.map((name) => (
+                                        <MenuItem key={name} value={name}>
+                                            {name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl variant="filled" className="dropdown" size="small">
+                                <InputLabel>
+                                    Diet
+                                </InputLabel>
                                 <Select
                                     id="user-diet"
                                     label="diet"
-                                    multiple
-                                    value={tagName}
-                                    onChange={handleChange}
-                                    renderValue={(selected) => selected.join(', ')}
+                                    value={dietName}
+                                    onChange={handleDietChange}
                                 >
-                                    {givenTags.map((name) => (
+                                    {dietType.map((name) => (
                                         <MenuItem key={name} value={name}>
-                                        <Checkbox checked={tagName.indexOf(name) > -1} />
-                                        <ListItemText primary={name} />
+                                            {name}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -83,14 +223,13 @@ function FilterBar (props) {
                         }}
                         state= {{
                             feed: true,
-                            filter: tagName.toString(),
+                            filter: getFilter(),
                         }}
                         onClick={()=> changeLocation('/recipes')}
                         className={"filter-button" }
                         >
                             <Button 
-                                // onClick={() => {
-                                // }}
+                                onClick={() => getFilter()}
                                 variant="contained"
                                 sx={{ "&&": {
                                     backgroundColor: "white",

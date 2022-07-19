@@ -12,9 +12,7 @@ import SearchBar from '../../components/molecules/SearchBar/SearchBar';
 import Stack from "@mui/material/Stack";
 import { Autocomplete } from "@mui/material/Autocomplete";
 import { Box } from "@mui/system"; */
-import axios from 'axios';
 import { NavLink } from "react-router-dom";
-import FilterBar from '../../components/molecules/FilterBar/FilterBar';
 
 function IngredientPage() {
   return (
@@ -43,7 +41,7 @@ function IngredientPage() {
         state= {{
           feed: false,
           // loading: {isSubmitting},
-          // recipes: recipes
+          filter: [],
         }}
         className={"next-page-button"}
       >

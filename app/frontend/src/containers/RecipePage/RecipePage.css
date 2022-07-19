@@ -2,6 +2,8 @@
     position: absolute;
     bottom: 2vh;
     right: 2vh;
+}
+.previous-page-button {
     text-decoration: none;
 } */
 
@@ -42,4 +44,24 @@
 
 .scroll-button {
     width: 50%;
+}
+
+.top-contents {
+    justify-content: center;
+    width: 100%;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.title-content {
+    width: 100%;
+}
+
+.button-content {
+    justify-content: center;
+    display: flex;
+    clear: none;
+    width:100%;
+    padding-bottom: 1vh;
 }

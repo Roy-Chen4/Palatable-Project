@@ -1,14 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { Button, Grid, Box } from '@mui/material';
 import React from 'react';
-import { Oval } from 'react-loader-spinner';
 import { NavLink, useLocation } from 'react-router-dom';
-import RecipeCard from '../../components/molecules/RecipeCard/RecipeCard';
-import axios from 'axios';
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from 'react-redux';
-import FilterBar from '../../components/molecules/FilterBar/FilterBar';
-import ScrollTopButton from '../../components/molecules/modal/ScrollTopButton';
 
 function FavouritePage() {
 

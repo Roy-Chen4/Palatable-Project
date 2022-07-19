@@ -12,7 +12,7 @@ import { withFormik } from "formik";
 import * as yup from "yup";
 import axios from 'axios';
 import { useDispatch } from "react-redux";
-import { login } from "../../../reducers/isLogged";
+import { dietChange, login } from "../../../reducers/isLogged";
 import "./ModalBody.css"
 
 const form = props => {
@@ -47,7 +47,10 @@ const form = props => {
         dispatch(login({ isLogged: false, email: values.email}));
         axios
             .post("/login/", values)
-            .then((res) => console.log(res))
+            .then((res) => {
+                console.log(res)
+                dispatch(dietChange({newUserDiet: res.data}))
+            })
             .then(() => dispatch(login({ isLogged: true, email: values.email})))
             .then(() => resetForm())
             .then(() => props.onClose())
@@ -101,6 +104,12 @@ const form = props => {
                 <Button 
                     className="error-text" 
                     onClick={() => {
+                        axios
+                            .post("/sendtwofac/", {email: values.email})
+                            .then((res) => console.log(res))
+                            .catch((err) => {
+                                console.log(err.request);
+                        })
                         openForgottenPass();
                         openTwoFactor();
                     }}
@@ -127,10 +136,10 @@ const form = props => {
                     variant="contained"
                     disabled={isSubmitting || errors.email || errors.password || accountError}
                     theme={primaryTheme}
-                    sx={{"&&":{
+                    sx={{
                         color:"white",
                         backgroundColor: "#df7b84",
-                    }}}
+                    }}
                 > 
                     Log In 
                 </Button> 
