@@ -104,6 +104,7 @@ export default function RecipeCard(props) {
         </Card>
         <RecipeModal 
             open={recipeOpen}
+            showInstructions={props.instructions}
             recipe={props.recipe}
             onClose={() => setRecipeOpen(false)} 
             primaryTheme={primaryTheme} 
@@ -120,6 +121,7 @@ export default function RecipeCard(props) {
 
 RecipeCard.propTypes = {
     key: PropTypes.number,
+    instructions: PropTypes.bool,
     recipe: PropTypes.any,
     recipeInfo: PropTypes.any,
 }
