@@ -8,6 +8,7 @@ import axios from 'axios';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from 'react-redux';
 import FilterBar from '../../components/molecules/FilterBar/FilterBar';
+import ScrollTopButton from '../../components/atoms/Button/ScrollTopButton';
 import './RecipePage.css';
 
 
@@ -132,6 +133,7 @@ function RecipePage() {
                             <Button 
                                 onClick={()=>setRecipes([])}
                                 sx={{ "&&": {
+                                    fontWeight: "700",
                                     backgroundColor: "#df7b84",
                                     color: "white", 
                                     ":hover": {
@@ -143,6 +145,9 @@ function RecipePage() {
                                 Return
                             </Button>
                         </NavLink>
+                    </div>
+                    <div className='scroll-button'>
+                        <ScrollTopButton/>
                     </div>
                 </div>
                 <Box className="grid-container" sx={{"&&":{ flexGrow: 1 }}}>

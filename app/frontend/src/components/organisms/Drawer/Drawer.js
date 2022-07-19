@@ -125,7 +125,7 @@ export default function CollapsableDrawer() {
           secondaryTheme={secondaryTheme}
         />
 
-        <ListItem 
+        {/* <ListItem 
           disablePadding
           sx= {{"&&":{
             display:
@@ -138,7 +138,27 @@ export default function CollapsableDrawer() {
             </ListItemIcon>
             <ListItemText primary={'Saved Recipes'} />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
+
+          <ListItem disablePadding  onClick={()=> setState(false)}>
+            <NavLink 
+              to={{
+                pathname: "/favourites",
+              }}
+              state= {{
+                feed: true,
+              }}
+              onClick={()=> changeLocation('/favourites')}
+              className={"recipe-page-button" }
+            >
+              <ListItemButton className={classes.buttonRoot}>
+                <ListItemIcon>
+                  <FavoriteBorderOutlinedIcon/>
+                </ListItemIcon>
+                <ListItemText primary={'Saved Recipes'}/>
+              </ListItemButton>
+            </NavLink>
+          </ListItem>
 
           <ListItem disablePadding  onClick={()=> setState(false)}>
             <NavLink 
