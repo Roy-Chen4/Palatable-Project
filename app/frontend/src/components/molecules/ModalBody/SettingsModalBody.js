@@ -85,6 +85,7 @@ const form = props => {
         });
     }
 
+
     return (
         <form>
             <DialogTitle>
@@ -118,7 +119,7 @@ const form = props => {
                     setAccountError(false);
                     setFieldValue("toggle", false);
                     setFieldValue("password1", '');
-                    setFieldValue("passord2", '');
+                    setFieldValue("password2", '');
                 }}
                 variant={toggleEmailPass ? "outlined" : "contained"}
                 theme={secondaryTheme}

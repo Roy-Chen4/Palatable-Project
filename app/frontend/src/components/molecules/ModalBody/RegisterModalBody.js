@@ -41,6 +41,7 @@ const form = props => {
 
     // register user calling register API
     const onRegisterSubmit = () => {
+        dispatch(login({ isLogged: false, email: values.email}));
         axios.post("/register/", values)
             .then((res) => console.log(res))
             .catch((err) => {
