@@ -16,10 +16,13 @@ import CardHeader from '@mui/material/CardHeader';
 import { useDispatch } from "react-redux";
 import { add } from "../../../reducers/isFavourited";
 import React, { useState, useEffect } from "react";
+import Dialog from "@material-ui/core/Dialog";
+import { DialogTitle } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 
 export default function RecipeCard(props) {
-
+    
     console.log(props.recipe);
 
     const dispatch = useDispatch();
@@ -30,9 +33,13 @@ export default function RecipeCard(props) {
         setRecipeName([props.recipe.title]);
     }} */
 
+    const [open, setOpen] = React.useState(false);
+
+    /* const rname = useSelector((state) => state.favourited) */
+
     const onRecipeFavourite = () => {
         /* setRecipeName(props.recipe.title) */
-        dispatch(add({favourited: [props.recipe.title]}));
+        dispatch(add({favourited: [props.recipe]}));
         /* setIsSubmitting(true); */
         setTimeout(function() { 
         /* setIsSubmitting(false); */
@@ -62,7 +69,7 @@ export default function RecipeCard(props) {
                     action={
                         <IconButton 
                         aria-label="add to favorites"
-                        onClick = {() => onRecipeFavourite()}
+                        onClick = {() => {onRecipeFavourite(); setOpen(true)}}
                         >
                             <FavoriteIcon />
                         </IconButton>
@@ -73,7 +80,6 @@ export default function RecipeCard(props) {
                     component="img"
                     width="48vw"
                     image={props.recipe.image}
-                    // alt="green iguana"
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">  
@@ -84,6 +90,11 @@ export default function RecipeCard(props) {
                     <Button size="small">Explore</Button>
                 </CardActions>
         </Card>
+
+        <Dialog open={open}>
+            <DialogTitle>{props.recipe.title} has been added to your favourites</DialogTitle>
+            <Button variant="contained" onClick={() => setOpen(false)}> close </Button>
+        </Dialog>
         </div>
     )
 

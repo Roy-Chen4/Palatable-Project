@@ -9,7 +9,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from 'react-redux';
 import './RecipePage.css';
 import FilterBar from '../../components/molecules/FilterBar/FilterBar';
-import ScrollTopButton from '../../components/molecules/modal/ScrollTopButton'
+import ScrollTopButton from '../../components/molecules/modal/ScrollTopButton';
 
 
 function RecipePage() {

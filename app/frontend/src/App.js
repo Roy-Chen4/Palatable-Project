@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './reducers/isLogged';
 import ingredientReducer from './reducers/userIngredients';
+import FavouritePage from './containers/FavouritePage/FavouritePage'
 
 export default function App() {
   // Create redux store
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<IngredientPage />} />
             <Route path="recipes" element={<RecipePage />} />
+            <Route path="favourites" element={<FavouritePage />} />
             {/* <Route path="*" element={<NoPage />} /> */}
           </Route>
         </Routes>
