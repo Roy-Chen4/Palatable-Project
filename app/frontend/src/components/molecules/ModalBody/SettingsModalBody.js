@@ -47,12 +47,12 @@ const form = props => {
     // password change calling editpassword API
     const onEmailSubmit = () => {
         setIsSubmitting(true);
-        const editPassword = {
+        const editEmail = {
             old_email: userEmail,
             new_email: values.email,
         }
         axios
-            .post("/editemail/", editPassword)
+            .post("/editemail/", editEmail)
             .then((res) => console.log(res))
             .then(() => dispatch(login({ isLogged: true, email: values.email, diet: ''})))
             .then(() => resetForm())
@@ -72,8 +72,9 @@ const form = props => {
             new_password1: values.password1,
             new_password2: values.password2,
         }
+        console.log(editPassword)
         axios
-            .post("/editpassword/", editPassword)
+            .post("/edituserpassword/", editPassword)
             .then((res) => console.log(res))
             .then(() => resetForm())
             .then(() => props.onClose())

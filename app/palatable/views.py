@@ -125,7 +125,6 @@ def twofacpassword(request):
         if serializer.is_valid():
             vcode=serializer.data['codeDetail']
             if (vcode == code):
-                user.save()
                 return Response(serializer.data)
             else:
                 return Response(data = "incorrectcode", status = status.HTTP_403_FORBIDDEN)
@@ -158,6 +157,24 @@ def editemail(request):
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 
+
+@api_view(['POST'])
+def edituserpass(request):
+    print(request.data)
+    print(request.data)
+    if request.method == 'POST':
+        print(1)
+        serializer = EditPasswordSerializer(data = request.data)
+        if serializer.is_valid():
+            print(2)
+            user = User.objects.get(email = serializer.data['email'])
+            password_validation.validate_password(serializer.data['new_password1'], user)
+            user.set_password(serializer.data['new_password1'])
+            user.save()
+            # user.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
+
 # edit password in settings
 @api_view(['POST'])
 def editpassword(request):
@@ -166,13 +183,10 @@ def editpassword(request):
     if request.method == 'POST':
         serializer = EditPasswordSerializer(data = request.data)
         if serializer.is_valid():
-            receiver = serializer.data['email']
-            apple = generate_code()
-            sender = 'palatableltd@gmail.com'
-            email_generate(sender, receiver, apple)
             user = User.objects.get(email = serializer.data['email'])
             password_validation.validate_password(serializer.data['new_password1'], user)
             user.set_password(serializer.data['new_password1'])
+            user.save()
             # user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
