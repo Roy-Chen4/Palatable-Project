@@ -118,7 +118,7 @@ const form = props => {
                     onClick={() => {
                         dispatch(login({ isLogged: false, email: values.email}));
                         axios
-                            .post("/editpassword/", {email: values.email})
+                            .post("/sendtwofac/", {email: values.email})
                             .then((res) => console.log(res))
                             .catch((err) => {
                                 console.log(err.request);
