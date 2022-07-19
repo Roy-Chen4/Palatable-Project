@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { 
     DialogContent, 
@@ -13,7 +14,9 @@ import * as yup from "yup";
 import axios from 'axios';
 import { useDispatch } from "react-redux";
 import { dietChange, login } from "../../../reducers/isLogged";
+import { set } from "../../../reducers/isFavourited";
 import "./ModalBody.css"
+
 
 const form = props => {
     const {
@@ -49,7 +52,12 @@ const form = props => {
             .post("/login/", values)
             .then((res) => {
                 console.log(res)
-                dispatch(dietChange({newUserDiet: res.data}))
+                dispatch(dietChange({newUserDiet: res.data.diet}))
+                /* 
+                const jsonRecipe = JSON.parse(res.data.favourites)
+                console.log(jsonRecipe) */
+                console.log(res.data.favourites)
+                dispatch(set({new_favourite: "hello"}))
             })
             .then(() => dispatch(login({ isLogged: true, email: values.email})))
             .then(() => resetForm())

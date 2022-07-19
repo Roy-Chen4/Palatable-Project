@@ -13,6 +13,7 @@ import { persistStore } from 'redux-persist'
 import userReducer from './reducers/isLogged';
 import ingredientReducer from './reducers/userIngredients';
 import FavouritePage from './containers/FavouritePage/FavouritePage'
+import favouriteReducer from './reducers/isFavourited';
 
 export default function App() {
   // Create redux store
@@ -20,6 +21,7 @@ export default function App() {
   const reducers = combineReducers ({
     user: userReducer,
     ingredients: ingredientReducer,
+    favourited: favouriteReducer,
   })
 
 

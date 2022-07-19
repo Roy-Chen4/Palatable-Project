@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from django.contrib.auth import password_validation
+from jsonfield import JSONField
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,4 +47,4 @@ class EditDietSerializer(serializers.Serializer):
 
 class FavouriteSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length = 30)
-    new_favourite = serializers.CharField(max_length = 100)
+    new_favourite = serializers.JSONField()

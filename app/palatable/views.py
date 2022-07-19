@@ -17,6 +17,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 from palatable.models import User, Ingredients
 from django.http import JsonResponse
+import json
 
 def generate_code(length = 5):
     global code
@@ -72,6 +73,7 @@ def login(request):
         serializer = LoginSerializer(data = request.data)
         if serializer.is_valid():  
             user = authenticate(username = serializer.data['email'], password = serializer.data['password'])
+            print(user.favourites)
             dict = {'diet': user.dietary, 'favourites': user.favourites}
             if user is not None:
                 # The backend authenticated the credentials
@@ -198,15 +200,23 @@ def dietstatus(request):
 # favourite a recipe
 @api_view(['POST'])
 def favourites(request):
+    print(request.data)
     if request.method =='POST':
+        print(1)
         serializer = FavouriteSerializer(data = request.data)
         if serializer.is_valid():
+            print(2)
             user = User.objects.get(email = serializer.data['email'])
             if user.favourites == '':
+                print(3)
                 user.favourites = (serializer.data['new_favourite'])
                 user.save()
             else:
-                user.favourites = (user.favourites + ', ' + serializer.data['new_favourite'])
+                print(4)
+                saved = json.dumps(serializer.data['new_favourite'])
+                ''' user.favourites = saved.append(serializer.data['new_favourite'][0]) '''
+                ''' user.favourites = (saved) '''
+                user.favourites = (user.favourites + ', ' + saved)
                 user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)

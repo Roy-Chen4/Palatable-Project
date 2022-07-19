@@ -3,6 +3,7 @@ import { Button, Grid, Box } from '@mui/material';
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import RecipeCard from '../../components/molecules/RecipeCard/RecipeCard';
 
 function FavouritePage() {
 
@@ -15,17 +16,21 @@ function FavouritePage() {
 
     /* const rname = useSelector(state => state.props.recipe.title) */
 
-    const rname = useSelector(state => state.favourited)
-    console.log(rname)
+    const favouritedRecipe = useSelector(state => state.favourited)
+    console.log(favouritedRecipe)
     
     return(
         <div>
-            <h1>
-                {/* {rname.favourited} */}
-               {/*  {rname} */}
-               hi
-               {rname}
-            </h1>   
+            <Grid container spacing={1}>
+            {favouritedRecipe.map((item, index) => (
+                <Grid key={index} item>
+                    <RecipeCard
+                    recipe={item}
+                    key={index}
+                />
+                </Grid>
+            ))}     
+            </Grid>
             <NavLink to="/" className={"previous-page-button"}>
                         <Button 
                         variant="contained"

@@ -26,6 +26,7 @@ import { createTheme } from '@mui/material/styles';
 import './Drawer.css';
 import { makeStyles } from '@material-ui/core';
 import { clear } from '../../../reducers/userIngredients';
+import { empty } from '../../../reducers/isFavourited';
 
 export default function CollapsableDrawer() {
   const dispatch = useDispatch();
@@ -243,6 +244,7 @@ export default function CollapsableDrawer() {
           onClick={() => {
             dispatch(logout());
             dispatch(clear());
+            dispatch(empty());
           }}
         >
           <ListItemButton onClick={()=> setState(false)} className={classes.buttonRoot}>

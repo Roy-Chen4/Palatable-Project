@@ -5,3 +5,8 @@
 .recipe-container {
     height: 420px;
 }
+
+.explore-button {
+    display: flex;
+    justify-content: center;
+}
