@@ -5,7 +5,7 @@ import {
   Typography,
   Grid,
   ButtonBase
-} from "@material-ui/core";
+} from "@mui/material";
 import PropTypes from 'prop-types';
 import CategoryModal from "../Modal/CategoryModal";
 import './Slider.css'

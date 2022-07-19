@@ -182,6 +182,7 @@ function RecipePage() {
                                 {recipes.map((item, index) => (
                                     <Grid key={index} item>
                                         <RecipeCard
+                                        instructions={(userAddedIngredients.length === 0 || isFeed)}
                                         recipe={item}
                                         key={index}
                                     />

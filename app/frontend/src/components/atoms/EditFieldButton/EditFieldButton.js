@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@mui/material";
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@mui/icons-material/Edit';
 import PropTypes from 'prop-types';
 
 const EditFieldButton = (props) => {
