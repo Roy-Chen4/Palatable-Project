@@ -158,6 +158,22 @@ def editemail(request):
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 
+
+@api_view(['POST'])
+def edituserpass(request):
+    global user
+    print(request.data)
+    if request.method == 'POST':
+        serializer = EditPasswordSerializer(data = request.data)
+        if serializer.is_valid():
+            user = User.objects.get(email = serializer.data['email'])
+            password_validation.validate_password(serializer.data['new_password1'], user)
+            user.set_password(serializer.data['new_password1'])
+            user.save()
+            # user.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
+
 # edit password in settings
 @api_view(['POST'])
 def editpassword(request):

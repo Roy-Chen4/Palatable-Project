@@ -73,7 +73,7 @@ const form = props => {
             new_password2: values.password2,
         }
         axios
-            .post("/editpassword/", editPassword)
+            .post("/edituserpass/", editPassword)
             .then((res) => console.log(res))
             .then(() => resetForm())
             .then(() => props.onClose())
