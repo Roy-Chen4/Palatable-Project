@@ -118,7 +118,7 @@ export default function AuthModal(props) {
                             setForgottenPassOpen(false);
                             dispatch(logout());
                         }} 
-                        onSubmit={() => setTwoFactorPassOpen(false)}
+                        onSubmit={() => {setTwoFactorPassOpen(false); props.onClose();}}
                         primaryTheme={props.primaryTheme} 
                         secondaryTheme={props.secondaryTheme}
                     />
