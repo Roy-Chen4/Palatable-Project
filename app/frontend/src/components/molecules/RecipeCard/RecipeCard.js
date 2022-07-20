@@ -50,7 +50,6 @@ export default function RecipeCard(props) {
     
     const userEmail = useSelector((state) => state.user.value.email)
     const isLogged = useSelector((state) => state.user.value.isLogged)
-    console.log(isLogged);
 
 
 
