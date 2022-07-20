@@ -42,6 +42,21 @@ def email_generate(sender, receiver, apple):
     print('email has been sent')
     s.close()
 
+def email_generate_password(sender, receiver, apple):
+    em_body = apple
+
+    message = MIMEText(em_body, 'html')
+    message['Subject'] = 'Reset password verification code'
+    message['From'] = sender
+    message['To'] = ''.join(receiver)
+
+    s = smtplib.SMTP_SSL(host = 'smtp.gmail.com', port = 465)
+    s.ehlo()
+    s.login(user = sender, password = 'yxgvdrumjrgwgvdc')
+    s.sendmail(sender, receiver, message.as_string())
+    print('email has been sent')
+    s.close()
+
 # Create your views here.
 
 '''
@@ -114,7 +129,7 @@ def email(request):
     receiver = request.data['email']
     apple = generate_code()
     sender = 'palatableltd@gmail.com'
-    email_generate(sender, receiver, apple)
+    email_generate_password(sender, receiver, apple)
     return Response("Email has been sent")
 
 
