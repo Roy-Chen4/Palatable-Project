@@ -202,8 +202,8 @@ def editpassword(request):
             password_validation.validate_password(serializer.data['new_password1'], user)
             user.set_password(serializer.data['new_password1'])
             user.save()
-            # user.save()
-            return Response(serializer.data)
+            dict = {'diet': user.dietary, 'favourites': user.favourites}
+            return Response(dict)
         return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
