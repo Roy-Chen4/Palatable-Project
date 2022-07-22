@@ -61,6 +61,7 @@ def email_generate_password(sender, receiver, apple):
     s.close()
 
 # Create your views here.
+
 '''@api_view(['POST'])
 def register(request):
     global data
@@ -75,6 +76,7 @@ def register(request):
             data = NewUserForm1(request.data)
             return Response(userSerializer.data)
         return Response(userSerializer.errors, status = status.HTTP_403_FORBIDDEN)'''
+
 class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)

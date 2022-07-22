@@ -23,8 +23,6 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html')),
     path('editemail/', views.editemail),
     path('editpassword/', views.editpassword),
-    path('twofac/', views.twofac),
-    path('api/', include('palatable.urls')),
     path('sendtwofac/', views.email),
     path('editemail/', views.editemail),
     path('editpassword/', views.editpassword),
@@ -34,5 +32,6 @@ urlpatterns = [
     path('editdiet/', views.editdiet),
     path('favourites/', views.favourites),
     path('ingredients/', views.get_ingredient),
+    path('', include('palatable.urls')),
     path('', include('frontend.urls'))
     ]
