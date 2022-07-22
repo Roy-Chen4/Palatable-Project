@@ -12,14 +12,23 @@ import SearchBar from '../../components/molecules/SearchBar/SearchBar';
 import Stack from "@mui/material/Stack";
 import { Autocomplete } from "@mui/material/Autocomplete";
 import { Box } from "@mui/system"; */
-import axios from 'axios';
 import { NavLink } from "react-router-dom";
+import SuggestionBar from '../../components/molecules/SuggestionBar/SuggestionBar';
 
 function IngredientPage() {
+
   return (
     <div className="IngredientPage">
+      <div className='helper-text1'>
+        <Typography>
+          SEARCH FOR INGREDIENTS IN THE SEARCHBAR
+        </Typography>
+      </div>
       <div className='TextInput'>
         <SearchBar/>
+      </div>
+      <div className='TextInput'>
+        <SuggestionBar visible/>
       </div>
       <Divider className="or-divider">or</Divider>
       <div className='helper-text'>
@@ -35,22 +44,23 @@ function IngredientPage() {
           pathname: "/recipes",
         }}
         state= {{
+          feed: false,
           // loading: {isSubmitting},
-          // recipes: recipes
+          filter: [],
         }}
         className={"next-page-button"}
       >
         <Button 
           variant="contained" 
           size="large" 
-          sx={{
+          sx={{"&&":{
             backgroundColor: "#df7b84", 
             fontWeight: "700",
             ":hover": {
               backgroundColor: "white",
               color: "#df7b84", 
             }
-          }}
+          }}}
           // onClick={() => console.log()}
         >
           Search

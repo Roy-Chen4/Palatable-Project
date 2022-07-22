@@ -1,6 +1,7 @@
-from django.urls import path
-from .views import index
+from django.urls import re_path, path
+from . import views
 
 urlpatterns = [
-    path('', index),
+    # path('', views.index),
+    re_path(r'^(?:.*)/?$', views.index),
 ]

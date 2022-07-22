@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@mui/material";
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@mui/icons-material/Edit';
 import PropTypes from 'prop-types';
 
 const EditFieldButton = (props) => {
@@ -12,9 +12,11 @@ const EditFieldButton = (props) => {
             onClick={onClick}
             variant="outlined"
             sx={{
-                color:"#df7b84",
-                // fontWeight: "",
-                width:"8%"
+                "&&":{
+                    color:"#df7b84",
+                    // fontWeight: "",
+                    width:"8%"
+                }
             }}
         > 
             <EditIcon />

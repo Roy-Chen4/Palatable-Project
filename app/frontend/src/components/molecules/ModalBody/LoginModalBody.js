@@ -1,19 +1,19 @@
-import React from "react";
-import { 
-    DialogContent, 
-    DialogTitle, 
-    TextField,
-    DialogActions, 
-    Button
-} 
-from '@mui/material';
-import validationLogin from "../../../validation/loginSchema";
-import { withFormik } from "formik";
-import * as yup from "yup";
+/* eslint-disable no-unused-vars */
+import {
+    Button, DialogActions, DialogContent,
+    DialogTitle,
+    TextField
+} from '@mui/material';
 import axios from 'axios';
+import { withFormik } from "formik";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../../../reducers/isLogged";
-import "./ModalBody.css"
+import * as yup from "yup";
+import { set } from "../../../reducers/isFavourited";
+import { dietChange, login } from "../../../reducers/isLogged";
+import validationLogin from "../../../validation/loginSchema";
+import "./ModalBody.css";
+
 
 const form = props => {
     const {
@@ -47,7 +47,22 @@ const form = props => {
         dispatch(login({ isLogged: false, email: values.email}));
         axios
             .post("/login/", values)
-            .then((res) => console.log(res))
+            .then((res) => {
+                console.log(res)
+                dispatch(dietChange({newUserDiet: res.data.diet}))
+                // let jsonRecipe = ''
+                // console.log(res.data.favourites.replace(/'/g, '"'))
+                // console.log(res.data.favourites.length)
+                // if (res.data.favourites.length > 1) {
+
+                //     console.log("hello")
+                //     console.log(JSON.parse(res.data.favourites.toString().replace(/'/g, '"')))
+                //     jsonRecipe = JSON.parse(res.data.favourites.replace(/'/g, '"'))
+                //     console.log(jsonRecipe)
+                // }
+                /* console.log(jsonRecipe) */ 
+                dispatch(set({new_favourite: [res.data.favourites]}))
+            })
             .then(() => dispatch(login({ isLogged: true, email: values.email})))
             .then(() => resetForm())
             .then(() => props.onClose())
@@ -81,7 +96,7 @@ const form = props => {
                     helperText={touched.email ? errors.email : ""}
                     error={(touched.email && Boolean(errors.email))}
                     margin="normal"
-                    sx={{width:"70%"}}
+                    sx={{"&&":{width:"70%"}}}
                 />
                 <TextField
                     id="password"
@@ -93,7 +108,7 @@ const form = props => {
                     helperText={touched.password ? errors.password : ""}
                     error={(touched.password && Boolean(errors.password))}
                     margin="normal"
-                    sx={{width:"70%"}}
+                    sx={{"&&":{width:"70%"}}}
                 />
             </DialogContent>
             <p1 className="error-text" style={{visibility: accountError ? "visible" : "hidden"}}>Invalid Email or Password</p1>
@@ -101,6 +116,13 @@ const form = props => {
                 <Button 
                     className="error-text" 
                     onClick={() => {
+                        dispatch(login({ isLogged: false, email: values.email}));
+                        axios
+                            .post("/sendtwofac/", {email: values.email})
+                            .then((res) => console.log(res))
+                            .catch((err) => {
+                                console.log(err.request);
+                        })
                         openForgottenPass();
                         openTwoFactor();
                     }}
@@ -115,6 +137,10 @@ const form = props => {
                     onClick={() => onClose()}
                     variant="contained"
                     theme={secondaryTheme}
+                    sx={{"&&":{
+                        color:"#df7b84",
+                        backgroundColor: "white",
+                    }}}
                 > 
                     Close 
                 </Button>
@@ -123,7 +149,10 @@ const form = props => {
                     variant="contained"
                     disabled={isSubmitting || errors.email || errors.password || accountError}
                     theme={primaryTheme}
-                    sx={{color:"white"}}
+                    sx={{
+                        color:"white",
+                        backgroundColor: "#df7b84",
+                    }}
                 > 
                     Log In 
                 </Button> 

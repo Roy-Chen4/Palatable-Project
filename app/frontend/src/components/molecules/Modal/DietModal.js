@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { dietChange } from "../../../reducers/isLogged";
 import PropTypes from 'prop-types';
 import './Modal.css';
+import axios from "axios";
 
 export default function DietModal(props) {
     const dispatch = useDispatch();
@@ -30,12 +31,22 @@ export default function DietModal(props) {
         setNewDiet(event.target.value);
     };
 
+    const userEmail = useSelector((state) => state.user.value.email);
+
     const onDietSubmit = () => {
         setIsSubmitting(true);
         setTimeout(function() { 
             setIsSubmitting(false);
             dispatch(dietChange({newUserDiet}))
-            props.onClose();
+            axios
+            .post("/editdiet/", {email: userEmail, new_diet: newUserDiet})
+            .then((res) => {
+                console.log(res)
+            })
+            .then(() => props.onClose())
+            .catch((err) => {
+                console.log(err.request);
+            });
         }.bind(this), 1000)
     }
 
@@ -60,8 +71,9 @@ export default function DietModal(props) {
                             value={newUserDiet}
                             label="diet"
                             onChange={handleChange}
-                            sx={{width:"100%"}}
+                            sx={{"&&":{width:"100%"}}}
                         >
+                            <MenuItem value={"none"}>None</MenuItem>
                             <MenuItem value={"vegetarian"}>Vegetarian</MenuItem>
                             <MenuItem value={"vegan"}>Vegan</MenuItem>
                             <MenuItem value={"pescatarian"}>Pescatarian</MenuItem>
@@ -73,6 +85,13 @@ export default function DietModal(props) {
                         onClick={() => props.onClose()}
                         variant="contained"
                         theme={props.secondaryTheme}
+                        sx={{ "&&": {
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "#df7b84",
+                                color: "white", 
+                            }
+                        }}}
                     > 
                         Close 
                     </Button>
@@ -81,7 +100,14 @@ export default function DietModal(props) {
                         variant="contained"
                         disabled={isSubmitting}
                         theme={props.primaryTheme}
-                        sx={{color:"white"}}
+                        sx={{"&&":{
+                            color:"white",
+                            backgroundColor: "#df7b84",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "#df7b84", 
+                            }
+                        }}}
                     > 
                         Save
                     </Button> 

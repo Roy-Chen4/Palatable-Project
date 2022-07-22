@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group
 from rest_framework import serializers
 from django.contrib.auth import password_validation
 from palatable.models import User
-
+from jsonfield import JSONField
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -54,5 +54,9 @@ class EditPasswordSerializer(serializers.Serializer):
         return super().validate(data)
 
 class EditDietSerializer(serializers.Serializer):
-    old_diet = serializers.CharField(max_length = 30)
+    email = serializers.EmailField(max_length = 30)
     new_diet = serializers.CharField(max_length = 30)
+
+class FavouriteSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length = 30)
+    new_favourite = serializers.JSONField()

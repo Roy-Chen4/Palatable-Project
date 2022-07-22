@@ -21,11 +21,17 @@ from palatable import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html')),
-    #path('test/', views.test),
-    #path('login/', views.login),
-    #path('register/', views.register),
     path('editemail/', views.editemail),
     path('editpassword/', views.editpassword),
     path('twofac/', views.twofac),
     path('api/', include('palatable.urls'))
-]
+    path('sendtwofac/', views.email),
+    path('editemail/', views.editemail),
+    path('editpassword/', views.editpassword),
+    path('edituserpassword/', views.edituserpass),
+    path('twofacpassword/', views.twofacpassword),
+    path('twofacregister/', views.twofacregister),
+    path('editdiet/', views.editdiet),
+    path('favourites/', views.favourites),
+    path('ingredients/', views.get_ingredient),
+    path('', include('frontend.urls'))]

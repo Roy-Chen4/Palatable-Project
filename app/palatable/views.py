@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import forms  
 from django.shortcuts import redirect  
 from django.contrib import messages  
-from django.contrib.auth.forms import UserCreationForm  
+from django.contrib.auth.forms import UserCreationForm 
 from .forms import *
 from rest_framework.decorators import api_view
 from .serializers import *
@@ -12,13 +12,15 @@ from django.contrib.auth import authenticate
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-from palatable.models import User
 from rest_framework.views import APIView
 from palatable.serializers import UserSerializer
 from rest_framework.exceptions import AuthenticationFailed
+from palatable.models import User, Ingredients
+from django.http import JsonResponse
 import jwt, datetime
 import random
 import smtplib, ssl
+import json
 
 def generate_code(length = 5):
     global code
@@ -38,13 +40,41 @@ def email_generate(sender, receiver, apple):
 
     s = smtplib.SMTP_SSL(host = 'smtp.gmail.com', port = 465)
     s.ehlo()
-    s.login(user = sender, password = 'nptjkuhikqtprucq')
+    s.login(user = sender, password = 'yxgvdrumjrgwgvdc')
+    s.sendmail(sender, receiver, message.as_string())
+    print('email has been sent')
+    s.close()
+
+def email_generate_password(sender, receiver, apple):
+    em_body = apple
+
+    message = MIMEText(em_body, 'html')
+    message['Subject'] = 'Reset password verification code'
+    message['From'] = sender
+    message['To'] = ''.join(receiver)
+
+    s = smtplib.SMTP_SSL(host = 'smtp.gmail.com', port = 465)
+    s.ehlo()
+    s.login(user = sender, password = 'yxgvdrumjrgwgvdc')
     s.sendmail(sender, receiver, message.as_string())
     print('email has been sent')
     s.close()
 
 # Create your views here.
-
+'''@api_view(['POST'])
+def register(request):
+    global data
+    data = NewUserForm1()
+    if request.method == 'POST':
+        userSerializer = RegisterSerializer(data = request.data)
+        if userSerializer.is_valid():
+            receiver = userSerializer.data['email']
+            apple = generate_code()
+            sender = 'palatableltd@gmail.com'
+            email_generate(sender, receiver, apple)
+            data = NewUserForm1(request.data)
+            return Response(userSerializer.data)
+        return Response(userSerializer.errors, status = status.HTTP_403_FORBIDDEN)'''
 class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -72,7 +102,7 @@ class LoginView(APIView):
         }
 
         token = jwt.encode(payload, 'secret', algorithm='HS256')
-        
+
         response = Response()
 
         response.set_cookie(key='jwt', value=token, httponly=True)
@@ -81,6 +111,10 @@ class LoginView(APIView):
         }
         return response
 
+        '''dict = {'diet': user.dietary, 'favourites': user.favourites}
+        if user is not None:
+            # The backend authenticated the credentials
+            return Response(dict)'''
 class UserView(APIView):
 
     def get(self, request):
@@ -108,13 +142,38 @@ class LogoutView(APIView):
         return response
 
 @api_view(['POST'])
-def twofac(request):
+def email(request):
+    receiver = request.data['email']
+    apple = generate_code()
+    sender = 'palatableltd@gmail.com'
+    email_generate_password(sender, receiver, apple)
+    return Response("Email has been sent")
+
+
+@api_view(['POST'])
+def twofacpassword(request):
     if request.method == 'POST':
         serializer = CodeSerializer(data = request.data)
         if serializer.is_valid():
             vcode=serializer.data['codeDetail']
             if (vcode == code):
                 return Response(serializer.data)
+            else:
+                return Response(data = "incorrectcode", status = status.HTTP_403_FORBIDDEN)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+@api_view(['POST'])
+def twofacregister(request):
+    if request.method == 'POST':
+        serializer = CodeSerializer(data = request.data)
+        if serializer.is_valid():
+            vcode=serializer.data['codeDetail']
+            if (vcode == code):
+                if data.is_valid():
+                    data.save()
+                    return Response(serializer.data)
+            else:
+                return Response(data = "incorrectcode", status = status.HTTP_403_FORBIDDEN)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
     
 # edit email in settings
@@ -129,9 +188,29 @@ def editemail(request):
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 
+
+@api_view(['POST'])
+def edituserpass(request):
+    print(request.data)
+    print(request.data)
+    if request.method == 'POST':
+        print(1)
+        serializer = EditPasswordSerializer(data = request.data)
+        if serializer.is_valid():
+            print(2)
+            user = User.objects.get(email = serializer.data['email'])
+            password_validation.validate_password(serializer.data['new_password1'], user)
+            user.set_password(serializer.data['new_password1'])
+            user.save()
+            # user.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
+
 # edit password in settings
 @api_view(['POST'])
 def editpassword(request):
+    global user
+    print(request.data)
     if request.method == 'POST':
         serializer = EditPasswordSerializer(data = request.data)
         if serializer.is_valid():
@@ -139,5 +218,48 @@ def editpassword(request):
             password_validation.validate_password(serializer.data['new_password1'], user)
             user.set_password(serializer.data['new_password1'])
             user.save()
-            return Response(serializer.data)
+            dict = {'diet': user.dietary, 'favourites': user.favourites}
+            return Response(dict)
         return Response(serializer.errors, status = status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+# edit diet status
+@api_view(['POST'])
+def editdiet(request):
+    if request.method =='POST':
+        serializer = EditDietSerializer(data = request.data)
+        if serializer.is_valid():
+            user = User.objects.get(email = serializer.data['email'])
+            user.dietary = serializer.data['new_diet']
+            user.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+# favourite a recipe
+@api_view(['POST'])
+def favourites(request):
+    print(request.data)
+    if request.method =='POST':
+        print(1)
+        serializer = FavouriteSerializer(data = request.data)
+        if serializer.is_valid():
+            print(2)
+            user = User.objects.get(email = serializer.data['email'])
+            if user.favourites == '':
+                print(3)
+                user.favourites = (serializer.data['new_favourite'])
+                user.save()
+            else:
+                print(4)
+                saved = json.dumps(serializer.data['new_favourite'])
+                ''' user.favourites = saved.append(serializer.data['new_favourite'][0]) '''
+                ''' user.favourites = (saved) '''
+                user.favourites = (user.favourites + ', ' + saved)
+                user.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+# returns all ingredient names within database
+@api_view(['GET'])
+def get_ingredient(request):
+    result = list(Ingredients.objects.values('name'))
+    return JsonResponse({'data': result})

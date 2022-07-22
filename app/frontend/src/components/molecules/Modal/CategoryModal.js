@@ -12,8 +12,8 @@ import { Dialog } from '@mui/material';
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
 import './Modal.css';
-import { createTheme} from '@mui/material/styles';
 import { add } from "../../../reducers/userIngredients";
+import { createTheme} from '@mui/material/styles';
 
 export default function CategoryModal(props) {
     const dispatch = useDispatch();
@@ -126,6 +126,13 @@ export default function CategoryModal(props) {
                         }}
                         variant="contained"
                         theme={secondaryTheme}
+                        sx={{ "&&": {
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "#df7b84",
+                                color: "white", 
+                            }
+                        }}}
                     > 
                         Close 
                     </Button>
@@ -134,7 +141,14 @@ export default function CategoryModal(props) {
                         variant="contained"
                         disabled={isSubmitting}
                         theme={primaryTheme}
-                        sx={{color:"white"}}
+                        sx={{"&&":{
+                            color:"white",
+                            backgroundColor: "#df7b84",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "#df7b84", 
+                            }
+                        }}}
                     > 
                         Add
                     </Button> 

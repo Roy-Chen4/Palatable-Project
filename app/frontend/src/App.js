@@ -5,33 +5,54 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import IngredientPage from './containers/IngredientPage/IngredientPage';
 import RecipePage from './containers/RecipePage/RecipePage'
 import { Provider } from "react-redux";
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage'
+import { persistReducer } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
 import userReducer from './reducers/isLogged';
 import ingredientReducer from './reducers/userIngredients';
-import FeedModal from './components/molecules/Modal/FeedModal'
+import FavouritePage from './containers/FavouritePage/FavouritePage'
+import favouriteReducer from './reducers/isFavourited';
 
 export default function App() {
   // Create redux store
+
+  const reducers = combineReducers ({
+    user: userReducer,
+    ingredients: ingredientReducer,
+    favourited: favouriteReducer,
+  })
+
+
+  const persistConfig = {
+    key: 'root',
+    storage
+  };
+
+  const persistedReducer = persistReducer(persistConfig, reducers);
   const store = configureStore({
-    reducer: {
-      user: userReducer,
-      ingredients: ingredientReducer,
-    }},
+    reducer: persistedReducer
+  },
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    );
+  );
     
+  let persistor = persistStore(store);
+
   return(
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<IngredientPage />} />
-            <Route path="recipes" element={<RecipePage />} />
-            {/* <Route path="*" element={<NoPage />} /> */}
-            <Route path="feed" element={<FeedModal />}/>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<IngredientPage />} />
+              <Route path="recipes" element={<RecipePage />} />
+              <Route path="favourites" element={<FavouritePage />} />
+              {/* <Route path="*" element={<NoPage />} /> */}
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   );
 }

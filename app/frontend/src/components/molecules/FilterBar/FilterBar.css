@@ -1,0 +1,36 @@
+.appbar {
+    height: 7vh;
+}
+
+.toolbar {
+    background-color: #ffd4d8;
+    height: 7vh;
+}
+
+.dropdown {
+    height: 6vh;
+    width: 30%;
+}
+
+.filter-text {
+    font-weight: 700;
+}
+
+.select-contents {
+    justify-content: center;
+    width: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.button-contents {
+    justify-content: right;
+    display: flex;
+}
+
+.filter-button {
+    width: 100% !important;
+    text-decoration: none !important;
+    color: rgba(0, 0, 0, 0.87);
+}
