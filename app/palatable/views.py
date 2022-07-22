@@ -79,8 +79,14 @@ def register(request):
 
 class RegisterView(APIView):
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        serializer = UserSerializer(data=request.data) 
+        print("dasdfasdf")     
+        if serializer.is_valid(""" raise_exception=True """):
+            print("2") 
+            receiver = UserSerializer.data['email']
+            apple = generate_code()
+            sender = 'palatableltd@gmail.com'
+            email_generate(sender, receiver, apple)
         serializer.save()
         return Response(serializer.data)
 
