@@ -4,6 +4,7 @@ const initialState = {
     isLogged: false,
     email: '',
     diet: '',
+    token: '',
 }
 
 export const userSlice = createSlice({
@@ -15,6 +16,9 @@ export const userSlice = createSlice({
             state.value.email = action.payload.email
             state.value.isLogged = action.payload.isLogged
         },
+        tokenStore: (state, action) => {
+            state.value.token = action.payload.token
+        },
         logout: (state) => {
             state.value = initialState
         },
@@ -24,6 +28,6 @@ export const userSlice = createSlice({
     }
 });
 
-export const { login, logout, dietChange } = userSlice.actions;
+export const { login, logout, dietChange, tokenStore } = userSlice.actions;
  
 export default userSlice.reducer;

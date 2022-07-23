@@ -8,6 +8,7 @@ import TwoFactorPassModalBody from '../ModalBody/TwoFactor/TwoFactorPassModalBod
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../reducers/isLogged';
 import ForgottenPassModalBody from '../ModalBody/ForgottenPassModalBody';
+import axios from 'axios';
 
 
 export default function AuthModal(props) {
@@ -79,7 +80,9 @@ export default function AuthModal(props) {
             <Dialog open={forgottenPassOpen} onClose={() => setForgottenPassOpen(false)} fullWidth='true' maxWidth='md'>
                 <div className="confirmation_ui">
                     <ForgottenPassModalBody
-                        onClose={() => setForgottenPassOpen(false)}
+                        onClose={() => {
+                            setForgottenPassOpen(false)
+                        }}
                         onSubmit={() => {
                             setForgottenPassOpen(false);
                             setLoginFailCount(0);
@@ -99,6 +102,14 @@ export default function AuthModal(props) {
                             setTwoFactorRegOpen(false);
                             setForgottenPassOpen(false);
                             dispatch(logout());
+                            axios
+                                .post("/logout/")
+                                .then((res) => {
+                                    console.log(res)
+                                })
+                                .catch((err) => {
+                                    console.log(err.request);
+                            });
                         }} 
                         onSubmit={() => setTwoFactorRegOpen(false)}
                         registerClose={() => setRegOpen(false)}
@@ -118,7 +129,7 @@ export default function AuthModal(props) {
                             setForgottenPassOpen(false);
                             dispatch(logout());
                         }} 
-                        onSubmit={() => setTwoFactorPassOpen(false)}
+                        onSubmit={() => {setTwoFactorPassOpen(false); props.onClose();}}
                         primaryTheme={props.primaryTheme} 
                         secondaryTheme={props.secondaryTheme}
                     />

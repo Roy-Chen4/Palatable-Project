@@ -48,7 +48,8 @@ export default function RecipeCard(props) {
 
     const [open, setOpen] = React.useState(false);
     
-    const userEmail = useSelector((state) => state.user.value)
+    const userEmail = useSelector((state) => state.user.value.email)
+    const isLogged = useSelector((state) => state.user.value.isLogged)
 
 
 
@@ -103,13 +104,14 @@ export default function RecipeCard(props) {
                     title={props.recipe.title}
                     action={
                         <IconButton 
+                        sx = {{display: isLogged ? "inline-block": "none"}}
                         aria-label="add to favorites"
                         onClick = {() => {handleOnClick()}}
                         >
                             <FavoriteIcon />
                         </IconButton>
                     }
-                    sx={{textAlign: "center"}}
+                    sx={{textAlign: "center", }}
                 />
                 <CardMedia
                     component="img"

@@ -20,12 +20,9 @@ from palatable import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include('frontend.urls')),
-    # path('', TemplateView.as_view(template_name='index.html')),
-    ##path('register/', views.register,name='register'), 
-    path('test/', views.test),
-    path('login/', views.login),
-    path('register/', views.register),
+    path('', TemplateView.as_view(template_name='index.html')),
+    path('editemail/', views.editemail),
+    path('editpassword/', views.editpassword),
     path('sendtwofac/', views.email),
     path('editemail/', views.editemail),
     path('editpassword/', views.editpassword),
@@ -35,5 +32,7 @@ urlpatterns = [
     path('editdiet/', views.editdiet),
     path('favourites/', views.favourites),
     path('ingredients/', views.get_ingredient),
-    path('', include('frontend.urls')),
-]
+    path('register/', views.register),
+    path('', include('palatable.urls')),
+    path('', include('frontend.urls'))
+    ]

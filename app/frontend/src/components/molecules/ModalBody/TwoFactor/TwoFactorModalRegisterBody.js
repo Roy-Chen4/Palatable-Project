@@ -12,7 +12,7 @@ from '@mui/material';
 import { withFormik } from "formik";
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../../../reducers/isLogged";
+import { login, tokenStore } from "../../../../reducers/isLogged";
 import "../ModalBody.css"
 
 const form = props => {
@@ -45,7 +45,10 @@ const form = props => {
         // console.log(values)
         axios
             .post("/twofacregister/", values)
-            .then((res) => console.log(res))
+            .then((res) => {
+                console.log(res)
+                dispatch(tokenStore({token: res.data.jwt}))
+            })
             .then(() => resetForm())
             .then(() => onSubmit())
             .then(() => registerClose())
@@ -61,10 +64,11 @@ const form = props => {
                     openAlert()
                     setTimeout(function() { 
                         closeAlert()
-                    }.bind(this), 2000)
+                    }.bind(this), 1500)
                     // account does not exist popup
                 }
         });
+        
         // if (regValue !== '') {
         //     axios
         //         .post("/register/", regValue)

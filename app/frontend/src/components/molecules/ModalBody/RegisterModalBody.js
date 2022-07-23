@@ -13,7 +13,7 @@ import { withFormik } from "formik";
 import * as yup from "yup";
 import axios from 'axios';
 import { useDispatch } from "react-redux";
-import { login } from "../../../reducers/isLogged";
+import { login, tokenStore } from "../../../reducers/isLogged";
 import validationRegister from "../../../validation/regSchema";
 import "./ModalBody.css"
 
