@@ -21,49 +21,6 @@ import './Modal.css';
 
 export default function RecipeModal(props) {
 
-    // console.log(props.recipe)
-    // console.log(props.showInstructions)
-    // if (props.showInstructions === true) {
-    //     var instructions = props.recipe.instructions
-    //         .replace(/<[^>]+>/g, '')
-    //         .split(".")
-    //         .filter(function(e){return e}); 
-    //     var ingredients = props.recipe.extendedIngredients;
-    // } else {
-    //     instructions = []
-    //     ingredients = [...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients]
-    // }
-    const [instructions, setInstructions] = React.useState(props.instructions)
-
-    const options = {
-        method: 'GET',
-        url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'+props.id+'/information',
-        headers: {
-            'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
-            'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-        }
-    };
-    function retrieveInstructions() {
-        axios.request(options).then(function (response) {
-            console.log(response.data);
-            return setInstructions(response.data.instructions
-                .replace(/<[^>]+>/g, '')
-                .split(".")
-                .filter(function(e){return e}));
-        }).catch(function (error) {
-            console.error(error);
-            return []
-        });
-    }
-
-    if (props.instructions.length === 0) {
-        console.log("retrieved instructions")
-        React.useEffect(() => {
-            retrieveInstructions();
-        }, []);
-    }
-
-
     return (
         <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth="lg" overflow='scroll'>
             
@@ -115,7 +72,7 @@ export default function RecipeModal(props) {
                         <Divider className="bot-divider"></Divider>
                         <Typography gutterBottom variant="p1" component="div" className="instruction-list">
                             <div className="align-left">
-                                {instructions.map((item, index) => (
+                                {props.instructions.map((item, index) => (
                                     <div key={index}>
                                         {index+1 + ". "+item}
                                     </div>

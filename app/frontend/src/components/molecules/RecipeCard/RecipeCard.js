@@ -30,7 +30,8 @@ export default function RecipeCard(props) {
     const dispatch = useDispatch();
     
     const [recipeOpen, setRecipeOpen] = React.useState(false);
-    
+    const [instructions, setInstructions] = React.useState([])
+    const [ingredients, setIngredients] = React.useState([])
     // console.log(props.recipe);
 
     const primaryTheme = createTheme({
@@ -64,8 +65,8 @@ export default function RecipeCard(props) {
             "title": props.recipe.title, 
             "id": props.recipe.id,
             "image": props.recipe.image, 
-            "ingredients": props.recipe.extendedIngredients,
-            "instructions": props.recipe.instructions,
+            "ingredients": ingredients,
+            "instructions": instructions,
         }
         const values = {email: userEmail, new_favourite: JSON.stringify(recipeValues)}
         // console.log(values)
@@ -88,6 +89,38 @@ export default function RecipeCard(props) {
         });
     }
 
+    React.useEffect(()=> {
+        if (props.type === "redux" || props.type === "feed") {
+            setInstructions(props.recipe.instructions);
+            setIngredients(props.recipe.extendedIngredients);
+        } else {
+            retrieveInstructions();
+            setIngredients(...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients)
+        }
+    }, [])
+    
+
+    const options = {
+        method: 'GET',
+        url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'+props.recipe.id+'/information',
+        headers: {
+            'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
+            'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+        }
+    };
+    function retrieveInstructions() {
+        axios.request(options).then(function (response) {
+            console.log(response.data);
+            setInstructions(response.data.instructions
+                .replace(/<[^>]+>/g, '')
+                .split(".")
+                .filter(function(e){return e}));
+        }).catch(function (error) {
+            console.error(error);
+            setInstructions([]);
+        });
+    }
+
     function getIngredients() {
         // check if from redux
         if (props.type === "redux") {
@@ -98,20 +131,23 @@ export default function RecipeCard(props) {
         } else {
             return [...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients]
         }
-        // check if search
     }
 
     function getInstructions() {
         // check if from redux
+        // if (props.type === "redux" || props.type === "feed") {
         if (props.type === "redux" || props.type === "feed") {
-            return props.recipe.instructions
+            return instructions
                 .replace(/<[^>]+>/g, '')
                 .split(".")
                 .filter(function(e){return e});
-            // check if feed 
         } else {
-            return []
+            return instructions
         }
+            // check if feed 
+        // } else {
+        //     return []
+        // }
         // check if search
     }
 
