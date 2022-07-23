@@ -16,6 +16,7 @@ from '@mui/material';
 import { Dialog } from '@mui/material';
 import PropTypes from 'prop-types';
 import CloseIcon from '@mui/icons-material/Close';
+import axios from 'axios';
 import './Modal.css';
 
 export default function RecipeModal(props) {
@@ -32,10 +33,37 @@ export default function RecipeModal(props) {
     //     instructions = []
     //     ingredients = [...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients]
     // }
-    var instructions = props.instructions
-        .replace(/<[^>]+>/g, '')
-        .split(".")
-        .filter(function(e){return e}); 
+    const [instructions, setInstructions] = React.useState(props.instructions)
+
+    const options = {
+        method: 'GET',
+        url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'+props.id+'/information',
+        headers: {
+            'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
+            'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+        }
+    };
+    function retrieveInstructions() {
+        axios.request(options).then(function (response) {
+            console.log(response.data);
+            return setInstructions(response.data.instructions
+                .replace(/<[^>]+>/g, '')
+                .split(".")
+                .filter(function(e){return e}));
+        }).catch(function (error) {
+            console.error(error);
+            return []
+        });
+    }
+
+    if (props.instructions.length === 0) {
+        console.log("retrieved instructions")
+        React.useEffect(() => {
+            retrieveInstructions();
+        }, []);
+        console.log(instructions)
+    }
+
 
     return (
         <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth="lg" overflow='scroll'>
@@ -122,6 +150,7 @@ export default function RecipeModal(props) {
 RecipeModal.propTypes = {
     open: PropTypes.bool,
     title: PropTypes.any,
+    id: PropTypes.any,
     image: PropTypes.any,
     ingredients: PropTypes.any,
     instructions: PropTypes.any,

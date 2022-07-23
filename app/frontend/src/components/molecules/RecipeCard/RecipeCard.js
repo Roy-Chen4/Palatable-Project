@@ -62,6 +62,7 @@ export default function RecipeCard(props) {
     function handleOnClick(){
         const recipeValues = {
             "title": props.recipe.title, 
+            "id": props.recipe.id,
             "image": props.recipe.image, 
             "ingredients": props.recipe.extendedIngredients,
             "instructions": props.recipe.instructions,
@@ -103,7 +104,10 @@ export default function RecipeCard(props) {
     function getInstructions() {
         // check if from redux
         if (props.type === "redux" || props.type === "feed") {
-            return props.recipe.instructions;
+            return props.recipe.instructions
+                .replace(/<[^>]+>/g, '')
+                .split(".")
+                .filter(function(e){return e});
             // check if feed 
         } else {
             return []
@@ -163,6 +167,7 @@ export default function RecipeCard(props) {
             showInstructions={props.instructions}
             recipe={props.recipe}
             title={props.recipe.title}
+            id={props.recipe.id}
             image={props.recipe.image}
             ingredients={getIngredients()}
             instructions={getInstructions()}
