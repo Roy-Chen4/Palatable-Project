@@ -280,7 +280,8 @@ def favourites(request):
                 print(serializer.data['new_favourite'])
                 ''' user.favourites = saved.append(serializer.data['new_favourite'][0]) '''
                 ''' user.favourites = (saved) '''
-                user.favourites = (user.favourites + ", " + serializer.data['new_favourite'])
+                # user.favourites = serializer.data['new_favourite']
+                user.favourites = json.dumps(serializer.data['new_favourite'])
                 user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)

@@ -68,25 +68,23 @@ export default function RecipeCard(props) {
             "ingredients": ingredients,
             "instructions": instructions,
         }
-        const values = {email: userEmail, new_favourite: JSON.stringify(recipeValues)}
+        const values = {email: userEmail, new_favourite: recipeValues}
         // console.log(values)
         // console.log(JSON.stringify(recipeValues))
         dispatch(add({favourited: [recipeValues]}));
         /* setIsSubmitting(true); */
-        setTimeout(function() { 
-        /* setIsSubmitting(false); */
-        // console.log(JSON.stringify(values))
-        // console.log(JSON.parse(JSON.stringify(values))
-        }.bind(this), 1000)
-        setOpen(true);
         axios
-            .post("/favourites/", values)
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((err) => {
-                console.log(err.request);
+        .post("/favourites/", values)
+        .then((res) => {
+            setOpen(true);
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log(err.request);
         });
+        setTimeout(function() { 
+            setOpen(false);
+        }.bind(this), 1000)
     }
 
     React.useEffect(()=> {

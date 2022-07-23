@@ -256,12 +256,24 @@ export default function CollapsableDrawer() {
             });
           }}
         >
-          <ListItemButton onClick={()=> setState(false)}>
-            <ListItemIcon>
-              <ExitToAppOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Sign Out'} />
-          </ListItemButton>
+          <NavLink 
+            to={{
+              pathname: "/",
+            }}
+            state= {{
+              feed: true,
+            }}
+            onClick={()=> changeLocation('/favourites')}
+            className={"recipe-page-button" }
+          >
+
+            <ListItemButton onClick={()=> setState(false)}>
+              <ListItemIcon>
+                <ExitToAppOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Sign Out'} />
+            </ListItemButton>
+          </NavLink>
         </ListItem>
       </List>
     </Box>
