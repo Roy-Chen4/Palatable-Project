@@ -32,6 +32,7 @@ urlpatterns = [
     path('editdiet/', views.editdiet),
     path('favourites/', views.favourites),
     path('ingredients/', views.get_ingredient),
+    path('register/', views.register),
     path('', include('palatable.urls')),
     path('', include('frontend.urls'))
     ]

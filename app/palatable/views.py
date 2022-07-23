@@ -62,7 +62,7 @@ def email_generate_password(sender, receiver, apple):
 
 # Create your views here.
 
-'''@api_view(['POST'])
+@api_view(['POST'])
 def register(request):
     global data
     data = NewUserForm1()
@@ -75,20 +75,20 @@ def register(request):
             email_generate(sender, receiver, apple)
             data = NewUserForm1(request.data)
             return Response(userSerializer.data)
-        return Response(userSerializer.errors, status = status.HTTP_403_FORBIDDEN)'''
+        return Response(userSerializer.errors, status = status.HTTP_403_FORBIDDEN)
 
-class RegisterView(APIView):
-    def post(self, request):
-        serializer = UserSerializer(data=request.data) 
-        print("dasdfasdf")     
-        if serializer.is_valid(""" raise_exception=True """):
-            print("2") 
-            receiver = UserSerializer.data['email']
-            apple = generate_code()
-            sender = 'palatableltd@gmail.com'
-            email_generate(sender, receiver, apple)
-        serializer.save()
-        return Response(serializer.data)
+# class RegisterView(APIView):
+#     def post(self, request):
+#         serializer = UserSerializer(data=request.data) 
+#         print("dasdfasdf")     
+#         if serializer.is_valid(""" raise_exception=True """):
+#             print("2") 
+#             receiver = UserSerializer.data['email']
+#             apple = generate_code()
+#             sender = 'palatableltd@gmail.com'
+#             email_generate(sender, receiver, apple)
+#         serializer.save()
+#         return Response(serializer.data)
 
 class LoginView(APIView):
     def post(self, request):
