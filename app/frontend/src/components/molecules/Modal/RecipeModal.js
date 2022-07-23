@@ -61,7 +61,6 @@ export default function RecipeModal(props) {
         React.useEffect(() => {
             retrieveInstructions();
         }, []);
-        console.log(instructions)
     }
 
 
