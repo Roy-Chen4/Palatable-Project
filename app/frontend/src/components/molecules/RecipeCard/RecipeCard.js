@@ -91,11 +91,14 @@ export default function RecipeCard(props) {
 
     React.useEffect(()=> {
         if (props.type === "redux" || props.type === "feed") {
-            setInstructions(props.recipe.instructions);
+            setInstructions(props.recipe.instructions
+                .replace(/<[^>]+>/g, '')
+                .split(".")
+                .filter(function(e){return e}));
             setIngredients(props.recipe.extendedIngredients);
         } else {
+            setIngredients([...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients])
             retrieveInstructions();
-            setIngredients(...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients)
         }
     }, [])
     
@@ -133,43 +136,10 @@ export default function RecipeCard(props) {
         }
     }
 
-    function getInstructions() {
-        // check if from redux
-        // if (props.type === "redux" || props.type === "feed") {
-        if (props.type === "redux" || props.type === "feed") {
-            return instructions
-                .replace(/<[^>]+>/g, '')
-                .split(".")
-                .filter(function(e){return e});
-        } else {
-            return instructions
-        }
-            // check if feed 
-        // } else {
-        //     return []
-        // }
-        // check if search
-    }
-
 
     return (
         <div className="recipe-cards">
             <Card classname="recipe-container" variant="outlined" sx={{ width: "48vw" }} >
-                {/* <CardMedia
-                    component="img"
-                    width="48vw"
-                    image={props.recipe.image}
-                    // alt="green iguana"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {props.recipe.title}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small">Save</Button>
-                    <Button size="small">Explore</Button>
-                </CardActions> */}
                 <CardHeader
                     title={props.recipe.title}
                     action={
@@ -206,7 +176,7 @@ export default function RecipeCard(props) {
             id={props.recipe.id}
             image={props.recipe.image}
             ingredients={getIngredients()}
-            instructions={getInstructions()}
+            instructions={instructions}
             onClose={() => setRecipeOpen(false)} 
             primaryTheme={primaryTheme} 
         />

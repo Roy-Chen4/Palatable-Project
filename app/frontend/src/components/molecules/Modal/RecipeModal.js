@@ -16,7 +16,6 @@ from '@mui/material';
 import { Dialog } from '@mui/material';
 import PropTypes from 'prop-types';
 import CloseIcon from '@mui/icons-material/Close';
-import axios from 'axios';
 import './Modal.css';
 
 export default function RecipeModal(props) {
