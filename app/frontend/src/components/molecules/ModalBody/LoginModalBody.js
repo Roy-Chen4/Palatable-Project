@@ -51,10 +51,10 @@ const form = props => {
                 console.log(res)
                 dispatch(dietChange({newUserDiet: res.data.diet}))
                 dispatch(tokenStore({token: res.data.jwt}))
-                console.log(res.data.favourites)
-                console.log(JSON.parse(res.data.favourites))
+                // console.log(res.data.favourites)
                 const faves = JSON.parse(JSON.parse(res.data.favourites))
-                dispatch(set({new_favourite: [faves]}))
+                console.log(faves)
+                dispatch(set({new_favourite: faves}))
 
             })
             .then(() => dispatch(login({ isLogged: true, email: values.email})))

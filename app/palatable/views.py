@@ -118,7 +118,6 @@ class LoginView(APIView):
         
         response.set_cookie(key='jwt', value=token, httponly=True)
         
-        print(user.favourites)
         response.data = {
             'jwt': token,
             'diet': user.dietary,
@@ -272,17 +271,13 @@ def favourites(request):
         serializer = FavouriteSerializer(data = request.data)
         if serializer.is_valid():
             user = User.objects.get(email = serializer.data['email'])
-            if user.favourites == '':
-                user.favourites = (serializer.data['new_favourite'])
-                user.save()
-            else:
-                # saved = json.dumps(serializer.data['new_favourite'])
-                print(serializer.data['new_favourite'])
-                ''' user.favourites = saved.append(serializer.data['new_favourite'][0]) '''
-                ''' user.favourites = (saved) '''
-                # user.favourites = serializer.data['new_favourite']
-                user.favourites = json.dumps(serializer.data['new_favourite'])
-                user.save()
+            json.dumps(serializer.data['new_favourite'])
+            # print(serializer.data['new_favourite'])
+            # ''' user.favourites = saved.append(serializer.data['new_favourite'][0]) '''
+            # ''' user.favourites = (saved) '''
+            # user.favourites = serializer.data['new_favourite']
+            user.favourites = json.dumps(serializer.data['new_favourite'])
+            user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 

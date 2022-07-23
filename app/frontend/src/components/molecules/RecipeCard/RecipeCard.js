@@ -51,7 +51,7 @@ export default function RecipeCard(props) {
     
     const userEmail = useSelector((state) => state.user.value.email)
     const isLogged = useSelector((state) => state.user.value.isLogged)
-
+    const faves= useSelector((state) => state.favourited.favourited)
 
 
   /*   console.log(rname) */
@@ -68,19 +68,23 @@ export default function RecipeCard(props) {
             "ingredients": ingredients,
             "instructions": instructions,
         }
-        const values = {email: userEmail, new_favourite: JSON.stringify(recipeValues)}
         dispatch(add({favourited: [recipeValues]}));
+        const allFaves = [...faves, recipeValues]
+        const values = {email: userEmail, new_favourite: JSON.stringify(allFaves)}
         /* setIsSubmitting(true); */
         axios
         .post("/favourites/", values)
         .then((res) => {
             setOpen(true);
             console.log(res)
+        }).then(()=> {
+            setTimeout(function() { 
+                setOpen(false);
+            }.bind(this), 2000)
         })
         .catch((err) => {
             console.log(err.request);
-        });
-        setOpen(false);
+        }); 
     }
 
     React.useEffect(()=> {
