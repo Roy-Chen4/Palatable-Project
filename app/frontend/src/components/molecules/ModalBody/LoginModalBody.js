@@ -52,23 +52,10 @@ const form = props => {
                 dispatch(dietChange({newUserDiet: res.data.diet}))
                 dispatch(tokenStore({token: res.data.jwt}))
                 console.log(res.data.favourites)
-                // console.log(res.data.favourites.replace(/'/g, '"'))
-                // console.log(JSON.parse(res.data.favourites.replace(/'/g, '"')))
-                // const favs = JSON.parse(res.data.favourites)
-                dispatch(set({new_favourite: res.data.favourites}))
+                console.log(JSON.parse(res.data.favourites))
+                const faves = JSON.parse(JSON.parse(res.data.favourites))
+                dispatch(set({new_favourite: [faves]}))
 
-
-                // let jsonRecipe = ''
-                // console.log(res.data.favourites.replace(/'/g, '"'))
-                // console.log(res.data.favourites.length)
-                // if (res.data.favourites.length > 1) {
-
-                //     console.log("hello")
-                //     console.log(JSON.parse(res.data.favourites.toString().replace(/'/g, '"')))
-                //     jsonRecipe = JSON.parse(res.data.favourites.replace(/'/g, '"'))
-                //     console.log(jsonRecipe)
-                // }
-                /* console.log(jsonRecipe) */ 
             })
             .then(() => dispatch(login({ isLogged: true, email: values.email})))
             .then(() => resetForm())

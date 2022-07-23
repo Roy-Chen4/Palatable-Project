@@ -68,9 +68,7 @@ export default function RecipeCard(props) {
             "ingredients": ingredients,
             "instructions": instructions,
         }
-        const values = {email: userEmail, new_favourite: recipeValues}
-        // console.log(values)
-        // console.log(JSON.stringify(recipeValues))
+        const values = {email: userEmail, new_favourite: JSON.stringify(recipeValues)}
         dispatch(add({favourited: [recipeValues]}));
         /* setIsSubmitting(true); */
         axios
@@ -82,22 +80,23 @@ export default function RecipeCard(props) {
         .catch((err) => {
             console.log(err.request);
         });
-        setTimeout(function() { 
-            setOpen(false);
-        }.bind(this), 1000)
+        setOpen(false);
     }
 
     React.useEffect(()=> {
-        if (props.type === "redux" || props.type === "feed") {
+        if (props.type === "feed") {
             setInstructions(props.recipe.instructions
                 .replace(/<[^>]+>/g, '')
                 .split(".")
                 .filter(function(e){return e}));
             setIngredients(props.recipe.extendedIngredients);
-        } else {
+        } else if (props.type === "redux") {
+            setInstructions(props.recipe.instructions)
+        }
+        else {
             setIngredients([...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients])
             retrieveInstructions();
-        }
+        } 
     }, [])
     
 

@@ -260,10 +260,10 @@ export default function CollapsableDrawer() {
             to={{
               pathname: "/",
             }}
-            state= {{
-              feed: true,
-            }}
-            onClick={()=> changeLocation('/favourites')}
+            // state= {{
+            //   feed: true,
+            // }}
+            // onClick={()=> changeLocation('/')}
             className={"recipe-page-button" }
           >
 
