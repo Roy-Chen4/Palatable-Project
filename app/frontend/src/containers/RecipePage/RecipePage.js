@@ -13,14 +13,15 @@ import './RecipePage.css';
 
 
 function RecipePage() {
+    const location = useLocation();
     const [isLoading, setIsLoading] = React.useState(true);
 
     
     const userAddedIngredients = useSelector((state) => state.ingredients.ingredients);
     const userDiet = useSelector((state) => state.user.value.diet);
     const [filter, setFilter] = React.useState([])
+    const [type, setType] = React.useState("feed")
 
-    const location = useLocation();
 
     const isFeed = location.state.feed;
 
@@ -36,6 +37,7 @@ function RecipePage() {
 
     function getOptions (len) {
         if (userAddedIngredients.length === 0 || isFeed) {
+            setType("feed");
             if (location.state.filter.length !== 0 || userDiet !== "") {
                 console.log("filters applied")
                 const getParam = {tags: filter, number: '10'}
@@ -60,6 +62,7 @@ function RecipePage() {
                 };
             }
         } else {
+            setType("search");
             options = {
                 method: 'GET',
                 url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
@@ -193,6 +196,7 @@ function RecipePage() {
                                         instructions={getInstructions()}
                                         recipe={item}
                                         key={index}
+                                        type={type}
                                     />
                                     </Grid>
                                 ))}     

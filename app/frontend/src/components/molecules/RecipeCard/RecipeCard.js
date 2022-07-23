@@ -31,7 +31,7 @@ export default function RecipeCard(props) {
     
     const [recipeOpen, setRecipeOpen] = React.useState(false);
     
-    console.log(props.recipe);
+    // console.log(props.recipe);
 
     const primaryTheme = createTheme({
         palette: {
@@ -60,18 +60,24 @@ export default function RecipeCard(props) {
     */
 
     function handleOnClick(){
-
-        const values = {email: userEmail.email, new_favourite: props.recipe}
-        console.log(props.recipe[0])
-        console.log(props.recipe)
-        console.log(values)
-        dispatch(add({favourited: [props.recipe]}));
+        const recipeValues = {
+            "title": props.recipe.title, 
+            "image": props.recipe.image, 
+            "ingredients": props.recipe.extendedIngredients,
+            "instructions": props.recipe.instructions,
+        }
+        const values = {email: userEmail, new_favourite: JSON.stringify(recipeValues)}
+        // console.log(values)
+        // console.log(JSON.stringify(recipeValues))
+        dispatch(add({favourited: [recipeValues]}));
         /* setIsSubmitting(true); */
         setTimeout(function() { 
         /* setIsSubmitting(false); */
+        // console.log(JSON.stringify(values))
+        // console.log(JSON.parse(JSON.stringify(values))
         }.bind(this), 1000)
         setOpen(true);
-            axios
+        axios
             .post("/favourites/", values)
             .then((res) => {
                 console.log(res)
@@ -79,6 +85,30 @@ export default function RecipeCard(props) {
             .catch((err) => {
                 console.log(err.request);
         });
+    }
+
+    function getIngredients() {
+        // check if from redux
+        if (props.type === "redux") {
+            return props.recipe.ingredients;
+            // check if feed 
+        } else if (props.type === "feed") {
+            return props.recipe.extendedIngredients;
+        } else {
+            return [...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients]
+        }
+        // check if search
+    }
+
+    function getInstructions() {
+        // check if from redux
+        if (props.type === "redux" || props.type === "feed") {
+            return props.recipe.instructions;
+            // check if feed 
+        } else {
+            return []
+        }
+        // check if search
     }
 
 
@@ -132,6 +162,10 @@ export default function RecipeCard(props) {
             open={recipeOpen}
             showInstructions={props.instructions}
             recipe={props.recipe}
+            title={props.recipe.title}
+            image={props.recipe.image}
+            ingredients={getIngredients()}
+            instructions={getInstructions()}
             onClose={() => setRecipeOpen(false)} 
             primaryTheme={primaryTheme} 
         />
@@ -150,4 +184,5 @@ RecipeCard.propTypes = {
     instructions: PropTypes.bool,
     recipe: PropTypes.any,
     recipeInfo: PropTypes.any,
+    type: PropTypes.string,
 }

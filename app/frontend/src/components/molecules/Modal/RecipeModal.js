@@ -20,25 +20,29 @@ import './Modal.css';
 
 export default function RecipeModal(props) {
 
-    console.log(props.recipe)
-    console.log(props.showInstructions)
-    if (props.showInstructions === true) {
-        var instructions = props.recipe.instructions
-            .replace(/<[^>]+>/g, '')
-            .split(".")
-            .filter(function(e){return e}); 
-        var ingredients = props.recipe.extendedIngredients;
-    } else {
-        instructions = []
-        ingredients = [...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients]
-    }
+    // console.log(props.recipe)
+    // console.log(props.showInstructions)
+    // if (props.showInstructions === true) {
+    //     var instructions = props.recipe.instructions
+    //         .replace(/<[^>]+>/g, '')
+    //         .split(".")
+    //         .filter(function(e){return e}); 
+    //     var ingredients = props.recipe.extendedIngredients;
+    // } else {
+    //     instructions = []
+    //     ingredients = [...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients]
+    // }
+    var instructions = props.instructions
+        .replace(/<[^>]+>/g, '')
+        .split(".")
+        .filter(function(e){return e}); 
 
     return (
         <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth="lg" overflow='scroll'>
             
             <DialogTitle>
                 <Typography className="card-title" variant="h3" component="div">
-                    {props.recipe.title}
+                    {props.title}
                 </Typography>
 
             </DialogTitle>
@@ -60,7 +64,7 @@ export default function RecipeModal(props) {
                             <CardMedia
                                 component="img"
                                 width="70vw"
-                                image={props.recipe.image}
+                                image={props.image}
                             />
                         </Card>
                     </div>
@@ -71,7 +75,7 @@ export default function RecipeModal(props) {
                         </Typography>
                         <Divider className="bottom-divider"></Divider>
                         <div className={`${"align-left"} ${"ingredient-list"}`}>
-                            {ingredients.map((item, index) => (
+                            {props.ingredients.map((item, index) => (
                                 <div key={index}>
                                     &#8226;{" " + item.name}
                                 </div>
@@ -117,7 +121,10 @@ export default function RecipeModal(props) {
 
 RecipeModal.propTypes = {
     open: PropTypes.bool,
-    recipe: PropTypes.any,
+    title: PropTypes.any,
+    image: PropTypes.any,
+    ingredients: PropTypes.any,
+    instructions: PropTypes.any,
     onClose: PropTypes.func,
     primaryTheme: PropTypes.func,
     showInstructions: PropTypes.bool,
