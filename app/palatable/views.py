@@ -65,6 +65,7 @@ def email_generate_password(sender, receiver, apple):
 @api_view(['POST'])
 def register(request):
     global data
+    global receiver
     data = NewUserForm1()
     if request.method == 'POST':
         userSerializer = RegisterSerializer(data = request.data)
@@ -72,6 +73,7 @@ def register(request):
             receiver = userSerializer.data['email']
             apple = generate_code()
             sender = 'palatableltd@gmail.com'
+            print(apple)
             email_generate(sender, receiver, apple)
             data = NewUserForm1(request.data)
             return Response(userSerializer.data)
@@ -115,7 +117,9 @@ class LoginView(APIView):
 
         response.set_cookie(key='jwt', value=token, httponly=True)
         response.data = {
-            'jwt': token
+            'jwt': token,
+            'diet': user.dietary,
+            'favourites': user.favourites,
         }
         return response
 
@@ -154,6 +158,7 @@ def email(request):
     receiver = request.data['email']
     apple = generate_code()
     sender = 'palatableltd@gmail.com'
+    print(apple)
     email_generate_password(sender, receiver, apple)
     return Response("Email has been sent")
 
@@ -179,7 +184,21 @@ def twofacregister(request):
             if (vcode == code):
                 if data.is_valid():
                     data.save()
-                    return Response(serializer.data)
+
+                    user = User.objects.filter(email=receiver).first()
+
+                    payload = {
+                        'id': user.id,
+                        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+                        'iat': datetime.datetime.utcnow()
+                    }
+
+                    token = jwt.encode(payload, 'secret', algorithm='HS256')
+
+                    response = Response()
+
+                    response.set_cookie(key='jwt', value=token, httponly=True)
+                    return Response({'jwt': token})
             else:
                 return Response(data = "incorrectcode", status = status.HTTP_403_FORBIDDEN)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)

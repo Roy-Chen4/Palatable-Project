@@ -10,7 +10,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { set } from "../../../reducers/isFavourited";
-import { dietChange, login } from "../../../reducers/isLogged";
+import { dietChange, login, tokenStore } from "../../../reducers/isLogged";
 import validationLogin from "../../../validation/loginSchema";
 import "./ModalBody.css";
 
@@ -50,6 +50,8 @@ const form = props => {
             .then((res) => {
                 console.log(res)
                 dispatch(dietChange({newUserDiet: res.data.diet}))
+                dispatch(tokenStore({token: res.data.jwt}))
+                dispatch(set({new_favourite: [res.data.favourites]}))
                 // let jsonRecipe = ''
                 // console.log(res.data.favourites.replace(/'/g, '"'))
                 // console.log(res.data.favourites.length)
@@ -61,7 +63,6 @@ const form = props => {
                 //     console.log(jsonRecipe)
                 // }
                 /* console.log(jsonRecipe) */ 
-                dispatch(set({new_favourite: [res.data.favourites]}))
             })
             .then(() => dispatch(login({ isLogged: true, email: values.email})))
             .then(() => resetForm())

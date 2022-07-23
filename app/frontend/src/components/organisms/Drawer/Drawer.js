@@ -23,9 +23,10 @@ import AuthModal from '../../molecules/Modal/AuthModal';
 import DietModal from '../../molecules/Modal/DietModal';
 import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
 import { createTheme } from '@mui/material/styles';
-import './Drawer.css';
 import { clear } from '../../../reducers/userIngredients';
 import { empty } from '../../../reducers/isFavourited';
+import axios from 'axios';
+import './Drawer.css';
 
 export default function CollapsableDrawer() {
   const dispatch = useDispatch();
@@ -245,6 +246,14 @@ export default function CollapsableDrawer() {
             dispatch(logout());
             dispatch(clear());
             dispatch(empty());
+            axios
+                .post("/logout/")
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch((err) => {
+                    console.log(err.request);
+            });
           }}
         >
           <ListItemButton onClick={()=> setState(false)}>
