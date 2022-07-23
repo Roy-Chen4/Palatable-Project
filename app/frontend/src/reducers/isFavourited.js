@@ -9,7 +9,7 @@ export const favouriteSlice = createSlice({
     initialState: initialState,
     reducers: {
         add: (state, action) => {
-            if (!(state.favourited.some(a => a === action.payload.favourited[0]))) {
+            if (!(state.favourited.some(a => a.id === action.payload.favourited[0].id))) {
                 state.favourited = [...state.favourited, ...action.payload.favourited]
             } else {
                 state.favourited = [...state.favourited]
@@ -22,7 +22,7 @@ export const favouriteSlice = createSlice({
             return initialState;
         },
         set: (state, action) => {
-            state.favourited = [...action.payload.new_favourite]
+            state.favourited = action.payload.new_favourite
         }
     }
 });

@@ -30,8 +30,9 @@ export default function RecipeCard(props) {
     const dispatch = useDispatch();
     
     const [recipeOpen, setRecipeOpen] = React.useState(false);
-    
-    console.log(props.recipe);
+    const [instructions, setInstructions] = React.useState([])
+    const [ingredients, setIngredients] = React.useState([])
+    // console.log(props.recipe);
 
     const primaryTheme = createTheme({
         palette: {
@@ -50,7 +51,7 @@ export default function RecipeCard(props) {
     
     const userEmail = useSelector((state) => state.user.value.email)
     const isLogged = useSelector((state) => state.user.value.isLogged)
-
+    const faves= useSelector((state) => state.favourited.favourited)
 
 
   /*   console.log(rname) */
@@ -60,46 +61,86 @@ export default function RecipeCard(props) {
     */
 
     function handleOnClick(){
-
-        const values = {email: userEmail.email, new_favourite: props.recipe}
-        console.log(props.recipe[0])
-        console.log(props.recipe)
-        console.log(values)
-        dispatch(add({favourited: [props.recipe]}));
+        const recipeValues = {
+            "title": props.recipe.title, 
+            "id": props.recipe.id,
+            "image": props.recipe.image, 
+            "ingredients": ingredients,
+            "instructions": instructions,
+        }
+        dispatch(add({favourited: [recipeValues]}));
+        const allFaves = [...faves, recipeValues]
+        const values = {email: userEmail, new_favourite: JSON.stringify(allFaves)}
         /* setIsSubmitting(true); */
-        setTimeout(function() { 
-        /* setIsSubmitting(false); */
-        }.bind(this), 1000)
-        setOpen(true);
-            axios
-            .post("/favourites/", values)
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((err) => {
-                console.log(err.request);
+        axios
+        .post("/favourites/", values)
+        .then((res) => {
+            setOpen(true);
+            console.log(res)
+        }).then(()=> {
+            setTimeout(function() { 
+                setOpen(false);
+            }.bind(this), 2000)
+        })
+        .catch((err) => {
+            console.log(err.request);
+        }); 
+    }
+
+    React.useEffect(()=> {
+        if (props.type === "feed") {
+            setInstructions(props.recipe.instructions
+                .replace(/<[^>]+>/g, '')
+                .split(".")
+                .filter(function(e){return e}));
+            setIngredients(props.recipe.extendedIngredients);
+        } else if (props.type === "redux") {
+            setInstructions(props.recipe.instructions)
+        }
+        else {
+            setIngredients([...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients])
+            retrieveInstructions();
+        } 
+    }, [])
+    
+
+    const options = {
+        method: 'GET',
+        url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'+props.recipe.id+'/information',
+        headers: {
+            'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
+            'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+        }
+    };
+    function retrieveInstructions() {
+        axios.request(options).then(function (response) {
+            console.log(response.data);
+            setInstructions(response.data.instructions
+                .replace(/<[^>]+>/g, '')
+                .split(".")
+                .filter(function(e){return e}));
+        }).catch(function (error) {
+            console.error(error);
+            setInstructions([]);
         });
+    }
+
+    function getIngredients() {
+        // check if from redux
+        if (props.type === "redux") {
+            return props.recipe.ingredients;
+            // check if feed 
+        } else if (props.type === "feed") {
+            return props.recipe.extendedIngredients;
+        } else {
+            return [...props.recipe.missedIngredients, ...props.recipe.usedIngredients, ...props.recipe.unusedIngredients]
+        }
     }
 
 
     return (
         <div className="recipe-cards">
             <Card classname="recipe-container" variant="outlined" sx={{ width: "48vw" }} >
-                {/* <CardMedia
-                    component="img"
-                    width="48vw"
-                    image={props.recipe.image}
-                    // alt="green iguana"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {props.recipe.title}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small">Save</Button>
-                    <Button size="small">Explore</Button>
-                </CardActions> */}
                 <CardHeader
                     title={props.recipe.title}
                     action={
@@ -132,6 +173,11 @@ export default function RecipeCard(props) {
             open={recipeOpen}
             showInstructions={props.instructions}
             recipe={props.recipe}
+            title={props.recipe.title}
+            id={props.recipe.id}
+            image={props.recipe.image}
+            ingredients={getIngredients()}
+            instructions={instructions}
             onClose={() => setRecipeOpen(false)} 
             primaryTheme={primaryTheme} 
         />
@@ -150,4 +196,5 @@ RecipeCard.propTypes = {
     instructions: PropTypes.bool,
     recipe: PropTypes.any,
     recipeInfo: PropTypes.any,
+    type: PropTypes.string,
 }
