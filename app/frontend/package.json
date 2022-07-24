@@ -47,9 +47,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch": "watch 'npm run build' ./src",
+    "watch-build": "watch 'npm run build' ./src",
     "lint": "eslint --fix --ext .js,.jsx .",
-    "dev": "webpack --mode development --watch",
+    "watch": "webpack --mode development --watch",
+    "serve": "webpack --mode=development serve",
     "release": "webpack --mode production"
   },
   "eslintConfig": {
