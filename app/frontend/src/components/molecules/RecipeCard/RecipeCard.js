@@ -14,7 +14,7 @@ import {
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CardHeader from '@mui/material/CardHeader';
 import { useDispatch } from "react-redux";
-import { add } from "../../../reducers/isFavourited";
+import { add, remove } from "../../../reducers/isFavourited";
 import React, { useState, useEffect } from "react";
 import { DialogTitle } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -48,6 +48,8 @@ export default function RecipeCard(props) {
     }} */
 
     const [open, setOpen] = React.useState(false);
+    const [colour, setColour] = React.useState("rgba(0, 0, 0, 0.54)");
+    const [text, setText] = React.useState("added to");
     
     const userEmail = useSelector((state) => state.user.value.email)
     const isLogged = useSelector((state) => state.user.value.isLogged)
@@ -68,26 +70,56 @@ export default function RecipeCard(props) {
             "ingredients": ingredients,
             "instructions": instructions,
         }
-        dispatch(add({favourited: [recipeValues]}));
-        const allFaves = [...faves, recipeValues]
-        const values = {email: userEmail, new_favourite: JSON.stringify(allFaves)}
         /* setIsSubmitting(true); */
-        axios
-        .post("/favourites/", values)
-        .then((res) => {
+        if (colour !== "red") {
+            setText("added to")
             setOpen(true);
-            console.log(res)
-        }).then(()=> {
-            setTimeout(function() { 
-                setOpen(false);
-            }.bind(this), 2000)
-        })
-        .catch((err) => {
-            console.log(err.request);
-        }); 
+            dispatch(add({favourited: [recipeValues]}));
+            const allFaves = [...faves, recipeValues]
+            const values = {email: userEmail, new_favourite: JSON.stringify(allFaves)}
+            setColour("red");
+            axios
+            .post("/favourites/", values)
+            .then((res) => {
+                console.log(res)
+            }).then(()=> {
+                setTimeout(function() { 
+                    setOpen(false);
+                }.bind(this), 1000)
+            })
+            .catch((err) => {
+                console.log(err.request);
+            }); 
+        } else {
+            setText("removed from")
+            setOpen(true);
+            setColour("rgba(0, 0, 0, 0.54)");
+            dispatch(remove({favourited: [recipeValues]}))
+            const newFaves = faves.filter(i => i.id !== props.recipe.id);
+            const values = {email: userEmail, new_favourite: JSON.stringify(newFaves)}
+            axios
+                .post("/favourites/", values)
+                .then((res) => {
+                    console.log(res)
+                }).then(()=> {
+                    setTimeout(function() { 
+                        setOpen(false);
+                    }.bind(this), 1000)
+                })
+                .catch((err) => {
+                    console.log(err.request);
+            }); 
+        }
+    }
+
+    function setHeartColour() {
+        if (faves.some(a => a.id === props.recipe.id)) {
+            setColour("red")
+        }
     }
 
     React.useEffect(()=> {
+        setHeartColour();
         if (props.type === "feed") {
             setInstructions(props.recipe.instructions
                 .replace(/<[^>]+>/g, '')
@@ -149,7 +181,7 @@ export default function RecipeCard(props) {
                         aria-label="add to favorites"
                         onClick = {() => {handleOnClick()}}
                         >
-                            <FavoriteIcon />
+                            <FavoriteIcon style={{color: colour}}/>
                         </IconButton>
                     }
                     sx={{textAlign: "center", }}
@@ -183,7 +215,7 @@ export default function RecipeCard(props) {
         />
 
         <Dialog open={open}>
-            <DialogTitle>{props.recipe.title} has been added to your favourites</DialogTitle>
+            <DialogTitle>{props.recipe.title} has been {text} your favourites</DialogTitle>
             <Button variant="contained" onClick={() => setOpen(false)}> close </Button>
         </Dialog>
         </div>

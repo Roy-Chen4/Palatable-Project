@@ -25,6 +25,7 @@ import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
 import { createTheme } from '@mui/material/styles';
 import { clear } from '../../../reducers/userIngredients';
 import { empty } from '../../../reducers/isFavourited';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import axios from 'axios';
 import './Drawer.css';
 
@@ -111,6 +112,7 @@ export default function CollapsableDrawer() {
           </Button>
         </div>
 
+
         <AuthModal 
           open={regOpen} 
           onClose={() => setRegOpen(false)} 
@@ -119,6 +121,28 @@ export default function CollapsableDrawer() {
           secondaryTheme={secondaryTheme}
         />
 
+        <ListItem 
+          disablePadding
+          sx= {{"&&":{
+            display:
+              loggedIn ? "flex" : "none",
+          }}}
+        >
+          <NavLink 
+            to={{
+              pathname: "/",
+            }}
+            className={"recipe-page-button" }
+          >
+            <ListItemButton onClick={()=> setState(false)}>
+              <ListItemIcon>
+                <HomeOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Sign Out'} />
+            </ListItemButton>
+          </NavLink>
+        </ListItem>
+        
         {/* <ListItem 
           disablePadding
           sx= {{"&&":{
@@ -135,7 +159,7 @@ export default function CollapsableDrawer() {
         </ListItem> */}
 
           {/* <ListItem disablePadding  onClick={()=> setState(false)}> */}
-          <ListItem 
+        <ListItem 
           disablePadding
           sx= {{"&&":{
             display:
@@ -143,7 +167,7 @@ export default function CollapsableDrawer() {
           }}}
           onClick={() => setState(true)}
         >
-            <NavLink 
+          <NavLink 
               to={{
                 pathname: "/favourites",
               }}
@@ -180,8 +204,31 @@ export default function CollapsableDrawer() {
                 </ListItemIcon>
                 <ListItemText primary={'Feed'}/>
               </ListItemButton>
-            </NavLink>
-          </ListItem>
+          </NavLink>
+        </ListItem>
+
+        <ListItem 
+          disablePadding
+          sx= {{"&&":{
+            display:
+              loggedIn ? "flex" : "none",
+          }}}
+        >
+          <NavLink 
+            to={{
+              pathname: "/",
+            }}
+            className={"recipe-page-button" }
+          >
+            <ListItemButton onClick={()=> setState(false)}>
+              <ListItemIcon>
+                <HomeOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Sign Out'} />
+            </ListItemButton>
+          </NavLink>
+        </ListItem>      
+
 
         <ListItem 
           disablePadding
@@ -260,10 +307,6 @@ export default function CollapsableDrawer() {
             to={{
               pathname: "/",
             }}
-            // state= {{
-            //   feed: true,
-            // }}
-            // onClick={()=> changeLocation('/')}
             className={"recipe-page-button" }
           >
 
