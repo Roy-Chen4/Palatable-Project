@@ -112,7 +112,14 @@ export default function RecipeCard(props) {
         }
     }
 
+    function setHeartColour() {
+        if (faves.some(a => a.id === props.recipe.id)) {
+            setColour("red")
+        }
+    }
+
     React.useEffect(()=> {
+        setHeartColour();
         if (props.type === "feed") {
             setInstructions(props.recipe.instructions
                 .replace(/<[^>]+>/g, '')
