@@ -19,7 +19,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import './Modal.css';
 
 export default function RecipeModal(props) {
-    console.log(props.ingredients)
 
     return (
         <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth="lg" overflow='scroll'>
