@@ -19,6 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import './Modal.css';
 
 export default function RecipeModal(props) {
+    console.log(props.ingredients)
 
     return (
         <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth="lg" overflow='scroll'>
@@ -60,7 +61,7 @@ export default function RecipeModal(props) {
                         <div className={`${"align-left"} ${"ingredient-list"}`}>
                             {props.ingredients.map((item, index) => (
                                 <div key={index}>
-                                    &#8226;{" " + item.name}
+                                    &#8226;{" " + item.amount + " " + item.unit + " " + item.name}
                                 </div>
                             ))}  
                         </div> 
