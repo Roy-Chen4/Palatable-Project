@@ -1,0 +1,16 @@
+.image-display {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-bottom: 3vh;
+    margin-top: 3vh;
+}
+
+.image {
+    display: flex;
+    outline: rgb(158, 158, 158), solid, 1px;
+}
+
+.image-input {
+    margin-bottom: 3px;
+}

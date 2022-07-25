@@ -7,6 +7,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
 import validationCreator from "../../../validation/creatorSchema";
+import './CreatorForm.css'
 
 const form = props => {
     const {
@@ -16,17 +17,18 @@ const form = props => {
         handleChange,
         handleBlur,
         resetForm,
+        setFieldValue,
     } = props;
     
     const [isSubmitting, setIsSubmitting] = React.useState(false);
-    const [imageURL, setImageURL] = React.useState("");
+    const [imageURL, setImageURL] = React.useState();
     const userEmail = useSelector((state) => state.user.value.email);
 
     const onFormSubmit = () => {
         setIsSubmitting(true);
         const recipe = {
             title: values.recipetitle,
-            // image: values.image,
+            image: values.image,
             // ingredients: values.ingredients,
             // tags: values.tags,
             // instructions: values.instructions,
@@ -41,6 +43,7 @@ const form = props => {
         }
         console.log("form values: " + recipe)
         console.log("recipe title: " + values.recipetitle)
+        console.log(values)
     }
 
 //    function handleImageChange(event) {
@@ -54,6 +57,12 @@ const form = props => {
 //         this.props.sfv("image", event.currentTarget.files[0]);
 //     }
 
+    function setImage() {
+        const reader = new FileReader();
+        reader.onload = () => {
+            setImageURL(reader.result)
+        } 
+    }
     return (
         <form>
             <div className="inputs">
@@ -74,11 +83,19 @@ const form = props => {
                         }}
                 />
             </div>
+            <div className='image-display'>
+                <img src={imageURL} width="300px" height="300px" className="image"/>
+            </div>
             <input
                 className="image-input"
-                name={"image-input"}
+                name={"image"}
                 type="file"
-                onChange={(e)=>handleChange(e)}
+                accept='image/*'
+                onChange={(e)=>{
+                    setFieldValue('image', URL.createObjectURL(e.target.files[0])); 
+                    // handleChange(e)
+                    setImageURL(URL.createObjectURL(e.target.files[0]));
+                }}
             />
 
             <div className="submit-button">
