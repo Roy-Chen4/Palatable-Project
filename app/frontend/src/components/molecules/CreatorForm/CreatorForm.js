@@ -36,13 +36,16 @@ const form = props => {
             // tags: values.tags,
             // instructions: values.instructions,
         }
+        setTimeout(function() { 
+            setIsSubmitting(false);
+        }.bind(this), 1000)
         // use values to Send in axios request to save the recipe in creator db
         const valuesToSend = {
             email: userEmail,
             recipe: JSON.stringify(recipe)
         }
         console.log("form values: " + recipe)
-        console.log("form values: " + recipe)
+        console.log("recipe title: " + values.recipetitle)
     }
 
     return (
