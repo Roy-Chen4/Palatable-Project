@@ -1,17 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { 
-    DialogContent, 
-    DialogTitle, 
-    TextField,
-    DialogActions, 
-    Button
-} 
-from '@mui/material';
+import {
+    Button, TextField
+} from '@mui/material';
 import { withFormik } from "formik";
-import * as yup from "yup";
-import axios from 'axios';
+import React from "react";
 import { useSelector } from "react-redux";
+import * as yup from "yup";
 import validationCreator from "../../../validation/creatorSchema";
 
 const form = props => {
@@ -25,6 +19,7 @@ const form = props => {
     } = props;
     
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const [imageURL, setImageURL] = React.useState("");
     const userEmail = useSelector((state) => state.user.value.email);
 
     const onFormSubmit = () => {
@@ -48,6 +43,17 @@ const form = props => {
         console.log("recipe title: " + values.recipetitle)
     }
 
+//    function handleImageChange(event) {
+//         const reader = new FileReader();
+//         reader.onload = () => {
+//             if (reader.readyState === 2) {
+//                 setImageURL({file: reader.result})
+//             }
+//         } 
+//         reader.readAsDataURL(event.target.files[0]);
+//         this.props.sfv("image", event.currentTarget.files[0]);
+//     }
+
     return (
         <form>
             <div className="inputs">
@@ -68,6 +74,12 @@ const form = props => {
                         }}
                 />
             </div>
+            <input
+                className="image-input"
+                name={"image-input"}
+                type="file"
+                onChange={(e)=>handleChange(e)}
+            />
 
             <div className="submit-button">
                 <Button 
