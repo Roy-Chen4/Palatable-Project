@@ -30,7 +30,7 @@ const form = props => {
     const onFormSubmit = () => {
         setIsSubmitting(true);
         const recipe = {
-            title: values.title,
+            title: values.recipetitle,
             // image: values.image,
             // ingredients: values.ingredients,
             // tags: values.tags,
@@ -41,6 +41,7 @@ const form = props => {
             email: userEmail,
             recipe: JSON.stringify(recipe)
         }
+        console.log("form values: " + recipe)
         console.log("form values: " + recipe)
     }
 
