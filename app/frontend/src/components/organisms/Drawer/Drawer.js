@@ -22,6 +22,7 @@ import { logout } from '../../../reducers/isLogged';
 import AuthModal from '../../molecules/Modal/AuthModal';
 import DietModal from '../../molecules/Modal/DietModal';
 import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
+import DinnerDiningOutlinedIcon from '@mui/icons-material/DinnerDiningOutlined';
 import { createTheme } from '@mui/material/styles';
 import { clear } from '../../../reducers/userIngredients';
 import { empty } from '../../../reducers/isFavourited';
@@ -138,7 +139,29 @@ export default function CollapsableDrawer() {
               <ListItemIcon>
                 <HomeOutlinedIcon />
               </ListItemIcon>
-              <ListItemText primary={'Sign Out'} />
+              <ListItemText primary={'Home'} />
+            </ListItemButton>
+          </NavLink>
+        </ListItem>
+
+        <ListItem 
+          disablePadding
+          sx= {{"&&":{
+            display:
+              loggedIn ? "flex" : "none",
+          }}}
+        >
+          <NavLink 
+            to={{
+              pathname: "/creator",
+            }}
+            className={"recipe-page-button" }
+          >
+            <ListItemButton onClick={()=> setState(false)}>
+              <ListItemIcon>
+                <DinnerDiningOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Creator'} />
             </ListItemButton>
           </NavLink>
         </ListItem>
@@ -206,28 +229,6 @@ export default function CollapsableDrawer() {
               </ListItemButton>
           </NavLink>
         </ListItem>
-
-        <ListItem 
-          disablePadding
-          sx= {{"&&":{
-            display:
-              loggedIn ? "flex" : "none",
-          }}}
-        >
-          <NavLink 
-            to={{
-              pathname: "/",
-            }}
-            className={"recipe-page-button" }
-          >
-            <ListItemButton onClick={()=> setState(false)}>
-              <ListItemIcon>
-                <HomeOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Sign Out'} />
-            </ListItemButton>
-          </NavLink>
-        </ListItem>      
 
 
         <ListItem 
