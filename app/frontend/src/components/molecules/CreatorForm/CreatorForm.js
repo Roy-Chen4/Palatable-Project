@@ -21,12 +21,28 @@ const form = props => {
         errors,
         handleChange,
         handleBlur,
-        onClose,
-        onSubmit,
         resetForm,
     } = props;
     
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const userEmail = useSelector((state) => state.user.value.email);
+
+    const onFormSubmit = () => {
+        setIsSubmitting(true);
+        const recipe = {
+            title: values.title,
+            // image: values.image,
+            // ingredients: values.ingredients,
+            // tags: values.tags,
+            // instructions: values.instructions,
+        }
+        // use values to Send in axios request to save the recipe in creator db
+        const valuesToSend = {
+            email: userEmail,
+            recipe: JSON.stringify(recipe)
+        }
+        console.log("form values: " + recipe)
+    }
 
     return (
         <form>
@@ -37,8 +53,8 @@ const form = props => {
                         value={values.recipetitle}
                         onChange={(e) => {handleChange(e)}}
                         onBlur={handleBlur}
-                        // helperText={touched.password1 ? errors.password1 : ""}
-                        error={touched.password1 && Boolean(errors.password1)}
+                        helperText={touched.recipetitle ? errors.recipetitle : ""}
+                        error={touched.recipetitle && Boolean(errors.recipetitle)}
                         margin="normal"
                         variant="outlined"
                         sx={{ 
@@ -48,12 +64,13 @@ const form = props => {
                         }}
                 />
             </div>
+
             <div className="submit-button">
                 <Button 
                     id="submit"
-                    onClick={() => console.log("mock creator form added: "+ values)}
+                    onClick={() => onFormSubmit()}
                     variant="contained"
-                    disabled={isSubmitting || errors}
+                    disabled={isSubmitting || errors.recipetitle}
                     // theme={primaryTheme}
                     sx={{"&&":{
                         color:"white",

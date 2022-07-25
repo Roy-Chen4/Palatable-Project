@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 const validationCreator = {
-    title: yup
+    recipetitle: yup
         .string()
         .required("Title is required"),
 };
