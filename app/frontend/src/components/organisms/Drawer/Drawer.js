@@ -27,6 +27,7 @@ import { createTheme } from '@mui/material/styles';
 import { clear } from '../../../reducers/userIngredients';
 import { empty } from '../../../reducers/isFavourited';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import PeopleIcon from '@mui/icons-material/People';
 import axios from 'axios';
 import './Drawer.css';
 
@@ -227,6 +228,28 @@ export default function CollapsableDrawer() {
                 </ListItemIcon>
                 <ListItemText primary={'Feed'}/>
               </ListItemButton>
+          </NavLink>
+        </ListItem>
+
+        <ListItem 
+          disablePadding
+          sx= {{"&&":{
+            display:
+              loggedIn ? "flex" : "none",
+          }}}
+        >
+          <NavLink 
+            to={{
+              pathname: "/creator",
+            }}
+            className={"recipe-page-button" }
+          >
+            <ListItemButton onClick={()=> setState(false)}>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Community'} />
+            </ListItemButton>
           </NavLink>
         </ListItem>
 

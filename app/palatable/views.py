@@ -286,3 +286,12 @@ def favourites(request):
 def get_ingredient(request):
     result = list(Ingredients.objects.values('name'))
     return JsonResponse({'data': result})
+
+@api_view(['POST'])
+def recipecreate(request):
+    if request.method == 'POST':
+        serializer = RecipeSerializer(data = request.data)
+        if serializer.is_valid():
+            json.dumps(serializer.data['new_recipe'])
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)

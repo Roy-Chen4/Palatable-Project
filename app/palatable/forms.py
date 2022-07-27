@@ -10,3 +10,8 @@ class NewUserForm1(UserCreationForm):
     class Meta:
         model = User
         fields = ['email', 'password1', 'password2']
+'''         
+class NewRecipeForm():
+    class Meta:
+        model = User
+        fields = ['email', 'recipe'] '''

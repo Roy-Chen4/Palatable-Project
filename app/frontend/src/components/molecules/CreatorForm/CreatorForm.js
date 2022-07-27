@@ -2,6 +2,7 @@
 import {
     Button, TextField
 } from '@mui/material';
+import axios from 'axios';
 import { withFormik } from "formik";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -29,21 +30,28 @@ const form = props => {
         const recipe = {
             title: values.recipetitle,
             image: values.image,
-            // ingredients: values.ingredients,
+            ingredients: values.ingredients,
             // tags: values.tags,
-            // instructions: values.instructions,
+            instructions: values.instructions,
         }
         setTimeout(function() { 
             setIsSubmitting(false);
         }.bind(this), 1000)
         // use values to Send in axios request to save the recipe in creator db
         const valuesToSend = {
-            email: userEmail,
+            /* email: userEmail, */
             recipe: JSON.stringify(recipe)
         }
+        axios.post("/recipecreate/", userEmail, valuesToSend)
+            .then((res) => console.log(res))
+            
         console.log("form values: " + recipe)
         console.log("recipe title: " + values.recipetitle)
+        console.log("ingredients: " + values.ingredients)
+        console.log("instructions: " + values.instructions)
         console.log(values)
+        console.log(valuesToSend)
+        console.log(userEmail)
     }
 
 //    function handleImageChange(event) {
@@ -95,6 +103,40 @@ const form = props => {
                     setFieldValue('image', URL.createObjectURL(e.target.files[0])); 
                     // handleChange(e)
                     setImageURL(URL.createObjectURL(e.target.files[0]));
+                }}
+            />
+
+            <TextField
+                id="ingredients"
+                placeholder="Ingredients"
+                value={values.ingredients}
+                onChange={(e) => {handleChange(e)}}
+                onBlur={handleBlur}
+                helperText={touched.ingredients ? errors.ingredients : ""}
+                error={touched.ingredients && Boolean(errors.ingredients)}
+                margin="normal"
+                variant="outlined"
+                sx={{ 
+                    "&&":{
+                        width:"70%"
+                    }
+                }}
+            />
+
+            <TextField
+                id="instructions"
+                placeholder="Instructions"
+                value={values.instructions}
+                onChange={(e) => {handleChange(e)}}
+                onBlur={handleBlur}
+                helperText={touched.instructions ? errors.instructions : ""}
+                error={touched.instructions && Boolean(errors.instructions)}
+                margin="normal"
+                variant="outlined"
+                sx={{ 
+                    "&&":{
+                        width:"70%"
+                    }
                 }}
             />
 
