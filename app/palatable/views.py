@@ -15,7 +15,7 @@ from email import encoders
 from rest_framework.views import APIView
 from palatable.serializers import UserSerializer
 from rest_framework.exceptions import AuthenticationFailed
-from palatable.models import User, Ingredients
+from palatable.models import User, Ingredients, Recipes
 from django.http import JsonResponse
 import jwt, datetime
 import random
@@ -286,3 +286,16 @@ def favourites(request):
 def get_ingredient(request):
     result = list(Ingredients.objects.values('name'))
     return JsonResponse({'data': result})
+
+# add a recipe
+@api_view(['POST'])
+def addrecipe(request):
+    if request.method =='POST':
+        serializer = AddRecipeSerializer(data = request.data)
+        if serializer.is_valid():
+            user = Recipes.objects.get(email = serializer.data['email'])
+            json.dumps(serializer.data['new_recipe'])
+            user.recipe = json.dumps(serializer.data['new_recipe'])
+            user.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
