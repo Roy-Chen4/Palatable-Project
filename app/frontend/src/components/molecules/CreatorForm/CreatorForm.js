@@ -34,16 +34,21 @@ const form = props => {
             // tags: values.tags,
             instructions: values.instructions,
         }
-        setTimeout(function() { 
+        /* setTimeout(function() { 
             setIsSubmitting(false);
-        }.bind(this), 1000)
+        }.bind(this), 1000) */
         // use values to Send in axios request to save the recipe in creator db
         const valuesToSend = {
-            /* email: userEmail, */
+            email: userEmail,
             recipe: JSON.stringify(recipe)
         }
-        axios.post("/recipecreate/", userEmail, valuesToSend)
-            .then((res) => console.log(res))
+        axios.post("/addrecipe/", valuesToSend)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err.request);
+            });
             
         console.log("form values: " + recipe)
         console.log("recipe title: " + values.recipetitle)
