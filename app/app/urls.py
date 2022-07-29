@@ -33,7 +33,7 @@ urlpatterns = [
     path('favourites/', views.favourites),
     path('ingredients/', views.get_ingredient),
     path('register/', views.register),
-    path('recipecreate/', views.recipecreate),
+    path('addrecipe/', views.addrecipe),
     path('', include('palatable.urls')),
     path('', include('frontend.urls'))
     ]

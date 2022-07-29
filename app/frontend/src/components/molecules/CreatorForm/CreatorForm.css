@@ -12,5 +12,10 @@
 }
 
 .image-input {
-    margin-bottom: 3px;
+    margin-bottom: 10px;
+    padding-left: 78px;
+    /* justify-content: center;
+    align-items: center;
+    display: flex; */
+    /* padding-bottom: 5vh; */
 }

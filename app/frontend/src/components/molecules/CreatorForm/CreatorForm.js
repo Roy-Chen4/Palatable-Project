@@ -86,14 +86,15 @@ const form = props => {
                         variant="outlined"
                         sx={{ 
                             "&&":{
-                                width:"70%"
+                                width:"50%"
                             }
                         }}
                 />
             </div>
             <div className='image-display'>
-                <img src={imageURL} width="300px" height="300px" className="image"/>
+                <img src={imageURL} width="180px" height="180px" className="image"/>
             </div>
+            <div>
             <input
                 className="image-input"
                 name={"image"}
@@ -105,6 +106,7 @@ const form = props => {
                     setImageURL(URL.createObjectURL(e.target.files[0]));
                 }}
             />
+            </div>
 
             <TextField
                 id="ingredients"
@@ -118,7 +120,7 @@ const form = props => {
                 variant="outlined"
                 sx={{ 
                     "&&":{
-                        width:"70%"
+                        width:"60%"
                     }
                 }}
             />
@@ -135,7 +137,7 @@ const form = props => {
                 variant="outlined"
                 sx={{ 
                     "&&":{
-                        width:"70%"
+                        width:"60%"
                     }
                 }}
             />

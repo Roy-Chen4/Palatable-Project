@@ -240,7 +240,7 @@ export default function CollapsableDrawer() {
         >
           <NavLink 
             to={{
-              pathname: "/creator",
+              pathname: "/community",
             }}
             className={"recipe-page-button" }
           >
