@@ -48,30 +48,8 @@ class Ingredients(models.Model):
     category = models.CharField(max_length=50)
     
 class Recipes(models.Model):
-    MEAL_CHOICES = [
-        ('BF', 'Breakfast'),
-        ('LH', 'Lunch'),
-        ('DN', 'Dinner'),
-        ('SK', 'Snack')
-    ]
-    DIETARY_CHOICES = [
-        ('NO', 'None'),
-        ('PT', 'Pescatarian'),
-        ('VE', 'Vegetarian'),
-        ('VG', 'Vegan')
-    ]
-
-    name = models.CharField(max_length=50)
-    description = models.TextField(blank=True)
-    meal_type = models.CharField(
-        max_length = 2,
-        choices = MEAL_CHOICES,
-        default = 'BF',
-    )
-    contributor = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.DecimalField(max_digits=4, decimal_places=2)
-    dietary = models.CharField(
-        max_length = 2,
-        choices = DIETARY_CHOICES,
-        default = 'NO',
-    )
+    email = models.CharField(max_length=100, unique=False)
+    recipe = models.CharField(max_length=1000000000)
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
