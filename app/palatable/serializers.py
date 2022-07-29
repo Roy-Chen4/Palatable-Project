@@ -60,7 +60,7 @@ class EditDietSerializer(serializers.Serializer):
 class FavouriteSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length = 30)
     new_favourite = serializers.JSONField()
-    
-class RecipeSerializer(serializers.Serializer):
+
+class AddRecipeSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length = 30)
-    new_recipe = serializers.JSONField()
+    recipe = serializers.JSONField()
