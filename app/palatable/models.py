@@ -48,5 +48,8 @@ class Ingredients(models.Model):
     category = models.CharField(max_length=50)
     
 class Recipes(models.Model):
-    email = models.CharField(max_length=100, unique=True)
+    email = models.CharField(max_length=100, unique=False)
     recipe = models.CharField(max_length=1000000000)
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []

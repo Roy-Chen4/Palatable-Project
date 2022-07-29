@@ -290,12 +290,14 @@ def get_ingredient(request):
 # add a recipe
 @api_view(['POST'])
 def addrecipe(request):
+    form = NewRecipeForm()
     if request.method =='POST':
         serializer = AddRecipeSerializer(data = request.data)
         if serializer.is_valid():
-            user = Recipes.objects.get(email = serializer.data['email'])
-            json.dumps(serializer.data['new_recipe'])
-            user.recipe = json.dumps(serializer.data['new_recipe'])
-            user.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+            print('lol')
+            form = NewRecipeForm(request.data)  
+            if form.is_valid():
+                print('lolol')
+                form.save()
+                return Response(serializer.data)
+        return Response(form.errors, status = status.HTTP_403_FORBIDDEN)
