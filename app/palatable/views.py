@@ -318,3 +318,18 @@ def editrecipe(request):
                 return Response(serializer.errors, status = status.HTTP_404_NOT_FOUND)
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+# delete a recipe
+@api_view(['DELETE'])
+def deleterecipe(request):
+    if request.method =='DELETE':
+        serializer = DeleteRecipeSerializer(data = request.data)
+        if serializer.is_valid():
+            recipe = Recipes.objects.get(id = serializer.data['id'])
+            # check if person trying to delete is deleting their own recipe
+            if recipe.email == serializer.data['email']:
+                recipe.delete()
+            else:
+                return Response(serializer.errors, status = status.HTTP_404_NOT_FOUND)
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
