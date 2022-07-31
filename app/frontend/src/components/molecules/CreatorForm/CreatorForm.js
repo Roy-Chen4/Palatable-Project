@@ -42,7 +42,7 @@ const form = props => {
             email: userEmail,
             recipe: JSON.stringify(recipe)
         }
-        axios.post("/addrecipe/", valuesToSend)
+        axios.post("/addrecipe/", valuesToSend) 
             .then((res) => {
                 console.log(res)
             })
