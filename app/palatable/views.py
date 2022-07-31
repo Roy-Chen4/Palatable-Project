@@ -301,3 +301,20 @@ def addrecipe(request):
                 form.save()
                 return Response(serializer.data)
         return Response(form.errors, status = status.HTTP_403_FORBIDDEN)
+
+# edit a recipe
+@api_view(['POST'])
+def editrecipe(request):
+    if request.method =='POST':
+        serializer = EditRecipeSerializer(data = request.data)
+        if serializer.is_valid():
+            recipe = Recipes.objects.get(id = serializer.data['id'])
+            # check if person trying to edit is editing their own recipe
+            if recipe.email == serializer.data['email']:
+                json.dumps(serializer.data['edit_recipe'])
+                recipe.recipe = json.dumps(serializer.data['edit_recipe'])
+                recipe.save()
+            else:
+                return Response(serializer.errors, status = status.HTTP_404_NOT_FOUND)
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
