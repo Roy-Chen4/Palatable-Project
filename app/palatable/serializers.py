@@ -64,3 +64,12 @@ class FavouriteSerializer(serializers.Serializer):
 class AddRecipeSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length = 30)
     recipe = serializers.JSONField()
+
+class EditRecipeSerializer(serializers.Serializer):
+    id = serializers.CharField(max_length = 5)
+    email = serializers.EmailField(max_length = 30)
+    edit_recipe = serializers.JSONField()
+
+class DeleteRecipeSerializer(serializers.Serializer):
+    id = serializers.CharField(max_length = 5)
+    email = serializers.EmailField(max_length = 30)
