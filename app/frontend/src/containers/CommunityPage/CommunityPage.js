@@ -18,6 +18,7 @@ import {
     Dialog,
 } from '@mui/material';
 
+
 function CommunityPage() {
 
     const [recipe, setRecipe] = useState([]);
@@ -26,32 +27,37 @@ function CommunityPage() {
         axios
         .get("/community/")
         .then((res) => {
-            setRecipe([...res.data.data])
+            console.log("hi")
+            const hello = JSON.parse((JSON.parse(JSON.stringify(res.data.data))))
+            setRecipe(hello)
+            /* setRecipe(...res.data.data) */
+            /* const new_recipe = JSON.parse([...res.data.data])
+            console.log("hi")
+            console.log(new_recipe) */
         })
-        .catch((err) => {
+        /* .catch((err) => {
             console.log(err.request);
-    });
-    }, [])
+    }); */
+    },[])
 
+
+    /* const v = JSON.parse(JSON.parse(a)) */
+    
     console.log(recipe)
+    /* console.log(recipe.recipe.title) */
+    /* const newRE = JSON.parse(recipe.recipe)
+    console.log(newRE) */
+    /* console.log(recipe)
     console.log(recipe.title)
-    console.log("hello")
-
-    function card() {
-        return (
-            <div>
-                <Card>
-                    <CardHeader>
-                        Hello
-                    </CardHeader>
-                </Card>
-            </div>
-        )
-    }
+    console.log("hello")  */
 
     return(
         <div>
             {/* <h1>{recipe.instructions}</h1> */}
+            {/* <Grid>
+
+            </Grid> */}
+            {/* <h1>{recipe.title}</h1> */}
             
             <NavLink to="/" className={"previous-page-button"}>
                 <Button 

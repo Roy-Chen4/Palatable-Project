@@ -30,7 +30,7 @@ export default function CommunityCard(props) {
 
     useEffect(() => {
         axios
-        .get("community/")
+        .get("/community/")
         .then((res) => {
             setRecipe([...res.data.data])
         })
