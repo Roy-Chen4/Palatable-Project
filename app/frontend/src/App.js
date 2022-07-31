@@ -14,6 +14,8 @@ import userReducer from './reducers/isLogged';
 import ingredientReducer from './reducers/userIngredients';
 import FavouritePage from './containers/FavouritePage/FavouritePage'
 import favouriteReducer from './reducers/isFavourited';
+import CreatorPage from './containers/CreatorPage/CreatorPage';
+import CommunityPage from './containers/CommunityPage/CommunityPage';
 
 export default function App() {
   // Create redux store
@@ -47,6 +49,8 @@ export default function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<IngredientPage />} />
               <Route path="recipes" element={<RecipePage />} />
+              <Route path="creator" element={<CreatorPage />} />
+              <Route path="community" element={<CommunityPage />} />
               <Route path="favourites" element={<FavouritePage />} />
               {/* <Route path="*" element={<NoPage />} /> */}
             </Route>

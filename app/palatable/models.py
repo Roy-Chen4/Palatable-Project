@@ -50,6 +50,6 @@ class Ingredients(models.Model):
 class Recipes(models.Model):
     email = models.CharField(max_length=100, unique=False)
     recipe = models.CharField(max_length=1000000000)
-    
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

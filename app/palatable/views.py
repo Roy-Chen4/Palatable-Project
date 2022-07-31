@@ -301,6 +301,11 @@ def addrecipe(request):
                 form.save()
                 return Response(serializer.data)
         return Response(form.errors, status = status.HTTP_403_FORBIDDEN)
+    
+@api_view(['GET'])
+def get_recipe(request):
+    result = list(Recipes.objects.values('recipe'))
+    return JsonResponse({'data': result})
 
 # edit a recipe
 @api_view(['POST'])

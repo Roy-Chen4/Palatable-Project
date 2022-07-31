@@ -22,10 +22,12 @@ import { logout } from '../../../reducers/isLogged';
 import AuthModal from '../../molecules/Modal/AuthModal';
 import DietModal from '../../molecules/Modal/DietModal';
 import SettingsModalBody from '../../molecules/ModalBody/SettingsModalBody';
+import DinnerDiningOutlinedIcon from '@mui/icons-material/DinnerDiningOutlined';
 import { createTheme } from '@mui/material/styles';
 import { clear } from '../../../reducers/userIngredients';
 import { empty } from '../../../reducers/isFavourited';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import PeopleIcon from '@mui/icons-material/People';
 import axios from 'axios';
 import './Drawer.css';
 
@@ -138,7 +140,29 @@ export default function CollapsableDrawer() {
               <ListItemIcon>
                 <HomeOutlinedIcon />
               </ListItemIcon>
-              <ListItemText primary={'Sign Out'} />
+              <ListItemText primary={'Home'} />
+            </ListItemButton>
+          </NavLink>
+        </ListItem>
+
+        <ListItem 
+          disablePadding
+          sx= {{"&&":{
+            display:
+              loggedIn ? "flex" : "none",
+          }}}
+        >
+          <NavLink 
+            to={{
+              pathname: "/creator",
+            }}
+            className={"recipe-page-button" }
+          >
+            <ListItemButton onClick={()=> setState(false)}>
+              <ListItemIcon>
+                <DinnerDiningOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Creator'} />
             </ListItemButton>
           </NavLink>
         </ListItem>
@@ -216,18 +240,18 @@ export default function CollapsableDrawer() {
         >
           <NavLink 
             to={{
-              pathname: "/",
+              pathname: "/community",
             }}
             className={"recipe-page-button" }
           >
             <ListItemButton onClick={()=> setState(false)}>
               <ListItemIcon>
-                <HomeOutlinedIcon />
+                <PeopleIcon />
               </ListItemIcon>
-              <ListItemText primary={'Sign Out'} />
+              <ListItemText primary={'Community'} />
             </ListItemButton>
           </NavLink>
-        </ListItem>      
+        </ListItem>
 
 
         <ListItem 
