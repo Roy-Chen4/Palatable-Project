@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { Divider, Typography, Button } from '@mui/material';
+import { Button, Divider, Typography } from '@mui/material';
 import * as React from 'react';
 import IngredientCarousel from '../../components/organisms/Carousel/Carousel';
 import IngredientList from '../../components/organisms/IngredientList/IngredientList';
 /* import { InputAdornment } from '@mui/material'; 
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search'; */
-import './IngredientPage.css';
 import SearchBar from '../../components/molecules/SearchBar/SearchBar';
+import './IngredientPage.css';
 /* import React, { useState, useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import { Autocomplete } from "@mui/material/Autocomplete";
@@ -37,7 +37,7 @@ function IngredientPage() {
         </Typography>
       </div>
       <IngredientCarousel />
-      <Divider className="line-divider">YOUR INGREDIENTS</Divider>
+      <Divider className="line-divider">YOUR INGREDIENTS &#40;MAX 20</Divider>
       <IngredientList />
       <NavLink 
         to={{
@@ -59,7 +59,10 @@ function IngredientPage() {
             ":hover": {
               backgroundColor: "white",
               color: "#df7b84", 
-            }
+            },
+            position: "fixed",
+            bottom: "1vh",
+            right: "1vw",
           }}}
           // onClick={() => console.log()}
         >
