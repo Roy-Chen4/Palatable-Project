@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { Button } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import CommunityCard from '../../components/molecules/CommunityCard/CommunityCard';
 
 
 function CommunityPage() {
@@ -54,6 +55,18 @@ function CommunityPage() {
 
             </Grid> */}
             {/* <h1>{recipe.title}</h1> */}
+            <Box className="grid-container" sx={{"&&":{ flexGrow: 1 }}}>
+                <Grid container spacing={1}>
+                    {recipe.map((item, index) => (
+                        <Grid key={index} item>
+                            <CommunityCard
+                                recipe={item}
+                            />
+                        </Grid>
+                    ))}     
+                </Grid>
+            </Box>
+
             
             <NavLink to="/" className={"previous-page-button"}>
                 <Button 

@@ -24,21 +24,21 @@ export default function CommunityCard(props) {
   
     
     
-    const userEmail = useSelector((state) => state.user.value.email)
+    // const userEmail = useSelector((state) => state.user.value.email)
     
-    const [recipe, setRecipe] = useState([]);
+    // const [recipe, setRecipe] = useState([]);
 
-    useEffect(() => {
-        axios
-        .get("/community/")
-        .then((res) => {
-            setRecipe([...res.data.data])
-        })
-        .catch((err) => {
-            console.log(err.request);
-    });
+    // useEffect(() => {
+    //     axios
+    //     .get("/community/")
+    //     .then((res) => {
+    //         setRecipe([...res.data.data])
+    //     })
+    //     .catch((err) => {
+    //         console.log(err.request);
+    // });
 
-    }, [])
+    // }, [])
 
 
     function handleOnClick(){
@@ -55,7 +55,7 @@ export default function CommunityCard(props) {
         <div className="recipe-cards">
             <Card classname="recipe-container" variant="outlined" sx={{ width: "48vw" }} >
                 <CardHeader
-                    title={recipe.title}
+                    title={props.recipe.title}
                     /* action={
                         <IconButton 
                         aria-label="add to favorites"
@@ -67,6 +67,11 @@ export default function CommunityCard(props) {
                     sx={{textAlign: "center", }}
                 />
                 <CardContent>
+                <CardMedia
+                    component="img"
+                    width="48vw"
+                    image={props.recipe.image ? props.recipe.image : ''}
+                />
                 </CardContent>
                 {/* <div className = "explore-button"> */}
                 <CardActions className = "explore-button">
@@ -80,10 +85,8 @@ export default function CommunityCard(props) {
 
 CommunityCard.propTypes = {
     key: PropTypes.number,
-    instructions: PropTypes.bool,
     recipe: PropTypes.any,
-    recipeInfo: PropTypes.any,
-    type: PropTypes.string,
+    id: PropTypes.any,
 }
 
 
