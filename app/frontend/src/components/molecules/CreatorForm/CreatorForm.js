@@ -110,17 +110,44 @@ const form = props => {
                 <img src={imageURL} width="180px" height="180px" className="image"/>
             </div>
             <div>
-            <input
+            <div className='instruction-text'>
+                <Typography>
+                    Enter Image as URL
+                </Typography>
+            </div>
+                <TextField
+                    id="image"
+                    placeholder="URL"
+                    value={values.image}
+                    type="url"
+                    onChange={(e) => {
+                        handleChange(e)
+                        setImageURL(e.target.value)
+                    }}
+                    onBlur={handleBlur}
+                    // helperText={touched.recipetitle ? errors.recipetitle : ""}
+                    // error={touched.recipetitle && Boolean(errors.recipetitle)}
+                    margin="normal"
+                    variant="outlined"
+                    sx={{ 
+                        "&&":{
+                            width:"50%"
+                        }
+                    }}
+                />
+            {/* <input
                 className="image-input"
                 name={"image"}
-                type="file"
-                accept='image/*'
+                type="url"
+                // accept='image/*'
                 onChange={(e)=>{
-                    setFieldValue('image', URL.createObjectURL(e.target.files[0])); 
-                    // handleChange(e)
-                    setImageURL(URL.createObjectURL(e.target.files[0]));
+                    // setFieldValue('image', URL.createObjectURL(e.target.files[0])); 
+                    handleChange(e)
+                    // console.log(e.target.value)
+                    setImageURL(e.target.value)
+                    // setImageURL(URL.createObjectURL(e.target.files[0]));
                 }}
-            />
+            /> */}
             </div>
             <div className='instruction-text'>
                 <Typography>
@@ -181,7 +208,7 @@ const form = props => {
                             backgroundColor: "white",
                             color: "#df7b84", 
                         },
-                        paddingBottom: "2vh",
+                        marginBottom: "2vh",
                     }}}
                 > 
                     Save 
