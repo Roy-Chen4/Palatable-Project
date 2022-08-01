@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
-    Button, TextField, Typography
+    Button, DialogTitle, TextField, Typography
 } from '@mui/material';
 import axios from 'axios';
 import { withFormik } from "formik";
@@ -8,7 +8,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
 import validationCreator from "../../../validation/creatorSchema";
-import './CreatorForm.css';
 
 const form = props => {
     const {
@@ -18,13 +17,12 @@ const form = props => {
         handleChange,
         handleBlur,
         resetForm,
-        setFieldValue,
-        openAlert,
-        closeAlert,
+        recipe,
+        onClose,
     } = props;
     
     const [isSubmitting, setIsSubmitting] = React.useState(false);
-    const [imageURL, setImageURL] = React.useState();
+    const [imageURL, setImageURL] = React.useState(recipe.image);
     const userEmail = useSelector((state) => state.user.value.email);
 
     const onFormSubmit = () => {
@@ -44,15 +42,13 @@ const form = props => {
             email: userEmail,
             recipe: JSON.stringify(recipe)
         }
-        axios.post("/addrecipe/", valuesToSend) 
+        axios.post("//", valuesToSend) 
             .then((res) => {
                 console.log(res)
-                openAlert();
             }).then(() => {
                 setTimeout(function() {
                     setIsSubmitting(false);
-                    closeAlert();
-                    window.location.reload();
+                    onClose()
                 }.bind(this), 2000)
             })
             .catch((err) => {
@@ -60,34 +56,16 @@ const form = props => {
                 setIsSubmitting(false);
             });
             
-        console.log("form values: " + recipe)
-        console.log("recipe title: " + values.recipetitle)
-        console.log("ingredients: " + values.ingredients)
-        console.log("instructions: " + values.instructions)
-        console.log(values)
-        console.log(valuesToSend)
-        console.log(userEmail)
-    }
-
-//    function handleImageChange(event) {
-//         const reader = new FileReader();
-//         reader.onload = () => {
-//             if (reader.readyState === 2) {
-//                 setImageURL({file: reader.result})
-//             }
-//         } 
-//         reader.readAsDataURL(event.target.files[0]);
-//         this.props.sfv("image", event.currentTarget.files[0]);
-//     }
-
-    function setImage() {
-        const reader = new FileReader();
-        reader.onload = () => {
-            setImageURL(reader.result)
-        } 
     }
     return (
         <form>
+            <DialogTitle>Edit Recipe</DialogTitle>
+            <div className='instruction-text'>
+                <Typography>
+                    Title
+                </Typography>
+            </div>
+
             <div className="inputs">
                 <TextField
                         id="recipetitle"
@@ -117,7 +95,7 @@ const form = props => {
             </div>
                 <TextField
                     id="image"
-                    placeholder="URL"
+                    placeholder="Image"
                     value={values.image}
                     type="url"
                     onChange={(e) => {
@@ -156,7 +134,7 @@ const form = props => {
             </div>
             <TextField
                 id="ingredients"
-                placeholder="Ingredients"
+                placeholder="Ingredient"
                 value={values.ingredients}
                 onChange={(e) => {handleChange(e)}}
                 onBlur={handleBlur}
@@ -218,8 +196,18 @@ const form = props => {
     );
 };
 
-const CreatorForm = withFormik({
+const EditRecipeModal = withFormik({
     validationSchema: yup.object().shape(validationCreator),
+    mapPropsToValues: (props) => {
+        return (
+            {
+                recipetitle: props.recipe.title,
+                image: props.recipe.image,
+                ingredients: props.recipe.ingredients,
+                instructions: props.recipe.instructions,
+            }
+        )
+    }
 })(form);
 
-export default CreatorForm;
+export default EditRecipeModal;
