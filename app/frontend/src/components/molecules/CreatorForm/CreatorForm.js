@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
-    Button, TextField
+    Button, TextField, Typography
 } from '@mui/material';
 import axios from 'axios';
 import { withFormik } from "formik";
@@ -115,13 +115,18 @@ const form = props => {
                 }}
             />
             </div>
-
+            <div className='helper-text1'>
+                <Typography>
+                Type in comma separated ingredients
+                </Typography>
+            </div>
             <TextField
                 id="ingredients"
                 placeholder="Ingredients"
                 value={values.ingredients}
                 onChange={(e) => {handleChange(e)}}
                 onBlur={handleBlur}
+                multiline={true}
                 helperText={touched.ingredients ? errors.ingredients : ""}
                 error={touched.ingredients && Boolean(errors.ingredients)}
                 margin="normal"
@@ -132,11 +137,16 @@ const form = props => {
                     }
                 }}
             />
-
+            <div className='helper-text1'>
+                <Typography>
+                Type in comma separated instructions
+                </Typography>
+            </div>
             <TextField
                 id="instructions"
                 placeholder="Instructions"
                 value={values.instructions}
+                multiline={true}
                 onChange={(e) => {handleChange(e)}}
                 onBlur={handleBlur}
                 helperText={touched.instructions ? errors.instructions : ""}
