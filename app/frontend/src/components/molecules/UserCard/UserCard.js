@@ -63,9 +63,10 @@ export default function UserCard(props) {
                 />
                 </CardContent>
                 <CardActions className = "explore-button">
-                    <Button size="small" onClick={()=>{setRecipeOpen(true)}} >Explore</Button>
-                    <Button size="small" onClick={()=>{console.log("deletefunction")}} >Delete</Button>
+                    <Button size="small" variant="outlined" onClick={()=>{setRecipeOpen(true)}} >Explore</Button>
                 </CardActions>
+                <Button size="small" variant="outlined" onClick={()=>{setConfirmationModal(true)}} sx={{margin: "10px"}}>Delete</Button>
+                <Button size="small" variant="outlined" onClick={()=>{console.log("editfunction")}} sx={{margin: "10px"}}>Edit</Button>
             </Card>
             <CommunityModal 
                 open={recipeOpen}
