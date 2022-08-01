@@ -9,6 +9,7 @@ import CardHeader from '@mui/material/CardHeader';
 import React, { useState } from "react";
 import CommunityModal from '../Modal/CommunityModal';
 import './UserCard.css';
+import EditRecipeModal from '../Modal/EditRecipeModal';
 
 
 export default function UserCard(props) {
@@ -17,6 +18,7 @@ export default function UserCard(props) {
     const [instructions, setInstructions] = React.useState([])
     const [ingredients, setIngredients] = React.useState([])
     const [confirmationModal, setConfirmationModal] = React.useState(false)
+    const [editModal, setEditModal] = React.useState(false)
     const [isSubmitting, setIsSubmitting] = React.useState(false)
 
     const primaryTheme = createTheme({
@@ -67,7 +69,7 @@ export default function UserCard(props) {
                     <Button size="small" variant="outlined" onClick={()=>{setRecipeOpen(true)}} >Explore</Button>
                 </CardActions>
                 <Button size="small" variant="outlined" onClick={()=>{setConfirmationModal(true)}} sx={{margin: "10px"}}>Delete</Button>
-                <Button size="small" variant="outlined" onClick={()=>{console.log("editfunction")}} sx={{margin: "10px"}}>Edit</Button>
+                <Button size="small" variant="outlined" onClick={()=>{setEditModal(true)}} sx={{margin: "10px"}}>Edit</Button>
             </Card>
             <CommunityModal 
                 open={recipeOpen}
@@ -82,7 +84,26 @@ export default function UserCard(props) {
                 primaryTheme={primaryTheme} 
             />
 
-            <Dialog className="dialog-container" open={confirmationModal} onClose={() => setConfirmationModal(false)} fullWidth='true' maxWidth='md'>
+            
+            <Dialog 
+                className="dialog-container" 
+                open={editModal} 
+                onClose={() => setEditModal(false)}
+                fullWidth='true' 
+                maxWidth='md'
+            >
+              <EditRecipeModal 
+               recipe={props.recipe}
+               onClose={() => setEditModal(false)}
+              />  
+            </Dialog>
+            <Dialog 
+                className="dialog-container" 
+                open={confirmationModal} 
+                onClose={() => setConfirmationModal(false)} 
+                fullWidth='true' 
+                maxWidth='md'
+            >
                 <DialogTitle>
                     <p1 className='category-heading'>
                         Are you sure you want to delete{": "+ props.recipe.title +"?"}
