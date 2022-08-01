@@ -285,7 +285,7 @@ def favourites(request):
 @api_view(['GET'])
 def get_ingredient(request):
     result = list(Ingredients.objects.values('name'))
-    return JsonResponse(result)
+    return JsonResponse({'data': result})
 
 # add a recipe
 @api_view(['POST'])
