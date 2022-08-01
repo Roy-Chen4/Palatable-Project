@@ -8,6 +8,7 @@ import {
 import CardHeader from '@mui/material/CardHeader';
 import React, { useState } from "react";
 import CommunityModal from '../Modal/CommunityModal';
+import './UserCard.css';
 
 
 export default function UserCard(props) {
@@ -81,13 +82,13 @@ export default function UserCard(props) {
                 primaryTheme={primaryTheme} 
             />
 
-            <Dialog open={confirmationModal} onClose={() => setConfirmationModal(false)} fullWidth='true' maxWidth='md'>
+            <Dialog className="dialog-container" open={confirmationModal} onClose={() => setConfirmationModal(false)} fullWidth='true' maxWidth='md'>
                 <DialogTitle>
-                    <p1 className='category-heading' style={{textTransform: 'uppercase'}}>
+                    <p1 className='category-heading'>
                         Are you sure you want to delete{": "+ props.recipe.title +"?"}
                     </p1>
                 </DialogTitle>
-                <DialogActions>
+                <DialogActions className="dialog-buttons" sx={{'&&':{justifyContent:"center"}}}>
                     <Button 
                         onClick={() => {
                             deleteRecipe();
@@ -95,6 +96,7 @@ export default function UserCard(props) {
                         variant="contained"
                         sx={{ "&&": {
                             backgroundColor: "white",
+                            color: "#df7b84",
                             ":hover": {
                                 backgroundColor: "#df7b84",
                                 color: "white", 
