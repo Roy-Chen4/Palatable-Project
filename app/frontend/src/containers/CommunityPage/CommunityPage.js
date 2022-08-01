@@ -1,22 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { Button, Grid, Box, CardHeader } from '@mui/material';
-import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import RecipeCard from '../../components/molecules/RecipeCard/RecipeCard';
-import { Oval } from 'react-loader-spinner';
-import CommunityCard from './CommunityCard';
-import { useState, useEffect } from "react";
+import { Button } from '@mui/material';
 import axios from 'axios';
-import { 
-    Card, 
-    CardContent, 
-    CardMedia, 
-    Typography, 
-    CardActions, 
-    IconButton, 
-    Dialog,
-} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 
 function CommunityPage() {
@@ -27,9 +13,19 @@ function CommunityPage() {
         axios
         .get("/community/")
         .then((res) => {
-            console.log("hi")
-            const hello = JSON.parse((JSON.parse(JSON.stringify(res.data.data))))
-            setRecipe(hello)
+            // console.log("hi")
+            console.log(res.data.data)
+            // console.log(res.data.data.length)
+            // console.log(res.data.data[0].recipe)
+            console.log(JSON.parse(res.data.data[0].recipe))
+            // const hello = JSON.parse((JSON.parse(JSON.stringify(res.data.data))))
+            let allRecipes = [];
+            for (let i=0; i<res.data.data.length; i++ ) {
+                allRecipes = [...allRecipes, JSON.parse(res.data.data[i].recipe)]
+                // console.log(allRecipes)
+            }
+            setRecipe([...allRecipes]);
+            // setRecipe(hello)
             /* setRecipe(...res.data.data) */
             /* const new_recipe = JSON.parse([...res.data.data])
             console.log("hi")
