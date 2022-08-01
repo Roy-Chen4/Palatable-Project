@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
-    Button, TextField
+    Button, TextField, Typography
 } from '@mui/material';
 import axios from 'axios';
 import { withFormik } from "formik";
@@ -8,7 +8,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
 import validationCreator from "../../../validation/creatorSchema";
-import './CreatorForm.css'
+import './CreatorForm.css';
 
 const form = props => {
     const {
@@ -19,6 +19,8 @@ const form = props => {
         handleBlur,
         resetForm,
         setFieldValue,
+        openAlert,
+        closeAlert,
     } = props;
     
     const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -45,9 +47,17 @@ const form = props => {
         axios.post("/addrecipe/", valuesToSend) 
             .then((res) => {
                 console.log(res)
+                openAlert();
+            }).then(() => {
+                setTimeout(function() {
+                    setIsSubmitting(false);
+                    closeAlert();
+                    window.location.reload();
+                }.bind(this), 2000)
             })
             .catch((err) => {
                 console.log(err.request);
+                setIsSubmitting(false);
             });
             
         console.log("form values: " + recipe)
@@ -112,13 +122,18 @@ const form = props => {
                 }}
             />
             </div>
-
+            <div className='instruction-text'>
+                <Typography>
+                Type in comma separated ingredients
+                </Typography>
+            </div>
             <TextField
                 id="ingredients"
                 placeholder="Ingredients"
                 value={values.ingredients}
                 onChange={(e) => {handleChange(e)}}
                 onBlur={handleBlur}
+                multiline={true}
                 helperText={touched.ingredients ? errors.ingredients : ""}
                 error={touched.ingredients && Boolean(errors.ingredients)}
                 margin="normal"
@@ -129,11 +144,16 @@ const form = props => {
                     }
                 }}
             />
-
+            <div className='instruction-text'>
+                <Typography>
+                Type in comma separated instructions
+                </Typography>
+            </div>
             <TextField
                 id="instructions"
                 placeholder="Instructions"
                 value={values.instructions}
+                multiline={true}
                 onChange={(e) => {handleChange(e)}}
                 onBlur={handleBlur}
                 helperText={touched.instructions ? errors.instructions : ""}
@@ -160,7 +180,8 @@ const form = props => {
                         ":hover": {
                             backgroundColor: "white",
                             color: "#df7b84", 
-                        }
+                        },
+                        paddingBottom: "2vh",
                     }}}
                 > 
                     Save 

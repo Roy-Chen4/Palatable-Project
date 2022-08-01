@@ -19,3 +19,9 @@
     display: flex; */
     /* padding-bottom: 5vh; */
 }
+
+.instruction-text {
+    padding-top: 1vh;
+    text-align: center;
+    color: #737373;
+}
