@@ -97,7 +97,7 @@ class LoginView(APIView):
         email = request.data['email']
         password = request.data['password']
 
-        user = User.objects.filter(email=email).first()
+        user = User.objects.filter(email = email).first()
 
         if user is None:
             raise AuthenticationFailed('User not found!')
@@ -337,4 +337,27 @@ def deleterecipe(request):
             else:
                 return Response(serializer.errors, status = status.HTTP_404_NOT_FOUND)
             return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+# returns all of the recipes that a user has made
+@api_view(['POST'])
+def getuserrecipes(request):
+    if request.method =='POST':
+        serializer = GetUserRecipesSerializer(data = request.data)
+        response = Response()
+        if serializer.is_valid():
+            user = Recipes.objects.filter(email = serializer.data['email'])
+            for user in Recipes.objects.filter(email = serializer.data['email']):
+                if response.data == None:
+                    response.data = {
+                        'id': str(user.id),
+                        'recipe': user.recipe
+                    }
+                else:
+                    response.data = {
+                        'id': response.data['id'] + ', ' + str(user.id),
+                        'recipe': response.data['recipe'] + ', ' + user.recipe
+                    }
+            print(response.data)
+            return response
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
