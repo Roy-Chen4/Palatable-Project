@@ -55,7 +55,7 @@ function CommunityPage() {
 
             </Grid> */}
             {/* <h1>{recipe.title}</h1> */}
-            <Box className="grid-container" sx={{"&&":{ flexGrow: 1 }}}>
+            <Box className="grid-container" sx={{"&&":{ flexGrow: 1, marginTop: "3vh" }}}>
                 <Grid container spacing={1}>
                     {recipe.map((item, index) => (
                         <Grid key={index} item>

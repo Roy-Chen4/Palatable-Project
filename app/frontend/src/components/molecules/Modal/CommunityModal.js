@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import React from "react";
 import './Modal.css';
 
-export default function RecipeModal(props) {
+export default function CommunityModal(props) {
 
     return (
         <Dialog open={props.open} onClose={() => props.onClose()} fullWidth='true' maxWidth="lg" overflow='scroll'>
@@ -51,7 +51,7 @@ export default function RecipeModal(props) {
                         <div className={`${"align-left"} ${"ingredient-list"}`}>
                             {props.ingredients.map((item, index) => (
                                 <div key={index}>
-                                    &#8226;{" " + item.amount + " " + item.unit + " " + item.name}
+                                    &#8226;{" " + item}
                                 </div>
                             ))}  
                         </div> 
@@ -93,7 +93,7 @@ export default function RecipeModal(props) {
 
 }
 
-RecipeModal.propTypes = {
+CommunityModal.propTypes = {
     open: PropTypes.bool,
     title: PropTypes.any,
     id: PropTypes.any,

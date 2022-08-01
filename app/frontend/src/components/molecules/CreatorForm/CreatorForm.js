@@ -8,7 +8,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
 import validationCreator from "../../../validation/creatorSchema";
-import './CreatorForm.css'
+import './CreatorForm.css';
 
 const form = props => {
     const {
@@ -45,9 +45,12 @@ const form = props => {
         axios.post("/addrecipe/", valuesToSend) 
             .then((res) => {
                 console.log(res)
+                setIsSubmitting(false);
+                resetForm();
             })
             .catch((err) => {
                 console.log(err.request);
+                setIsSubmitting(false);
             });
             
         console.log("form values: " + recipe)

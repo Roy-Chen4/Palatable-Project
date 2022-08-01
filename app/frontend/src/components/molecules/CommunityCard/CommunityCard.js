@@ -1,22 +1,13 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types';
 /* import * as React from 'react'; */
-import { 
-    Card, 
-    CardContent, 
-    CardMedia, 
-    Typography, 
-    CardActions, 
-    Button,
-    IconButton, 
-    Dialog,
+import {
+    Button, Card, CardActions, CardContent,
+    CardMedia, createTheme
 } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import CardHeader from '@mui/material/CardHeader';
-import React, { useState, useEffect } from "react";
-import { DialogTitle } from '@mui/material';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import React, { useState } from "react";
+import CommunityModal from '../Modal/CommunityModal';
 
 
 export default function CommunityCard(props) {
@@ -26,7 +17,7 @@ export default function CommunityCard(props) {
     
     // const userEmail = useSelector((state) => state.user.value.email)
     
-    // const [recipe, setRecipe] = useState([]);
+    const [recipeOpen, setRecipeOpen] = useState(false);
 
     // useEffect(() => {
     //     axios
@@ -40,6 +31,13 @@ export default function CommunityCard(props) {
 
     // }, [])
 
+    const primaryTheme = createTheme({
+        palette: {
+          primary: {
+            main: '#df7b84',
+          },
+        },
+      });
 
     function handleOnClick(){
         const recipeValues = {
@@ -49,6 +47,19 @@ export default function CommunityCard(props) {
             "instructions": props.recipe.instructions,
         }
     }
+
+    const [instructions, setInstructions] = React.useState([])
+    const [ingredients, setIngredients] = React.useState([])
+    React.useEffect(()=> {
+            setInstructions(props.recipe.instructions
+                .replace(/<[^>]+>/g, '')
+                .split(",")
+                .filter(function(e){return e}));
+            setIngredients(props.recipe.ingredients
+                .replace(/<[^>]+>/g, '')
+                .split(",")
+                .filter(function(e){return e}));
+    }, [])
 
 
     return (
@@ -75,9 +86,21 @@ export default function CommunityCard(props) {
                 </CardContent>
                 {/* <div className = "explore-button"> */}
                 <CardActions className = "explore-button">
-                    <Button size="small" /* onClick={()=>{setRecipeOpen(true)}} */>Explore</Button>
+                    <Button size="small" onClick={()=>{setRecipeOpen(true)}} >Explore</Button>
                 </CardActions>
-        </Card>
+            </Card>
+            <CommunityModal 
+                open={recipeOpen}
+                recipe={props.recipe}
+                title={props.recipe.title}
+                type={"redux"}
+                id={props.recipe.id}
+                image={props.recipe.image}
+                ingredients={ingredients}
+                instructions={instructions}
+                onClose={() => setRecipeOpen(false)} 
+                primaryTheme={primaryTheme} 
+            />
         </div>
     )
 
