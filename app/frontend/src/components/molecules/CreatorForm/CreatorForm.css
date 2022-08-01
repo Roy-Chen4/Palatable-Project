@@ -25,3 +25,16 @@
     text-align: center;
     color: #737373;
 }
+
+.tag-buttons {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.instruction-text-button {
+    padding-top: 1vh;
+    padding-bottom: 2vh;
+    text-align: center;
+    color: #737373;
+}
