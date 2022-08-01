@@ -33,7 +33,7 @@ const form = props => {
             title: values.recipetitle,
             image: values.image,
             ingredients: values.ingredients,
-            // tags: values.tags,
+            tags: tagValue,
             instructions: values.instructions,
         }
         /* setTimeout(function() { 
@@ -60,14 +60,43 @@ const form = props => {
                 setIsSubmitting(false);
             });
             
-        console.log("form values: " + recipe)
+        /* console.log("form values: " + recipe)
         console.log("recipe title: " + values.recipetitle)
         console.log("ingredients: " + values.ingredients)
         console.log("instructions: " + values.instructions)
         console.log(values)
         console.log(valuesToSend)
-        console.log(userEmail)
+        console.log(userEmail) */
     }
+
+    const [tagValue, setTagValue] = React.useState()
+    const [selected, isSelected] = React.useState('')
+
+    /* function onBreakfastSubmit() {
+        if (selected === true){
+            setTagValue('breakfast')
+        }
+        else {
+            setTagValue('') 
+        }
+        console.log(tagValue)
+    } */
+
+    function onBreakfastSubmit() {
+        setTagValue('breakfast')
+        console.log(tagValue)
+    }
+
+    function onLunchSubmit() {
+        setTagValue('lunch')
+        console.log(tagValue)
+    }
+
+    function onDinnerSubmit() {
+        setTagValue('dinner')
+        console.log(tagValue)
+    }
+
 
 //    function handleImageChange(event) {
 //         const reader = new FileReader();
@@ -193,6 +222,119 @@ const form = props => {
                     }
                 }}
             />
+
+            <div className='instruction-text-button'>
+                <Typography>
+                Select one tag
+                </Typography>
+            </div>
+
+            <div className='tag-buttons'>
+            <Button
+                    /* onClick={() => {onBreakfastSubmit(); isSelected(true)}} */
+                    onClick={() => {onBreakfastSubmit(); isSelected('breakfast')}}
+                    /* sx={{"&&": {
+                        color:"white",
+                        backgroundColor: "#df7b84",
+                        ":hover": {
+                            backgroundColor: "white",
+                            color: "#df7b84", 
+                        },
+                        marginBottom: "2vh",
+                    }}} */
+                    sx={{
+                        ...(selected === 'breakfast' && {
+                            color:"#df7b84",
+                            backgroundColor: "#white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "#df7b84", 
+                            },
+                        }),
+                        ...(selected !== 'breakfast' && {
+                            color:"white",
+                            backgroundColor: "#df7b84",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "#df7b84", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Breakfast
+                </Button>
+                <Button
+                    /* onClick={() => {onLunchSubmit(); isSelected(true)}} */
+                    onClick={() => {onLunchSubmit(); isSelected('lunch')}}
+                    /* sx={{"&&":{
+                        color:"white",
+                        backgroundColor: "#df7b84",
+                        ":hover": {
+                            backgroundColor: "white",
+                            color: "#df7b84", 
+                        },
+                        marginBottom: "2vh",
+                    }}} */
+                    sx={{
+                        ...(selected === 'lunch' && {
+                            color:"#df7b84",
+                            backgroundColor: "#white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "#df7b84", 
+                            },
+                        }),
+                        ...(selected !== 'lunch' && {
+                            color:"white",
+                            backgroundColor: "#df7b84",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "#df7b84", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Lunch
+                </Button>
+                <Button
+                    onClick={() => {onDinnerSubmit(); isSelected('dinner')}}
+                    /* sx={{"&&":{
+                        color:"white",
+                        backgroundColor: "#df7b84",
+                        ":hover": {
+                            backgroundColor: "white",
+                            color: "#df7b84", 
+                        },
+                        marginBottom: "2vh",
+                    }}} */
+                    sx={{
+                        ...(selected === 'dinner' && {
+                            color:"#df7b84",
+                            backgroundColor: "#white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "#df7b84", 
+                            },
+                        }),
+                        ...(selected !== 'dinner' && {
+                            color:"white",
+                            backgroundColor: "#df7b84",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "#df7b84", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Dinner
+                </Button>
+            </div>
 
             <div className="submit-button">
                 <Button 
