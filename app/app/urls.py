@@ -37,6 +37,7 @@ urlpatterns = [
     path('community/', views.get_recipe),
     path('editrecipe/', views.editrecipe),
     path('deleterecipe/', views.deleterecipe),
+    path('getuserrecipes/', views.getuserrecipes),
     path('', include('palatable.urls')),
     path('', include('frontend.urls'))
     ]

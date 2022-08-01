@@ -73,3 +73,6 @@ class EditRecipeSerializer(serializers.Serializer):
 class DeleteRecipeSerializer(serializers.Serializer):
     id = serializers.CharField(max_length = 5)
     email = serializers.EmailField(max_length = 30)
+
+class GetUserRecipesSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length = 30)
