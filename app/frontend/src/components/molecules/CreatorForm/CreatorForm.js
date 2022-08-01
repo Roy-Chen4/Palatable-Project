@@ -19,6 +19,8 @@ const form = props => {
         handleBlur,
         resetForm,
         setFieldValue,
+        openAlert,
+        closeAlert,
     } = props;
     
     const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -45,8 +47,13 @@ const form = props => {
         axios.post("/addrecipe/", valuesToSend) 
             .then((res) => {
                 console.log(res)
-                setIsSubmitting(false);
-                resetForm();
+                openAlert();
+            }).then(() => {
+                setTimeout(function() {
+                    setIsSubmitting(false);
+                    closeAlert();
+                    window.location.reload();
+                }.bind(this), 2000)
             })
             .catch((err) => {
                 console.log(err.request);
@@ -115,7 +122,7 @@ const form = props => {
                 }}
             />
             </div>
-            <div className='helper-text1'>
+            <div className='instruction-text'>
                 <Typography>
                 Type in comma separated ingredients
                 </Typography>
@@ -137,7 +144,7 @@ const form = props => {
                     }
                 }}
             />
-            <div className='helper-text1'>
+            <div className='instruction-text'>
                 <Typography>
                 Type in comma separated instructions
                 </Typography>
@@ -173,7 +180,8 @@ const form = props => {
                         ":hover": {
                             backgroundColor: "white",
                             color: "#df7b84", 
-                        }
+                        },
+                        paddingBottom: "2vh",
                     }}}
                 > 
                     Save 
