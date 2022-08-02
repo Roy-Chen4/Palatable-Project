@@ -37,7 +37,7 @@ function IngredientPage() {
         </Typography>
       </div>
       <IngredientCarousel />
-      <Divider className="line-divider">YOUR INGREDIENTS &#40;MAX 20</Divider>
+      <Divider className="line-divider">YOUR INGREDIENTS</Divider>
       <IngredientList />
       <NavLink 
         to={{
