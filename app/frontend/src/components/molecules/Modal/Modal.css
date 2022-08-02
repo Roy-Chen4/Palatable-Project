@@ -45,3 +45,9 @@
 .instruction-list {
     padding-top: 2vh;
 }
+
+.tag-format {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
