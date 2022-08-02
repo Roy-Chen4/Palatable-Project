@@ -83,18 +83,37 @@ const form = props => {
     } */
 
     function onBreakfastSubmit() {
-        setTagValue('breakfast')
+        setTagValue(tagValue !=='breakfast' ? 'breakfast': undefined)
         console.log(tagValue)
+        return(tagValue !=='breakfast' ? 'breakfast': undefined)
     }
 
     function onLunchSubmit() {
-        setTagValue('lunch')
+        
+        setTagValue(tagValue !=='lunch' ? 'lunch': undefined)
         console.log(tagValue)
+        return(tagValue !=='lunch' ? 'lunch': undefined)
     }
 
     function onDinnerSubmit() {
-        setTagValue('dinner')
+        setTagValue(tagValue !=='dinner' ? 'dinner': undefined)
         console.log(tagValue)
+        return(tagValue !=='dinner' ? 'dinner': undefined)
+    }
+    function onSnackSubmit() {
+        setTagValue(tagValue !=='snack' ? 'snack': undefined)
+        console.log(tagValue)
+        return(tagValue !=='snack' ? 'snack': undefined)
+    }
+    function onDrinkSubmit() {
+        setTagValue(tagValue !=='drink' ? 'drink': undefined)
+        console.log(tagValue)
+        return(tagValue !=='drink' ? 'drink': undefined)
+    }
+    function onDessertSubmit() {
+        setTagValue(tagValue !=='dessert' ? 'dessert': undefined)
+        console.log(tagValue)
+        return(tagValue !=='dessert' ? 'dessert': undefined)
     }
 
 
@@ -231,32 +250,24 @@ const form = props => {
 
             <div className='tag-buttons'>
             <Button
-                    /* onClick={() => {onBreakfastSubmit(); isSelected(true)}} */
-                    onClick={() => {onBreakfastSubmit(); isSelected('breakfast')}}
-                    /* sx={{"&&": {
-                        color:"white",
-                        backgroundColor: "#df7b84",
-                        ":hover": {
-                            backgroundColor: "white",
-                            color: "#df7b84", 
-                        },
-                        marginBottom: "2vh",
-                    }}} */
+                    onClick={() => {isSelected(onBreakfastSubmit())}}
+                    variant="outlined"
+                    size="small"
                     sx={{
                         ...(selected === 'breakfast' && {
-                            color:"#df7b84",
-                            backgroundColor: "#white",
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
                             ":hover": {
-                                backgroundColor: "white",
-                                color: "#df7b84", 
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
                             },
                         }),
                         ...(selected !== 'breakfast' && {
-                            color:"white",
-                            backgroundColor: "#df7b84",
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
                             ":hover": {
                                 backgroundColor: "white",
-                                color: "#df7b84", 
+                                color: "rgb(25, 118, 210);", 
                             },
                         }),
                         marginBottom: "2vh",
@@ -266,32 +277,24 @@ const form = props => {
                     Breakfast
                 </Button>
                 <Button
-                    /* onClick={() => {onLunchSubmit(); isSelected(true)}} */
-                    onClick={() => {onLunchSubmit(); isSelected('lunch')}}
-                    /* sx={{"&&":{
-                        color:"white",
-                        backgroundColor: "#df7b84",
-                        ":hover": {
-                            backgroundColor: "white",
-                            color: "#df7b84", 
-                        },
-                        marginBottom: "2vh",
-                    }}} */
+                    onClick={() => {isSelected(onLunchSubmit())}}
+                    variant="outlined"
+                    size="small"
                     sx={{
                         ...(selected === 'lunch' && {
-                            color:"#df7b84",
-                            backgroundColor: "#white",
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
                             ":hover": {
-                                backgroundColor: "white",
-                                color: "#df7b84", 
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
                             },
                         }),
                         ...(selected !== 'lunch' && {
-                            color:"white",
-                            backgroundColor: "#df7b84",
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
                             ":hover": {
                                 backgroundColor: "white",
-                                color: "#df7b84", 
+                                color: "rgb(25, 118, 210);", 
                             },
                         }),
                         marginBottom: "2vh",
@@ -301,31 +304,24 @@ const form = props => {
                     Lunch
                 </Button>
                 <Button
-                    onClick={() => {onDinnerSubmit(); isSelected('dinner')}}
-                    /* sx={{"&&":{
-                        color:"white",
-                        backgroundColor: "#df7b84",
-                        ":hover": {
-                            backgroundColor: "white",
-                            color: "#df7b84", 
-                        },
-                        marginBottom: "2vh",
-                    }}} */
+                    onClick={() => {isSelected(onDinnerSubmit())}}
+                    variant="outlined"
+                    size="small"
                     sx={{
                         ...(selected === 'dinner' && {
-                            color:"#df7b84",
-                            backgroundColor: "#white",
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
                             ":hover": {
-                                backgroundColor: "white",
-                                color: "#df7b84", 
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
                             },
                         }),
                         ...(selected !== 'dinner' && {
-                            color:"white",
-                            backgroundColor: "#df7b84",
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
                             ":hover": {
                                 backgroundColor: "white",
-                                color: "#df7b84", 
+                                color: "rgb(25, 118, 210);", 
                             },
                         }),
                         marginBottom: "2vh",
@@ -333,6 +329,87 @@ const form = props => {
                     }}
                 >
                     Dinner
+                </Button>
+                <Button
+                    onClick={() => {isSelected(onSnackSubmit())}}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                        ...(selected === 'snacks' && {
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
+                            ":hover": {
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
+                            },
+                        }),
+                        ...(selected !== 'snacks' && {
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "rgb(25, 118, 210);", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Snacks
+                </Button>
+                <Button
+                    onClick={() => {isSelected(onDrinkSubmit())}}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                        ...(selected === 'drinks' && {
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
+                            ":hover": {
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
+                            },
+                        }),
+                        ...(selected !== 'drinks' && {
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "rgb(25, 118, 210);", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Drinks
+                </Button>
+                <Button
+                    onClick={() => {isSelected(onDessertSubmit())}}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                        ...(selected === 'dessert' && {
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
+                            ":hover": {
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
+                            },
+                        }),
+                        ...(selected !== 'dessert' && {
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "rgb(25, 118, 210);", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Dessert
                 </Button>
             </div>
 

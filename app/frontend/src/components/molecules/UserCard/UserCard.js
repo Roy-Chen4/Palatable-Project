@@ -95,7 +95,7 @@ export default function UserCard(props) {
                 recipe={props.recipe}
                 title={props.recipe.title}
                 type={"redux"}
-                id={props.recipe.id}
+                id={props.id}
                 image={props.recipe.image}
                 ingredients={ingredients}
                 instructions={instructions}
@@ -111,10 +111,11 @@ export default function UserCard(props) {
                 fullWidth='true' 
                 maxWidth='md'
             >
-              <EditRecipeModal 
-               recipe={props.recipe}
-               onClose={() => setEditModal(false)}
-              />  
+                <EditRecipeModal 
+                    id = {props.id}
+                    recipe={props.recipe}
+                    onClose={() => setEditModal(false)}
+                />  
             </Dialog>
             <Dialog 
                 className="dialog-container" 

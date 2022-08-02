@@ -18,6 +18,7 @@ const form = props => {
         handleBlur,
         resetForm,
         recipe,
+        id,
         onClose,
     } = props;
     
@@ -40,9 +41,10 @@ const form = props => {
         // use values to Send in axios request to save the recipe in creator db
         const valuesToSend = {
             email: userEmail,
-            recipe: JSON.stringify(recipe)
+            edit_recipe: JSON.stringify(recipe),
+            id: id,
         }
-        axios.post("//", valuesToSend) 
+        axios.post("/editrecipe/", valuesToSend) 
             .then((res) => {
                 console.log(res)
             }).then(() => {

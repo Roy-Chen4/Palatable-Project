@@ -316,8 +316,7 @@ def editrecipe(request):
             recipe = Recipes.objects.get(id = serializer.data['id'])
             # check if person trying to edit is editing their own recipe
             if recipe.email == serializer.data['email']:
-                json.dumps(serializer.data['edit_recipe'])
-                recipe.recipe = json.dumps(serializer.data['edit_recipe'])
+                recipe.recipe = serializer.data['edit_recipe']
                 recipe.save()
             else:
                 return Response(serializer.errors, status = status.HTTP_404_NOT_FOUND)
