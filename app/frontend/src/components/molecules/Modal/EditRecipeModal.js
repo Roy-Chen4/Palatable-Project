@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 import {
-    Button, DialogTitle, TextField, Typography
+    Button, DialogTitle, IconButton, TextField, Typography
 } from '@mui/material';
 import axios from 'axios';
 import { withFormik } from "formik";
 import React from "react";
 import { useSelector } from "react-redux";
+import CloseIcon from '@mui/icons-material/Close';
 import * as yup from "yup";
 import validationCreator from "../../../validation/creatorSchema";
 
@@ -18,12 +19,15 @@ const form = props => {
         handleBlur,
         resetForm,
         recipe,
+        id,
         onClose,
     } = props;
     
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [imageURL, setImageURL] = React.useState(recipe.image);
     const userEmail = useSelector((state) => state.user.value.email);
+    const [tagValue, setTagValue] = React.useState(recipe.tags);
+    const [selected, isSelected] = React.useState(recipe.tags);
 
     const onFormSubmit = () => {
         setIsSubmitting(true);
@@ -31,7 +35,7 @@ const form = props => {
             title: values.recipetitle,
             image: values.image,
             ingredients: values.ingredients,
-            // tags: values.tags,
+            tags: tagValue,
             instructions: values.instructions,
         }
         /* setTimeout(function() { 
@@ -40,9 +44,10 @@ const form = props => {
         // use values to Send in axios request to save the recipe in creator db
         const valuesToSend = {
             email: userEmail,
-            recipe: JSON.stringify(recipe)
+            edit_recipe: JSON.stringify(recipe),
+            id: id,
         }
-        axios.post("//", valuesToSend) 
+        axios.post("/editrecipe/", valuesToSend) 
             .then((res) => {
                 console.log(res)
             }).then(() => {
@@ -57,9 +62,56 @@ const form = props => {
             });
             
     }
+
+
+    function onBreakfastSubmit() {
+        setTagValue(tagValue !=='breakfast' ? 'breakfast': undefined)
+        console.log(tagValue)
+        return(tagValue !=='breakfast' ? 'breakfast': undefined)
+    }
+
+    function onLunchSubmit() {
+        
+        setTagValue(tagValue !=='lunch' ? 'lunch': undefined)
+        console.log(tagValue)
+        return(tagValue !=='lunch' ? 'lunch': undefined)
+    }
+
+    function onDinnerSubmit() {
+        setTagValue(tagValue !=='dinner' ? 'dinner': undefined)
+        console.log(tagValue)
+        return(tagValue !=='dinner' ? 'dinner': undefined)
+    }
+    function onSnackSubmit() {
+        setTagValue(tagValue !=='snack' ? 'snack': undefined)
+        console.log(tagValue)
+        return(tagValue !=='snack' ? 'snack': undefined)
+    }
+    function onDrinkSubmit() {
+        setTagValue(tagValue !=='drink' ? 'drink': undefined)
+        console.log(tagValue)
+        return(tagValue !=='drink' ? 'drink': undefined)
+    }
+    function onDessertSubmit() {
+        setTagValue(tagValue !=='dessert' ? 'dessert': undefined)
+        console.log(tagValue)
+        return(tagValue !=='dessert' ? 'dessert': undefined)
+    }
     return (
         <form>
             <DialogTitle>Edit Recipe</DialogTitle>
+            <IconButton
+                aria-label="close"
+                onClick={() => props.onClose()}
+                sx={{
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    color: (theme) => theme.palette.grey[500],
+                }}
+            >
+                <CloseIcon />
+            </IconButton>
             <div className='instruction-text'>
                 <Typography>
                     Title
@@ -171,6 +223,175 @@ const form = props => {
                     }
                 }}
             />
+            <div className='instruction-text'>
+                <Typography>
+                Select one tag
+                </Typography>
+            </div>
+            <div className='tag-buttons'>
+                <Button
+                    onClick={() => {isSelected(onBreakfastSubmit())}}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                        ...(selected === 'breakfast' && {
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
+                            ":hover": {
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
+                            },
+                        }),
+                        ...(selected !== 'breakfast' && {
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "rgb(25, 118, 210);", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Breakfast
+                </Button>
+                <Button
+                    onClick={() => {isSelected(onLunchSubmit())}}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                        ...(selected === 'lunch' && {
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
+                            ":hover": {
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
+                            },
+                        }),
+                        ...(selected !== 'lunch' && {
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "rgb(25, 118, 210);", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Lunch
+                </Button>
+                <Button
+                    onClick={() => {isSelected(onDinnerSubmit())}}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                        ...(selected === 'dinner' && {
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
+                            ":hover": {
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
+                            },
+                        }),
+                        ...(selected !== 'dinner' && {
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "rgb(25, 118, 210);", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Dinner
+                </Button>
+                <Button
+                    onClick={() => {isSelected(onSnackSubmit())}}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                        ...(selected === 'snacks' && {
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
+                            ":hover": {
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
+                            },
+                        }),
+                        ...(selected !== 'snacks' && {
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "rgb(25, 118, 210);", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Snacks
+                </Button>
+                <Button
+                    onClick={() => {isSelected(onDrinkSubmit())}}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                        ...(selected === 'drinks' && {
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
+                            ":hover": {
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
+                            },
+                        }),
+                        ...(selected !== 'drinks' && {
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "rgb(25, 118, 210);", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Drinks
+                </Button>
+                <Button
+                    onClick={() => {isSelected(onDessertSubmit())}}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                        ...(selected === 'dessert' && {
+                            color:"white",
+                            backgroundColor: "rgb(25, 118, 210);",
+                            ":hover": {
+                                color:"white",
+                                backgroundColor: "rgb(25, 118, 210);",
+                            },
+                        }),
+                        ...(selected !== 'dessert' && {
+                            color:"rgb(25, 118, 210);",
+                            backgroundColor: "white",
+                            ":hover": {
+                                backgroundColor: "white",
+                                color: "rgb(25, 118, 210);", 
+                            },
+                        }),
+                        marginBottom: "2vh",
+                        marginRight: "1vw",
+                    }}
+                >
+                    Dessert
+                </Button>
+            </div>
 
             <div className="submit-button">
                 <Button 

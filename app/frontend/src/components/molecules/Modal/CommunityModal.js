@@ -43,6 +43,20 @@ export default function CommunityModal(props) {
                         </Card>
                     </div>
                     <CardContent className="recipe-card-contents">
+                        <Button
+                            variant="outlined"
+                            disabled
+                            size="small"
+                            sx={{ '&&': {
+                                    color:"white",
+                                    backgroundColor: "rgb(57 126 194)",
+                                    marginBottom: "1vh",
+                                    display:props.tags ? "inline": "none"
+                                }
+                            }}
+                        >
+                            {props.tags ? props.tags:''}
+                        </Button>
                         <Divider className="top-divider"></Divider>
                         <Typography gutterBottom variant="h5" component="div">
                             Ingredients
@@ -96,6 +110,7 @@ export default function CommunityModal(props) {
 CommunityModal.propTypes = {
     open: PropTypes.bool,
     title: PropTypes.any,
+    tags: PropTypes.any,
     id: PropTypes.any,
     image: PropTypes.any,
     ingredients: PropTypes.any,
