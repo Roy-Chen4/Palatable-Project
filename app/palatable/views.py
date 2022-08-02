@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.shortcuts import render
 from django.contrib.auth import forms  
 from django.shortcuts import redirect  
@@ -386,5 +387,18 @@ def check_option(request):
         result = "vegetarian"
     else:
         result = "vegan"
+    
+    return JsonResponse({'data': result})
+
+# given category return an ingredient that is not in the given cateogry
+@api_view(['POST'])
+def suggest_ingredient(request):
+    data = request.data
+    ingredients = data["ingredients"]
+    ingredient_list = Ingredients.objects.values('name')
+    for i in ingredients:
+        ingredient_list.remove(i)
+    
+    result = random.choice(ingredient_list)
     
     return JsonResponse({'data': result})

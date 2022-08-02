@@ -81,7 +81,7 @@ export default function CommunityModal(props) {
                                         color:"white",
                                         backgroundColor: "rgb(198 18 71)",
                                         marginBottom: "1vh",
-                                        display:props.genre ? "inline": "none"
+                                        display:props.genre !== 'none' ? "inline": "none"
                                     }
                                 }}
                             >

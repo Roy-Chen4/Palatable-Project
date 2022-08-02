@@ -24,11 +24,14 @@ const form = props => {
     } = props;
     
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const [suggestIsSubmitting, setSuggestIsSubmitting] = React.useState(false);
     const [imageURL, setImageURL] = React.useState();
     const userEmail = useSelector((state) => state.user.value.email);
     const [tagValue, setTagValue] = React.useState()
     const [selected, isSelected] = React.useState('')
     const [genre, setGenre] = React.useState('none')
+    const [ingredientsList, setIngredientsList] = React.useState([])
+    const [ingredientField, setIngredientField] = React.useState('')
 
 
     const onFormSubmit = () => {
@@ -36,7 +39,7 @@ const form = props => {
         const recipe = {
             title: values.recipetitle,
             image: values.image,
-            ingredients: values.ingredients,
+            ingredients: ingredientField,
             tags: tagValue,
             genre: genre,
             instructions: values.instructions,
@@ -132,11 +135,11 @@ const form = props => {
 //     }
 
     function getGenre() {
-        console.log(values.ingredients)
         const ingredientList = values.ingredients
             .replace(/<[^>]+>/g, '')
             .split(",")
             .filter(function(e){return e});
+        setIngredientsList(ingredientList)
         const valuesToSend = {ingredients: ingredientList}
         console.log(valuesToSend)
         axios.post("/checkrecipe/", valuesToSend) 
@@ -147,9 +150,28 @@ const form = props => {
             .catch((err) => {
                 console.log(err.request);
                 setIsSubmitting(false);
-            });
-            
+            });  
+    }
 
+    function suggestIngredient () {
+        const valuesToSend = {ingredients: ingredientsList}
+        axios.post("/suggestingredient/", valuesToSend) 
+            .then((res) => {
+                console.log(res)
+                console.log(res.data.data.name)
+                if (ingredientField === '' ) {
+                    setFieldValue("ingredients", res.data.data.name)
+                    setIngredientField(res.data.data.name)
+                } else {
+                    setFieldValue("ingredients", ingredientField + ", " + res.data.data.name)
+                    setIngredientField(ingredientField + ", " + res.data.data.name)
+                }
+                setSuggestIsSubmitting(false);
+            })
+            .catch((err) => {
+                console.log(err.request);
+                setSuggestIsSubmitting(false);
+            });
     }
     return (
         <form>
@@ -226,6 +248,7 @@ const form = props => {
                 value={values.ingredients}
                 onChange={(e) => {
                     handleChange(e);
+                    setIngredientField(e.target.value)
                     getGenre();
                 }}
                 onBlur={handleBlur}
@@ -240,6 +263,24 @@ const form = props => {
                     }
                 }}
             />
+            <Button 
+                id="submit"
+                onClick={() => suggestIngredient()}
+                variant="contained"
+                disabled={suggestIsSubmitting}
+                sx={{
+                    color:"rgb(25, 118, 210);",
+                    backgroundColor: "white",
+                    ":hover": {
+                        backgroundColor: "white",
+                        color: "rgb(25, 118, 210);", 
+                    },
+                    marginBottom: "2vh",
+                    marginRight: "1vw",
+                }}
+            > 
+                Suggest Ingredient
+            </Button> 
             <div className='recipe-genre'>
                 <Button
                     variant="outlined"
@@ -455,7 +496,7 @@ const form = props => {
                     id="submit"
                     onClick={() => onFormSubmit()}
                     variant="contained"
-                    disabled={isSubmitting || errors.recipetitle}
+                    disabled={isSubmitting || errors.title || errors.ingredients || errors.instructions}
                     // theme={primaryTheme}
                     sx={{"&&":{
                         color:"white",
