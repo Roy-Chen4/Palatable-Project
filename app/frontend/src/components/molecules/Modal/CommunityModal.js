@@ -125,7 +125,6 @@ CommunityModal.propTypes = {
     image: PropTypes.any,
     ingredients: PropTypes.any,
     instructions: PropTypes.any,
-    tags: PropTypes.any,
     onClose: PropTypes.func,
     primaryTheme: PropTypes.func,
     showInstructions: PropTypes.bool,
