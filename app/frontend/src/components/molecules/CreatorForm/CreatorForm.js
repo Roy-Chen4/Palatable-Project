@@ -26,6 +26,10 @@ const form = props => {
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [imageURL, setImageURL] = React.useState();
     const userEmail = useSelector((state) => state.user.value.email);
+    const [tagValue, setTagValue] = React.useState()
+    const [selected, isSelected] = React.useState('')
+    const [genre, setGenre] = React.useState('none')
+
 
     const onFormSubmit = () => {
         setIsSubmitting(true);
@@ -34,6 +38,7 @@ const form = props => {
             image: values.image,
             ingredients: values.ingredients,
             tags: tagValue,
+            genre: genre,
             instructions: values.instructions,
         }
         /* setTimeout(function() { 
@@ -69,9 +74,7 @@ const form = props => {
         console.log(userEmail) */
     }
 
-    const [tagValue, setTagValue] = React.useState()
-    const [selected, isSelected] = React.useState('')
-
+   
     /* function onBreakfastSubmit() {
         if (selected === true){
             setTagValue('breakfast')
@@ -128,11 +131,25 @@ const form = props => {
 //         this.props.sfv("image", event.currentTarget.files[0]);
 //     }
 
-    function setImage() {
-        const reader = new FileReader();
-        reader.onload = () => {
-            setImageURL(reader.result)
-        } 
+    function getGenre() {
+        console.log(values.ingredients)
+        const ingredientList = values.ingredients
+            .replace(/<[^>]+>/g, '')
+            .split(",")
+            .filter(function(e){return e});
+        const valuesToSend = {ingredients: ingredientList}
+        console.log(valuesToSend)
+        axios.post("/checkrecipe/", valuesToSend) 
+            .then((res) => {
+                console.log(res)
+                setGenre(res.data.data)
+            })
+            .catch((err) => {
+                console.log(err.request);
+                setIsSubmitting(false);
+            });
+            
+
     }
     return (
         <form>
@@ -207,7 +224,10 @@ const form = props => {
                 id="ingredients"
                 placeholder="Ingredients"
                 value={values.ingredients}
-                onChange={(e) => {handleChange(e)}}
+                onChange={(e) => {
+                    handleChange(e);
+                    getGenre();
+                }}
                 onBlur={handleBlur}
                 multiline={true}
                 helperText={touched.ingredients ? errors.ingredients : ""}
@@ -220,6 +240,22 @@ const form = props => {
                     }
                 }}
             />
+            <div className='recipe-genre'>
+                <Button
+                    variant="outlined"
+                    disabled
+                    size="small"
+                    sx={{ '&&': {
+                            color:"white",
+                            backgroundColor: "rgb(57 126 194)",
+                            marginBottom: "1vh",
+                            display:genre !=='none' ? "inline-flex": "none"
+                        }
+                    }}
+                >
+                    Recipe Genre: {genre}
+                </Button>
+            </div>
             <div className='instruction-text'>
                 <Typography>
                 Type in comma separated instructions

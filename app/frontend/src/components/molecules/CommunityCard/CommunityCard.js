@@ -96,6 +96,7 @@ export default function CommunityCard(props) {
                 ingredients={ingredients}
                 instructions={instructions}
                 tags={tags}
+                genre={props.recipe.genre}
                 onClose={() => setRecipeOpen(false)} 
                 primaryTheme={primaryTheme} 
             />

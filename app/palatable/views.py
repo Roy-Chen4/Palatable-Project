@@ -362,9 +362,11 @@ def getuserrecipes(request):
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 
 # given ingredient list returns diet option
-@api_view(['GET'])
+@api_view(['POST'])
 def check_option(request):
     data = request.data
+    print(request)
+    print(request.data)
     input_list = data["ingredients"]
     pascetarian = ["meat/poultry", "prepared foods", "deli"]
     vegetarian = pascetarian + ["fish", "seafood"]
