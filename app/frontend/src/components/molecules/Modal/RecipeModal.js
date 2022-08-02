@@ -59,7 +59,7 @@ export default function RecipeModal(props) {
                         <Typography gutterBottom variant="h5" component="div" className="instruction-title">
                             Instructions
                         </Typography>
-                        <Divider className="bot-divider"></Divider>
+                        <Divider className="bottom-divider"></Divider>
                         <Typography gutterBottom variant="p1" component="div" className="instruction-list">
                             <div className="align-left">
                                 {props.instructions.map((item, index) => (
@@ -67,6 +67,16 @@ export default function RecipeModal(props) {
                                         {index+1 + ". "+item}
                                     </div>
                                 ))}
+                            </div>
+                        </Typography>
+                        <Divider className="top-divider"></Divider>
+                        <Typography gutterBottom variant="h5" component="div" className="instruction-title">
+                            Total price of the recipe (approximated)
+                        </Typography>
+                        <Divider className="bot-divider"></Divider>
+                        <Typography>
+                            <div className='price'>
+                                ${(props.price % 10).toFixed(2)}
                             </div>
                         </Typography>
                     </CardContent>
@@ -100,6 +110,7 @@ RecipeModal.propTypes = {
     image: PropTypes.any,
     ingredients: PropTypes.any,
     instructions: PropTypes.any,
+    price: PropTypes.any,
     onClose: PropTypes.func,
     primaryTheme: PropTypes.func,
     showInstructions: PropTypes.bool,
