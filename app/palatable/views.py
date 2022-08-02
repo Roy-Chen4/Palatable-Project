@@ -360,3 +360,29 @@ def getuserrecipes(request):
             # print(response.data)
             return response
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+# given ingredient list returns diet option
+@api_view(['GET'])
+def check_option(request):
+    data = request.data
+    input_list = data["ingredients"]
+    pascetarian = ["meat/poultry", "prepared foods", "deli"]
+    vegetarian = pascetarian + ["fish", "seafood"]
+    vegan = vegetarian + ["cheese", "dairy", "eggs", "gelatin"]
+    cat_list = []
+    for ingredient in input_list:
+        categories = list(Ingredients.objects.filter(name__contains=ingredient).values("category"))
+        for category in categories:
+            cat_name = category["category"]
+            if cat_name not in cat_list:
+                cat_list.append(cat_name)
+    if list(set(cat_list) & set(pascetarian)) != []:
+        result = "none"
+    elif list(set(cat_list) & set(vegetarian)) != []:
+        result = "pascetarian"
+    elif list(set(cat_list) & set(vegan)) != []:
+        result = "vegetarian"
+    else:
+        result = "vegan"
+    
+    return JsonResponse({'data': result})
