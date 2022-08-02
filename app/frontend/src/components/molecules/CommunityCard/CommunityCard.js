@@ -15,6 +15,7 @@ export default function CommunityCard(props) {
     const [recipeOpen, setRecipeOpen] = useState(false);
     const [instructions, setInstructions] = React.useState([])
     const [ingredients, setIngredients] = React.useState([])
+    const [tags, setTags] = React.useState([])
 
     // useEffect(() => {
     //     axios
@@ -54,6 +55,7 @@ export default function CommunityCard(props) {
                 .replace(/<[^>]+>/g, '')
                 .split(",")
                 .filter(function(e){return e}));
+            setTags(props.recipe.tags);
     }, [])
 
 
@@ -93,6 +95,7 @@ export default function CommunityCard(props) {
                 image={props.recipe.image}
                 ingredients={ingredients}
                 instructions={instructions}
+                tags={tags}
                 onClose={() => setRecipeOpen(false)} 
                 primaryTheme={primaryTheme} 
             />
