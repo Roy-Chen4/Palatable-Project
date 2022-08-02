@@ -43,6 +43,20 @@ export default function CommunityModal(props) {
                         </Card>
                     </div>
                     <CardContent className="recipe-card-contents">
+                        <Divider className="top-divider"></Divider>
+                        <Typography 
+                            gutterBottom 
+                            variant="h5" 
+                            component="div" 
+                            className="instruction-title"
+                            sx={{ '&&': {
+                                display:props.tags ? "block": "none"
+                            }
+                        }}
+                        >
+                            Meal Type
+                        </Typography>
+                        <Divider className="bottom-divider"></Divider>
                         <Button
                             variant="outlined"
                             disabled
@@ -84,15 +98,7 @@ export default function CommunityModal(props) {
                             </div>
                         </Typography>
                         <Divider className="top-divider"></Divider>
-                        <Typography gutterBottom variant="h5" component="div" className="instruction-title">
-                            Meal Type
-                        </Typography>
-                        <Divider className="bot-divider"></Divider>
-                        <Typography>
-                            <div className='tag-format'>
-                                {props.tags}
-                            </div>
-                        </Typography>
+                        
                     </CardContent>
             </DialogContent>
             <DialogActions>
@@ -125,7 +131,6 @@ CommunityModal.propTypes = {
     image: PropTypes.any,
     ingredients: PropTypes.any,
     instructions: PropTypes.any,
-    tags: PropTypes.any,
     onClose: PropTypes.func,
     primaryTheme: PropTypes.func,
     showInstructions: PropTypes.bool,
