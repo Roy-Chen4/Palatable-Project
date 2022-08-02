@@ -6,10 +6,12 @@ import {
     CardMedia, createTheme, Dialog, DialogActions, DialogTitle
 } from '@mui/material';
 import CardHeader from '@mui/material/CardHeader';
+import axios from 'axios';
 import React, { useState } from "react";
+import { useSelector } from 'react-redux';
 import CommunityModal from '../Modal/CommunityModal';
-import './UserCard.css';
 import EditRecipeModal from '../Modal/EditRecipeModal';
+import './UserCard.css';
 
 
 export default function UserCard(props) {
@@ -20,6 +22,7 @@ export default function UserCard(props) {
     const [confirmationModal, setConfirmationModal] = React.useState(false)
     const [editModal, setEditModal] = React.useState(false)
     const [isSubmitting, setIsSubmitting] = React.useState(false)
+    const userEmail = useSelector((state) => state.user.value.email);
 
     const primaryTheme = createTheme({
         palette: {
@@ -32,10 +35,26 @@ export default function UserCard(props) {
     function deleteRecipe () {
         setIsSubmitting(true)
         console.log("delete-recipe")
-        setTimeout(function() { 
+        const valuesToSend = {
+            recipeid: props.id,
+            email: userEmail,
+        }
+        axios
+        .post("/deleterecipe/", valuesToSend)
+        .then((res) => {
+            console.log(res.data)
+            // console.log(JSON.parse(res.data.data[0].recipe))
+        }) .then (() => {
+            setTimeout(function() { 
+                setIsSubmitting(false);
+                setConfirmationModal(false);
+                props.remove()
+            }.bind(this), 2000)
+        })
+        .catch((err) => {
+            console.log(err.request);
             setIsSubmitting(false);
-            location.reload();
-        }.bind(this), 2000)
+        }); 
     }
 
 
@@ -152,4 +171,5 @@ UserCard.propTypes = {
     key: PropTypes.number,
     recipe: PropTypes.any,
     id: PropTypes.any,
+    remove: PropTypes.any,
 }

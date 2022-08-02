@@ -71,7 +71,7 @@ class EditRecipeSerializer(serializers.Serializer):
     edit_recipe = serializers.JSONField()
 
 class DeleteRecipeSerializer(serializers.Serializer):
-    id = serializers.CharField(max_length = 5)
+    recipeid = serializers.CharField(max_length = 5)
     email = serializers.EmailField(max_length = 30)
 
 class GetUserRecipesSerializer(serializers.Serializer):
