@@ -2,6 +2,7 @@
 import CloseIcon from '@mui/icons-material/Close';
 import {
     Button,
+    ButtonGroup,
     Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent,
     DialogTitle, Divider, IconButton, Typography
 } from '@mui/material';
@@ -57,20 +58,36 @@ export default function CommunityModal(props) {
                             Meal Type
                         </Typography>
                         <Divider className="bottom-divider"></Divider>
-                        <Button
-                            variant="outlined"
-                            disabled
-                            size="small"
-                            sx={{ '&&': {
-                                    color:"white",
-                                    backgroundColor: "rgb(57 126 194)",
-                                    marginBottom: "1vh",
-                                    display:props.tags ? "inline": "none"
-                                }
-                            }}
-                        >
-                            {props.tags ? props.tags:''}
-                        </Button>
+                        <ButtonGroup sx={{marginTop: "1vh"}}>
+                            <Button
+                                variant="outlined"
+                                disabled
+                                size="small"
+                                sx={{ '&&': {
+                                        color:"white",
+                                        backgroundColor: "rgb(57 126 194)",
+                                        marginBottom: "1vh",
+                                        display:props.tags ? "inline": "none"
+                                    }
+                                }}
+                            >
+                                {props.tags ? props.tags:''}
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                disabled
+                                size="small"
+                                sx={{ '&&': {
+                                        color:"white",
+                                        backgroundColor: "rgb(198 18 71)",
+                                        marginBottom: "1vh",
+                                        display:props.genre ? "inline": "none"
+                                    }
+                                }}
+                            >
+                                {props.genre ? props.genre:''}
+                            </Button>
+                        </ButtonGroup>
                         <Divider className="top-divider"></Divider>
                         <Typography gutterBottom variant="h5" component="div">
                             Ingredients
@@ -127,6 +144,7 @@ CommunityModal.propTypes = {
     open: PropTypes.bool,
     title: PropTypes.any,
     tags: PropTypes.any,
+    genre: PropTypes.any,
     id: PropTypes.any,
     image: PropTypes.any,
     ingredients: PropTypes.any,
