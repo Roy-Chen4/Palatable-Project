@@ -325,12 +325,12 @@ def editrecipe(request):
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)
 
 # delete a recipe
-@api_view(['DELETE'])
+@api_view(['POST'])
 def deleterecipe(request):
-    if request.method =='DELETE':
+    if request.method =='POST':
         serializer = DeleteRecipeSerializer(data = request.data)
         if serializer.is_valid():
-            recipe = Recipes.objects.get(id = serializer.data['id'])
+            recipe = Recipes.objects.get(id = serializer.data['recipeid'])
             # check if person trying to delete is deleting their own recipe
             if recipe.email == serializer.data['email']:
                 recipe.delete()
@@ -349,15 +349,15 @@ def getuserrecipes(request):
             user = Recipes.objects.filter(email = serializer.data['email'])
             for user in Recipes.objects.filter(email = serializer.data['email']):
                 if response.data == None:
-                    response.data = {
-                        'id': str(user.id),
-                        'recipe': user.recipe
-                    }
+                    response.data = [
+                        {'id': str(user.id),
+                        'recipe': json.dumps(user.recipe)}
+                    ]
                 else:
-                    response.data = {
-                        'id': response.data['id'] + ', ' + str(user.id),
-                        'recipe': response.data['recipe'] + ', ' + user.recipe
-                    }
-            print(response.data)
+                    response.data.append( {
+                        'id': str(user.id),
+                        'recipe': json.dumps(user.recipe)
+                    })
+            # print(response.data)
             return response
         return Response(serializer.errors, status = status.HTTP_403_FORBIDDEN)

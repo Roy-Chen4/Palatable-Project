@@ -1,44 +1,43 @@
 /* eslint-disable no-unused-vars */
-import { AlertTitle, Box, Button, ButtonGroup, Dialog, Grid } from '@mui/material';
-import * as React from 'react';
-import CreatorForm from '../../components/molecules/CreatorForm/CreatorForm';
-import { Alert } from '@mui/material';
+import { Alert, AlertTitle, Box, Button, ButtonGroup, Dialog, Grid } from '@mui/material';
 import axios from 'axios';
-import "./CreatorPage.css"
+import * as React from 'react';
+import { useSelector } from 'react-redux';
+import CreatorForm from '../../components/molecules/CreatorForm/CreatorForm';
 import UserCard from '../../components/molecules/UserCard/UserCard';
+import "./CreatorPage.css";
 
 function CreatorPage() {
     const [toggle, setToggle] = React.useState(true);
     const [successModalOpen, setSuccessModalOpen] = React.useState(false);
     const [userRecipe, setUserRecipe] = React.useState([])
 
+    const userEmail = useSelector((state) => state.user.value.email);
     React.useEffect(() => {
+        const valuesToSend = {
+            email: userEmail,
+        }
         axios
-        .get("/community/")
+        .post("/getuserrecipes/", valuesToSend)
         .then((res) => {
-            // console.log("hi")
-            console.log(res.data.data)
-            // console.log(res.data.data.length)
-            // console.log(res.data.data[0].recipe)
-            console.log(JSON.parse(res.data.data[0].recipe))
-            // const hello = JSON.parse((JSON.parse(JSON.stringify(res.data.data))))
+            console.log(res.data)
+            // console.log(JSON.parse(res.data.data[0].recipe))
             let allRecipes = [];
-            for (let i=0; i<res.data.data.length; i++ ) {
-                allRecipes = [...allRecipes, JSON.parse(res.data.data[i].recipe)]
-                // console.log(allRecipes)
+            for (let i=0; i<res.data.length; i++ ) {
+                allRecipes = [...allRecipes, {id: res.data[i].id, recipe: JSON.parse(JSON.parse(res.data[i].recipe))}]
             }
             setUserRecipe([...allRecipes]);
-            // setRecipe(hello)
-            /* setRecipe(...res.data.data) */
-            /* const new_recipe = JSON.parse([...res.data.data])
-            console.log("hi")
-            console.log(new_recipe) */
+            console.log(allRecipes)
         })
-        /* .catch((err) => {
+        .catch((err) => {
             console.log(err.request);
-    }); */
+        }); 
     },[])
-
+    const remove = (item) => {
+        console.log(item);
+        let filteredArr = userRecipe.filter((el) => el.id !== item.id);
+        setUserRecipe(filteredArr);
+    };
 
     return (
         <div className="creator-page">
@@ -91,7 +90,9 @@ function CreatorPage() {
                         {userRecipe.map((item, index) => (
                             <Grid key={index} item>
                                 <UserCard
-                                    recipe={item}
+                                    id = {item.id}
+                                    recipe={item.recipe}
+                                    remove={() => {remove(item)}}
                                 />
                             </Grid>
                         ))}     
