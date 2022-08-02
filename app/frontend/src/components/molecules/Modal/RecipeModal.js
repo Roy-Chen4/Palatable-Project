@@ -76,7 +76,10 @@ export default function RecipeModal(props) {
                         <Divider className="bot-divider"></Divider>
                         <Typography>
                             <div className='price'>
-                                ${(props.price % 10).toFixed(2)}
+                                Total price: ${(props.price % 10).toFixed(2)}
+                            </div>
+                            <div className='price'>
+                                Total price per serving: ${(props.priceServing % 10).toFixed(2)}
                             </div>
                         </Typography>
                     </CardContent>
@@ -111,6 +114,7 @@ RecipeModal.propTypes = {
     ingredients: PropTypes.any,
     instructions: PropTypes.any,
     price: PropTypes.any,
+    priceServing: PropTypes.any,
     onClose: PropTypes.func,
     primaryTheme: PropTypes.func,
     showInstructions: PropTypes.bool,
