@@ -169,6 +169,22 @@ export default function RecipeCard(props) {
         }
     }
 
+    const [price, setPrice] = React.useState()
+
+    const options2 = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '8176d37892msh319090cdc777d8ap1e4f8djsn0b7472bf3694',
+            'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+        }
+    };
+    
+    fetch(`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${props.recipe.id}/priceBreakdownWidget.json`, options2)
+        .then(response => response.json())
+        .then(response => setPrice(response.totalCost))
+        .catch(err => console.error(err));
+    
+
 
     return (
         <div className="recipe-cards">
@@ -210,6 +226,7 @@ export default function RecipeCard(props) {
             image={props.recipe.image}
             ingredients={getIngredients()}
             instructions={instructions}
+            price={price}
             onClose={() => setRecipeOpen(false)} 
             primaryTheme={primaryTheme} 
         />
