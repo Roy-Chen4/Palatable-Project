@@ -170,6 +170,7 @@ export default function RecipeCard(props) {
     }
 
     const [price, setPrice] = React.useState()
+    const [priceServing, setPriceServing] = React.useState()
 
     const options2 = {
         method: 'GET',
@@ -181,8 +182,10 @@ export default function RecipeCard(props) {
     
     fetch(`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${props.recipe.id}/priceBreakdownWidget.json`, options2)
         .then(response => response.json())
-        .then(response => setPrice(response.totalCost))
+        .then(response => {setPrice(response.totalCost); setPriceServing(response.totalCostPerServing)})
+        .then(response => console.log(response))
         .catch(err => console.error(err));
+    
     
 
 
@@ -227,6 +230,7 @@ export default function RecipeCard(props) {
             ingredients={getIngredients()}
             instructions={instructions}
             price={price}
+            priceServing={priceServing}
             onClose={() => setRecipeOpen(false)} 
             primaryTheme={primaryTheme} 
         />
