@@ -250,7 +250,7 @@ const form = props => {
             </div>
 
             <div className='tag-buttons'>
-            <Button
+                <Button
                     onClick={() => {isSelected(onBreakfastSubmit())}}
                     variant="outlined"
                     size="small"
