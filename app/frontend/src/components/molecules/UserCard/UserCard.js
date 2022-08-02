@@ -92,7 +92,7 @@ export default function UserCard(props) {
             </Card>
             <CommunityModal 
                 open={recipeOpen}
-                recipe={props.recipe}
+                tags={props.recipe.tags}
                 title={props.recipe.title}
                 type={"redux"}
                 id={props.id}

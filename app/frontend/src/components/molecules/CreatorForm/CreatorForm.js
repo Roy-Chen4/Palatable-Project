@@ -168,6 +168,7 @@ const form = props => {
                     placeholder="URL"
                     value={values.image}
                     type="url"
+                    size="small"
                     onChange={(e) => {
                         handleChange(e)
                         setImageURL(e.target.value)
