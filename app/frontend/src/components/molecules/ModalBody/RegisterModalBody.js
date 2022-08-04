@@ -55,8 +55,7 @@ const form = props => {
                 setIsSubmitting(false);
                 setErrorText('Account already exists or incorrect data has been entered')
             })
-        if (setAccountError === false){
-            setIsSubmitting(true);
+        if (accountError === false){
             openTwoFactor();
         }
         

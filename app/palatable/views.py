@@ -75,9 +75,12 @@ def register(request):
             apple = generate_code()
             sender = 'palatableltd@gmail.com'
             print(apple)
-            email_generate(sender, receiver, apple)
-            data = NewUserForm1(request.data)
-            return Response(userSerializer.data)
+            password1 = userSerializer.data['password1']
+            password2 = userSerializer.data['password2']
+            if (password1 == password2):
+                email_generate(sender, receiver, apple)
+                data = NewUserForm1(request.data)
+                return Response(userSerializer.data)
         return Response(userSerializer.errors, status = status.HTTP_403_FORBIDDEN)
 
 # class RegisterView(APIView):
