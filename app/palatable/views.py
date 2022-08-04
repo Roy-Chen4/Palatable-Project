@@ -24,6 +24,20 @@ import smtplib, ssl
 import json
 
 def generate_code(length = 5):
+    '''
+
+    Function which generates a 5 letter code from a given list string of characters
+    
+    Parameters:
+    length: set as 5 characters
+
+    Returns:
+    Returns the 5 letter code
+
+    Raises:
+    none
+
+    '''
     global code
     code = ""
     characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
@@ -32,6 +46,23 @@ def generate_code(length = 5):
     return code
 
 def email_generate(sender, receiver, apple):
+    '''
+
+    Function which sends an email with generated code when user signs up
+    
+    Parameters:
+    sender: email address from which the email is being sent
+    receiver: email address which is receiving the email
+    apple: the message being sent in the email
+
+    Returns:
+    none
+
+    Raises:
+    none
+
+    '''
+
     em_body = apple
 
     message = MIMEText(em_body, 'html')
@@ -47,6 +78,22 @@ def email_generate(sender, receiver, apple):
     s.close()
 
 def email_generate_password(sender, receiver, apple):
+    '''
+
+    Function which sends an email with generated code when user changes their password
+    
+    Parameters:
+    sender: email address from which the email is being sent
+    receiver: email address which is receiving the email
+    apple: the message being sent in the email
+
+    Returns:
+    none
+
+    Raises:
+    none
+
+    '''
     em_body = apple
 
     message = MIMEText(em_body, 'html')
@@ -61,40 +108,32 @@ def email_generate_password(sender, receiver, apple):
     print('email has been sent')
     s.close()
 
-# Create your views here.
-
-@api_view(['POST'])
-def register(request):
-    global data
-    global receiver
-    data = NewUserForm1()
-    if request.method == 'POST':
-        userSerializer = RegisterSerializer(data = request.data)
-        if userSerializer.is_valid():
-            receiver = userSerializer.data['email']
-            apple = generate_code()
-            sender = 'palatableltd@gmail.com'
-            print(apple)
-            email_generate(sender, receiver, apple)
-            data = NewUserForm1(request.data)
-            return Response(userSerializer.data)
-        return Response(userSerializer.errors, status = status.HTTP_403_FORBIDDEN)
-
-# class RegisterView(APIView):
-#     def post(self, request):
-#         serializer = UserSerializer(data=request.data) 
-#         print("dasdfasdf")     
-#         if serializer.is_valid(""" raise_exception=True """):
-#             print("2") 
-#             receiver = UserSerializer.data['email']
-#             apple = generate_code()
-#             sender = 'palatableltd@gmail.com'
-#             email_generate(sender, receiver, apple)
-#         serializer.save()
-#         return Response(serializer.data)
-
 class LoginView(APIView):
     def post(self, request):
+        '''
+
+        Function which logs a user in, creating an authenticated JSON web token
+        
+        Parameters:
+            id: identification number associated with user
+            email: email address associated with user
+            password: password associated with user's account
+
+        Returns:
+        Returns a dictionary containing information about the user; 
+        their JSON web toke, their dietary requirement settings and a list of their favourite recipes
+
+        {
+            'jwt': users_JSON_web_token,
+            'diet': users_deitary_requirement,
+            'favourites': users_favourite_recipes,
+        }
+
+        Raises:
+        AuthenticationFailed if email does not exist in database
+        AuthenticationFailed if password does not correlate with given email
+        
+        '''
         email = request.data['email']
         password = request.data['password']
 
@@ -126,13 +165,24 @@ class LoginView(APIView):
         }
         return response
 
-        '''dict = {'diet': user.dietary, 'favourites': user.favourites}
-        if user is not None:
-            # The backend authenticated the credentials
-            return Response(dict)'''
 class UserView(APIView):
-
     def get(self, request):
+        '''
+
+        Function which checks if a user has an authenticated JSON web token
+        
+        Parameters:
+            id: identification number associated with user
+            email: email address associated with user
+            password: password associated with user's account
+
+        Returns:
+        Returns serializer data of a user
+
+        Raises:
+        AuthenticationFailed if token doesn't exist or is expired
+        
+        '''
         token = request.COOKIES.get('jwt')
 
         if not token:
@@ -149,6 +199,24 @@ class UserView(APIView):
 
 class LogoutView(APIView):
     def post(self, request):
+        '''
+
+        Function which logs out a user, deleting their JSON web token
+        
+        Parameters:
+        none
+
+        Returns:
+        Returns a message
+
+        {
+            'message': 'success'
+        }
+
+        Raises:
+        none
+        
+        '''
         response = Response()
         response.delete_cookie('jwt')
         response.data = {
@@ -157,7 +225,58 @@ class LogoutView(APIView):
         return response
 
 @api_view(['POST'])
+def register(request):
+    '''
+
+    Function which registers a new user
+    
+    Parameters:
+    request.data:
+        email: email address which is being registered
+        password1: new password which the user wants to set
+        password2: new password which the user wants to set
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_405 if email is invalid
+    HTTP_405 if password(s) is invalid
+    HTTP_403 if params are not inputted correctly
+    
+    '''
+    global data
+    global receiver
+    data = NewUserForm1()
+    if request.method == 'POST':
+        userSerializer = RegisterSerializer(data = request.data)
+        if userSerializer.is_valid():
+            receiver = userSerializer.data['email']
+            apple = generate_code()
+            sender = 'palatableltd@gmail.com'
+            print(apple)
+            email_generate(sender, receiver, apple)
+            data = NewUserForm1(request.data)
+            return Response(userSerializer.data)
+        return Response(userSerializer.errors, status = status.HTTP_403_FORBIDDEN)
+
+@api_view(['POST'])
 def email(request):
+    '''
+
+    Function which sends an email with generated code when user signs up
+    
+    Parameters:
+    request.data:
+        email: email address which is receiving the email
+
+    Returns:
+    message which says "Email has been sent"
+
+    Raises:
+    none
+
+    '''
     receiver = request.data['email']
     apple = generate_code()
     sender = 'palatableltd@gmail.com'
@@ -168,6 +287,24 @@ def email(request):
 
 @api_view(['POST'])
 def twofacpassword(request):
+    '''
+
+    Function which checks if the 5 digit code for 2FA is correct
+    
+    Parameters:
+    request.data:
+        codeDetail: the 2FA code
+
+    Returns:
+    Returns the parameters
+    If the code is incorrect, returns a message "incorrectcode"s
+
+    Raises:
+    HTTP_405 if new_email is invalid
+    HTTP_403 if params are not inputted correctly
+    HTTP_403 if the code is incorrect
+    
+    '''
     if request.method == 'POST':
         serializer = CodeSerializer(data = request.data)
         if serializer.is_valid():
@@ -209,6 +346,23 @@ def twofacregister(request):
 # edit email in settings
 @api_view(['POST'])
 def editemail(request):
+    '''
+
+    Function which edits the user's email
+    
+    Parameters:
+    request.data:
+        old_email: email associated with the user who's password is getting changed
+        new_email: new password which the user wants to set
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_405 if new_email is invalid
+    HTTP_403 if params are not inputted correctly
+    
+    '''
     if request.method == 'POST':
         serializer = EditEmailSerializer(data = request.data)
         if serializer.is_valid():
@@ -221,6 +375,24 @@ def editemail(request):
 
 @api_view(['POST'])
 def edituserpass(request):
+    '''
+
+    Function which edits the user's password
+    
+    Parameters:
+    email: email associated with the user who's password is getting changed
+    new_password1: new password which the user wants to set
+    new_password2: new password which the user wants to set, same as new_password2
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_403 if passwords don't match
+    HTTP_405 if email is invalid
+    HTTP_422 if params are not inputted
+    
+    '''
     print(request.data)
     print(request.data)
     if request.method == 'POST':
@@ -239,6 +411,25 @@ def edituserpass(request):
 # edit password in settings
 @api_view(['POST'])
 def editpassword(request):
+    '''
+
+    Function which edits the user's password
+    
+    Parameters:
+    request.data:
+        email: email associated with the user who's password is getting changed
+        new_password1: new password which the user wants to set
+        new_password2: new password which the user wants to set, same as new_password2
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_403 if passwords don't match
+    HTTP_405 if email is invalid
+    HTTP_422 if params are not inputted
+    
+    '''
     global user
     print(request.data)
     if request.method == 'POST':
@@ -255,6 +446,23 @@ def editpassword(request):
 # edit diet status
 @api_view(['POST'])
 def editdiet(request):
+    '''
+
+    Function which edits the user's diet preferences
+    
+    Parameters:
+    request.data:
+        email: email associated with the user who's diet is getting changed
+        new_diet: new diet which the user wants to set
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_405 if email is invalid
+    HTTP_403 if params are not inputted correctly
+
+    '''
     if request.method =='POST':
         serializer = EditDietSerializer(data = request.data)
         if serializer.is_valid():
@@ -267,6 +475,23 @@ def editdiet(request):
 # favourite a recipe
 @api_view(['POST'])
 def favourites(request):
+    '''
+
+    Function which adds a recipe to a user's favourites section
+    
+    Parameters:
+    request.data:
+        email: email associated with the user who's diet is getting changed
+        new_favourite: new recipe which the user wants to add to their favourites
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_405 if email is invalid
+    HTTP_403 if params are not inputted correctly
+
+    '''
     print(request.data)
     if request.method =='POST':
         serializer = FavouriteSerializer(data = request.data)
@@ -291,6 +516,23 @@ def get_ingredient(request):
 # add a recipe
 @api_view(['POST'])
 def addrecipe(request):
+    '''
+
+    Function which allows a user to add a new recipe
+    
+    Parameters:
+    request.data:
+        email: email associated with the user who's trying to add a recipe
+        recipe: new recipe which the user wants to add
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_405 if email is invalid
+    HTTP_403 if params are not inputted correctly
+
+    '''
     form = NewRecipeForm()
     if request.method =='POST':
         serializer = AddRecipeSerializer(data = request.data)
@@ -311,6 +553,23 @@ def get_recipe(request):
 # edit a recipe
 @api_view(['POST'])
 def editrecipe(request):
+    '''
+    
+    Function which allows a user to edit a recipe they have previously added
+    
+    Parameters:
+    request.data:
+        email: email associated with the user who's trying to edit the recipe
+        edit_recipe: New recipe information which will replace previous recipe information
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_405 if email is invalid
+    HTTP_403 if params are not inputted correctly
+
+    '''
     if request.method =='POST':
         serializer = EditRecipeSerializer(data = request.data)
         if serializer.is_valid():
@@ -327,6 +586,23 @@ def editrecipe(request):
 # delete a recipe
 @api_view(['POST'])
 def deleterecipe(request):
+    '''
+    
+    Function which deletes a user's recipe they have already created
+    
+    Parameters:
+    request.data:
+        email: email associated with the user who's trying to delete the recipe
+        recipeid: id associated with the already created recipe
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_404 if email is different to the email to which created the recipe
+    HTTP_403 if params are not inputted correctly
+
+    '''
     if request.method =='POST':
         serializer = DeleteRecipeSerializer(data = request.data)
         if serializer.is_valid():
@@ -342,6 +618,26 @@ def deleterecipe(request):
 # returns all of the recipes that a user has made
 @api_view(['POST'])
 def getuserrecipes(request):
+    '''
+    
+    Function which gives all the recipes a user has created
+    
+    Parameters:
+    request.data:
+        email: email of the target user
+
+    Returns:
+    Returns a dictionary of all the recipes a user has created, along with their corresponding ids:
+
+    {   
+        'id': recipe_1_id, recipe_2_id, recipe_3_id,
+        'recipe': recipe_1_info, recipe_2_info, recipe_3_info
+    }
+
+    Raises:
+    HTTP_403 if param is not inputted correctly
+
+    '''
     if request.method =='POST':
         serializer = GetUserRecipesSerializer(data = request.data)
         response = Response()
@@ -365,6 +661,28 @@ def getuserrecipes(request):
 # given ingredient list returns diet option
 @api_view(['POST'])
 def check_option(request):
+
+    '''
+    
+    Function which determines the diet option of a list of ingredients
+    
+    Parameters:
+    request.data:
+        ingredients: list of ingredients
+
+    Returns:
+    Returns if the list given is of diet options:
+
+    None,
+    pescatarian,
+    vegetarian,
+    vegan
+
+    Raises:
+    HTTP_405 if ingredient inputted does not exist
+
+    '''
+
     data = request.data
     print(request)
     print(request.data)
@@ -393,6 +711,25 @@ def check_option(request):
 # given category return an ingredient that is not in the given cateogry
 @api_view(['POST'])
 def suggest_ingredient(request):
+    '''
+    
+    Function which gives an ingredient NOT in the inputted category
+    
+    Parameters:
+    request.data:
+        ingredients: list of ingredients
+
+    Returns:
+    Returns an ingredient 
+
+    {
+        'data': ingredient
+    }
+
+    Raises:
+    HTTP_405 if ingredients inputted don't not exist
+
+    '''
     data = request.data
     ingredients = data["ingredients"]
     ingredient_list = Ingredients.objects.values('name')
