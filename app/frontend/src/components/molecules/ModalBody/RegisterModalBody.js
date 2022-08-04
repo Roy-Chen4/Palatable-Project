@@ -39,7 +39,7 @@ const form = props => {
 
     const [accountError, setAccountError] = React.useState(false);
     const [errorText, setErrorText] = React.useState('');
-    /* const [isSubmitting, setIsSubmitting] = React.useState(false); */
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
     
     /** 
     * register user calling register API
@@ -52,10 +52,11 @@ const form = props => {
             .catch((err) => {
                 console.log(err.request);
                 setAccountError(true);
-                /* setIsSubmitting(false); */
+                setIsSubmitting(false);
                 setErrorText('Account already exists or incorrect data has been entered')
             })
         if (setAccountError === false){
+            setIsSubmitting(true);
             openTwoFactor();
         }
         
@@ -137,7 +138,8 @@ const form = props => {
                 <Button 
                     onClick={() => onRegisterSubmit()}
                     variant="contained"
-                    disabled={/* isSubmitting || */ errors.email || errors.password1 || errors.password2 || accountError}
+                    disabled={isSubmitting || errors.email || errors.password1 || errors.password2 || accountError}
+                    /* disabled={errors.email || errors.password || accountError} */
                     theme={primaryTheme}
                     sx={{"&&":{
                         color:"white",
