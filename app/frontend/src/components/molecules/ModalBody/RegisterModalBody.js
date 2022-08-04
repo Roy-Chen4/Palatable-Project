@@ -39,22 +39,25 @@ const form = props => {
 
     const [accountError, setAccountError] = React.useState(false);
     const [errorText, setErrorText] = React.useState('');
-    const [isSubmitting, setIsSubmitting] = React.useState(false);
+    /* const [isSubmitting, setIsSubmitting] = React.useState(false); */
     
     /** 
     * register user calling register API
     */
     const onRegisterSubmit = () => {
         dispatch(login({ isLogged: false, email: values.email}));
+        /* setIsSubmitting(true); */
         axios.post("/register/", values)
             .then((res) => console.log(res))
             .catch((err) => {
                 console.log(err.request);
-                setAccountError(true)
-                setIsSubmitting(false);
-                setErrorText('Account Already Exists')
+                setAccountError(true);
+                /* setIsSubmitting(false); */
+                setErrorText('Account already exists or incorrect data has been entered')
             })
-        openTwoFactor();
+        if (setAccountError === false){
+            openTwoFactor();
+        }
         
     }
 
@@ -134,7 +137,7 @@ const form = props => {
                 <Button 
                     onClick={() => onRegisterSubmit()}
                     variant="contained"
-                    disabled={isSubmitting || errors.email || errors.password1 || errors.password2 || accountError}
+                    disabled={/* isSubmitting || */ errors.email || errors.password1 || errors.password2 || accountError}
                     theme={primaryTheme}
                     sx={{"&&":{
                         color:"white",
