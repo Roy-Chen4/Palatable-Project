@@ -54,7 +54,7 @@ const form = props => {
                 setIsSubmitting(false);
                 setErrorText('Account already exists or incorrect data has been entered')
             })
-        if (values.password1 === values.password2){
+        if (values.password1 === values.password2 && values.password1.length != 0){
             openTwoFactor();
         }
         
