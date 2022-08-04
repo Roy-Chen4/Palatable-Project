@@ -91,7 +91,6 @@ const form = props => {
                     }}
                     onBlur={handleBlur}
                     margin="dense"
-                    // variant="outlined"
                     sx={{"&&":{width:"70%"}}}
                 />
             </DialogContent>

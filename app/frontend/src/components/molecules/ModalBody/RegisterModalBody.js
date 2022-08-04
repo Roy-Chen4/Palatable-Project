@@ -39,7 +39,8 @@ const form = props => {
 
     const [accountError, setAccountError] = React.useState(false);
     const [errorText, setErrorText] = React.useState('');
-
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
+    
     /** 
     * register user calling register API
     */
@@ -50,6 +51,7 @@ const form = props => {
             .catch((err) => {
                 console.log(err.request);
                 setAccountError(true)
+                setIsSubmitting(false);
                 setErrorText('Account Already Exists')
             })
         openTwoFactor();
@@ -78,7 +80,6 @@ const form = props => {
                     helperText={touched.email ? errors.email : ""}
                     error={touched.email && Boolean(errors.email)}
                     margin="normal"
-                    // variant="outlined"
                     sx={{"&&":{width:"65%", paddingLeft: "10vmin"}}}
                 />
                 <TextField
@@ -92,15 +93,10 @@ const form = props => {
                     }}
                     onBlur={(e) => {
                         handleBlur(e); 
-                        // if (values.password1 !== values.password2 && values.password1 !== '' && values.password2 !== '' ) {
-                        //     setAccountError(true)
-                        //     setErrorText('Passwords Do Not Match')
-                        // }
                     }}
                     helperText={touched.password1 ? errors.password1 : ""}
                     error={touched.password1 && Boolean(errors.password1)}
                     margin="normal"
-                    // variant="outlined"
                     sx={{"&&":{width:"65%", paddingLeft: "10vmin"}}}
                 />
                 <TextField
@@ -114,15 +110,10 @@ const form = props => {
                     }}
                     onBlur={(e) => {
                         handleBlur(e); 
-                        // if (values.password1 !== values.password2 && values.password1 !== '' && values.password2 !== '' ) {
-                        //     setAccountError(true)
-                        //     setErrorText('Passwords Do Not Match')
-                        // }
                     }}
                     helperText={touched.password2 ? errors.password2 : ""}
                     error={touched.password2 && Boolean(errors.password2)}
                     margin="normal"
-                    // variant="outlined"
                     sx={{"&&":{width:"65%", paddingLeft: "10vmin"}}}
                 />
             </DialogContent>
@@ -143,7 +134,7 @@ const form = props => {
                 <Button 
                     onClick={() => onRegisterSubmit()}
                     variant="contained"
-                    disabled={errors.email || errors.password || accountError}
+                    disabled={isSubmitting || errors.email || errors.password1 || errors.password2 || accountError}
                     theme={primaryTheme}
                     sx={{"&&":{
                         color:"white",

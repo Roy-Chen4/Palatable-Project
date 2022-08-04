@@ -51,7 +51,6 @@ const form = props => {
                 console.log(res)
                 dispatch(dietChange({newUserDiet: res.data.diet}))
                 dispatch(tokenStore({token: res.data.jwt}))
-                // console.log(res.data.favourites)
                 if (res.data.favourites.length > 1) {
                     const faves = JSON.parse(JSON.parse(res.data.favourites))
                     console.log("favourites found")
