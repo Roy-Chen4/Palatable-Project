@@ -40,6 +40,7 @@ const form = props => {
     const [accountError, setAccountError] = React.useState(false);
     const [errorText, setErrorText] = React.useState('');
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+    /* const [twofac, setTwoFac] = React.useState(''); */
     
     /** 
     * register user calling register API
@@ -55,7 +56,7 @@ const form = props => {
                 setIsSubmitting(false);
                 setErrorText('Account already exists or incorrect data has been entered')
             })
-        if (accountError === false){
+        if (values.password1 === values.password2){
             openTwoFactor();
         }
         
