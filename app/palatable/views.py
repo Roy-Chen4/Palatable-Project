@@ -221,6 +221,23 @@ def editemail(request):
 
 @api_view(['POST'])
 def edituserpass(request):
+    '''
+    Function which edits the user's password
+    
+    Parameters:
+    email: email associated with the user who's password is getting changed
+    new_password1: new password which the user wants to set
+    new_password2: new password which the user wants to set, same as new_password2
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_403 if passwords don't match
+    HTTP_405 if email is invalid
+    HTTP_422 if params are not inputted
+    
+    '''
     print(request.data)
     print(request.data)
     if request.method == 'POST':
@@ -255,6 +272,21 @@ def editpassword(request):
 # edit diet status
 @api_view(['POST'])
 def editdiet(request):
+    '''
+    Function which edits the user's diet preferences
+    
+    Parameters:
+    email: email associated with the user who's diet is getting changed
+    new_diet: new diet which the user wants to set
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_405 if email is invalid
+    HTTP_403 if params are not inputted correctly
+
+    '''
     if request.method =='POST':
         serializer = EditDietSerializer(data = request.data)
         if serializer.is_valid():
@@ -267,6 +299,21 @@ def editdiet(request):
 # favourite a recipe
 @api_view(['POST'])
 def favourites(request):
+    '''
+    Function which adds a recipe to a user's favourites section
+    
+    Parameters:
+    email: email associated with the user who's diet is getting changed
+    new_favourite: new recipe which the user wants to add to their favourites
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_405 if email is invalid
+    HTTP_403 if params are not inputted correctly
+
+    '''
     print(request.data)
     if request.method =='POST':
         serializer = FavouriteSerializer(data = request.data)
@@ -291,6 +338,22 @@ def get_ingredient(request):
 # add a recipe
 @api_view(['POST'])
 def addrecipe(request):
+    '''
+
+    Function which allows a user to add a new recipe
+    
+    Parameters:
+    email: email associated with the user who's trying to add a recipe
+    recipe: new recipe which the user wants to add
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_405 if email is invalid
+    HTTP_403 if params are not inputted correctly
+
+    '''
     form = NewRecipeForm()
     if request.method =='POST':
         serializer = AddRecipeSerializer(data = request.data)
@@ -311,6 +374,22 @@ def get_recipe(request):
 # edit a recipe
 @api_view(['POST'])
 def editrecipe(request):
+    '''
+    
+    Function which allows a user to edit a recipe they have previously added
+    
+    Parameters:
+    email: email associated with the user who's trying to edit the recipe
+    edit_recipe: New recipe information which will replace previous recipe information
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_405 if email is invalid
+    HTTP_403 if params are not inputted correctly
+
+    '''
     if request.method =='POST':
         serializer = EditRecipeSerializer(data = request.data)
         if serializer.is_valid():
@@ -327,6 +406,22 @@ def editrecipe(request):
 # delete a recipe
 @api_view(['POST'])
 def deleterecipe(request):
+    '''
+    
+    Function which deletes a user's recipe they have already created
+    
+    Parameters:
+    email: email associated with the user who's trying to delete the recipe
+    recipeid: id associated with the already created recipe
+
+    Returns:
+    Returns the parameters
+
+    Raises:
+    HTTP_404 if email is different to the email to which created the recipe
+    HTTP_403 if params are not inputted correctly
+
+    '''
     if request.method =='POST':
         serializer = DeleteRecipeSerializer(data = request.data)
         if serializer.is_valid():
@@ -342,6 +437,25 @@ def deleterecipe(request):
 # returns all of the recipes that a user has made
 @api_view(['POST'])
 def getuserrecipes(request):
+    '''
+    
+    Function which gives all the recipes a user has created
+    
+    Parameters:
+    email: email of the target user
+
+    Returns:
+    Returns a dictionary of all the recipes a user has created, along with their corresponding ids:
+
+    {   
+        'id': recipe_1_id, recipe_2_id, recipe_3_id,
+        'recipe': recipe_1_info, recipe_2_info, recipe_3_info
+    }
+
+    Raises:
+    HTTP_403 if param is not inputted correctly
+
+    '''
     if request.method =='POST':
         serializer = GetUserRecipesSerializer(data = request.data)
         response = Response()
@@ -365,6 +479,27 @@ def getuserrecipes(request):
 # given ingredient list returns diet option
 @api_view(['POST'])
 def check_option(request):
+
+    '''
+    
+    Function which determines the diet option of a list of ingredients
+    
+    Parameters:
+    ingredients: list of ingredients
+
+    Returns:
+    Returns if the list given is of diet options:
+
+    None,
+    pescatarian,
+    vegetarian,
+    vegan
+
+    Raises:
+    HTTP_405 if ingredient inputted does not exist
+
+    '''
+
     data = request.data
     print(request)
     print(request.data)
@@ -393,6 +528,25 @@ def check_option(request):
 # given category return an ingredient that is not in the given cateogry
 @api_view(['POST'])
 def suggest_ingredient(request):
+    '''
+    
+    Function which determines the diet option of a list of ingredients
+    
+    Parameters:
+    ingredients: list of ingredients
+
+    Returns:
+    Returns if the list given is of diet options:
+
+    None,
+    pescatarian,
+    vegetarian,
+    vegan
+
+    Raises:
+    HTTP_405 if ingredient inputted does not exist
+
+    '''
     data = request.data
     ingredients = data["ingredients"]
     ingredient_list = Ingredients.objects.values('name')
