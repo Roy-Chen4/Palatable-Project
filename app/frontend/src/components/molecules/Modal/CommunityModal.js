@@ -10,6 +10,12 @@ import PropTypes from 'prop-types';
 import React from "react";
 import './Modal.css';
 
+/** 
+* @summary Handles the format and depiction of user contributed recipes to be displayed in
+* the community card
+* @param props
+* @return Structure for the community card to display on the community page
+*/
 export default function CommunityModal(props) {
 
     return (

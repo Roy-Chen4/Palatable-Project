@@ -14,6 +14,12 @@ import { useSelector } from "react-redux";
 import validationForgottenPass from "../../../validation/forgottenPassSchema";
 import "./ModalBody.css"
 
+/** 
+* @summary Handles the forgotten password function that appears after three incorrect
+* password attempts
+* @param props
+* @return My diet component in the drawer
+*/
 const form = props => {
     const {
         values,
@@ -44,7 +50,6 @@ const form = props => {
             new_password1: values.password1,
             new_password2: values.password2,
         }
-        // console.log(editPassword)
         axios
             .post("/editpassword/", editPassword)
             .then((res) => console.log(res))

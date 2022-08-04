@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import IconButton from "@mui/material/IconButton";
 
+/** 
+* 'Scroll to the top' button that enables users to scroll to the top of the page
+* when clicked on.
+*/
 
 const ScrollTopButton = (showBelow) => {
 

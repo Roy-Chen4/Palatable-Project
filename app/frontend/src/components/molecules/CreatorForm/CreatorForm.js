@@ -36,6 +36,7 @@ const form = props => {
 
     const onFormSubmit = () => {
         setIsSubmitting(true);
+        // Setting the components of a recipe 
         const recipe = {
             title: values.recipetitle,
             image: values.image,
@@ -44,9 +45,6 @@ const form = props => {
             genre: genre,
             instructions: values.instructions,
         }
-        /* setTimeout(function() { 
-            setIsSubmitting(false);
-        }.bind(this), 1000) */
         // use values to Send in axios request to save the recipe in creator db
         const valuesToSend = {
             email: userEmail,
@@ -67,26 +65,7 @@ const form = props => {
                 console.log(err.request);
                 setIsSubmitting(false);
             });
-            
-        /* console.log("form values: " + recipe)
-        console.log("recipe title: " + values.recipetitle)
-        console.log("ingredients: " + values.ingredients)
-        console.log("instructions: " + values.instructions)
-        console.log(values)
-        console.log(valuesToSend)
-        console.log(userEmail) */
     }
-
-   
-    /* function onBreakfastSubmit() {
-        if (selected === true){
-            setTagValue('breakfast')
-        }
-        else {
-            setTagValue('') 
-        }
-        console.log(tagValue)
-    } */
 
     function onBreakfastSubmit() {
         setTagValue(tagValue !=='breakfast' ? 'breakfast': undefined)
@@ -122,18 +101,9 @@ const form = props => {
         return(tagValue !=='dessert' ? 'dessert': undefined)
     }
 
-
-//    function handleImageChange(event) {
-//         const reader = new FileReader();
-//         reader.onload = () => {
-//             if (reader.readyState === 2) {
-//                 setImageURL({file: reader.result})
-//             }
-//         } 
-//         reader.readAsDataURL(event.target.files[0]);
-//         this.props.sfv("image", event.currentTarget.files[0]);
-//     }
-
+    /** 
+    * Function to get the genre of an inputted ingredient 
+    */
     function getGenre() {
         const ingredientList = values.ingredients
             .replace(/<[^>]+>/g, '')
@@ -213,8 +183,6 @@ const form = props => {
                         setImageURL(e.target.value)
                     }}
                     onBlur={handleBlur}
-                    // helperText={touched.recipetitle ? errors.recipetitle : ""}
-                    // error={touched.recipetitle && Boolean(errors.recipetitle)}
                     margin="normal"
                     variant="outlined"
                     sx={{ 
@@ -223,19 +191,6 @@ const form = props => {
                         }
                     }}
                 />
-            {/* <input
-                className="image-input"
-                name={"image"}
-                type="url"
-                // accept='image/*'
-                onChange={(e)=>{
-                    // setFieldValue('image', URL.createObjectURL(e.target.files[0])); 
-                    handleChange(e)
-                    // console.log(e.target.value)
-                    setImageURL(e.target.value)
-                    // setImageURL(URL.createObjectURL(e.target.files[0]));
-                }}
-            /> */}
             </div>
             <div className='instruction-text'>
                 <Typography>

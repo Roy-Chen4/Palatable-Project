@@ -18,6 +18,12 @@ import PropTypes from 'prop-types';
 import './Modal.css';
 import axios from "axios";
 
+/** 
+* @summary Handles the diet editing functionality where users can select from
+* none, vegan, vegetarian and pescetarian
+* @param props
+* @return My diet component in the drawer
+*/
 export default function DietModal(props) {
     const dispatch = useDispatch();
 
@@ -33,6 +39,9 @@ export default function DietModal(props) {
 
     const userEmail = useSelector((state) => state.user.value.email);
 
+    /** 
+    * Editing the new diet selected by the user for backend
+    */
     const onDietSubmit = () => {
         setIsSubmitting(true);
         setTimeout(function() { 

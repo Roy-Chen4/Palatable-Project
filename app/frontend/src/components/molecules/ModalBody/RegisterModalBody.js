@@ -17,6 +17,9 @@ import { login, tokenStore } from "../../../reducers/isLogged";
 import validationRegister from "../../../validation/regSchema";
 import "./ModalBody.css"
 
+/** 
+* form created consisting of user email and password to be sent to database
+*/
 const form = props => {
     const {
         values,
@@ -37,9 +40,9 @@ const form = props => {
     const [accountError, setAccountError] = React.useState(false);
     const [errorText, setErrorText] = React.useState('');
 
-    // const [isSubmitting, setIsSubmitting] = React.useState(false);
-
-    // register user calling register API
+    /** 
+    * register user calling register API
+    */
     const onRegisterSubmit = () => {
         dispatch(login({ isLogged: false, email: values.email}));
         axios.post("/register/", values)

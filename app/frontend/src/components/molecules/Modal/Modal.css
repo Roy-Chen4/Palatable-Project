@@ -56,3 +56,11 @@
     text-align: center;
     font-size: large;
 }
+
+.register-banner {
+    padding-left: 50vw;
+    padding-bottom: 20vh;
+    /* float: left; */
+    height: 60vw;
+    width: 80vw;
+}

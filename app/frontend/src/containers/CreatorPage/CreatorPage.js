@@ -7,6 +7,9 @@ import CreatorForm from '../../components/molecules/CreatorForm/CreatorForm';
 import UserCard from '../../components/molecules/UserCard/UserCard';
 import "./CreatorPage.css";
 
+/** 
+* Creator page container
+*/
 function CreatorPage() {
     const [toggle, setToggle] = React.useState(true);
     const [successModalOpen, setSuccessModalOpen] = React.useState(false);
@@ -21,7 +24,6 @@ function CreatorPage() {
         .post("/getuserrecipes/", valuesToSend)
         .then((res) => {
             console.log(res.data)
-            // console.log(JSON.parse(res.data.data[0].recipe))
             let allRecipes = [];
             for (let i=0; i<res.data.length; i++ ) {
                 allRecipes = [...allRecipes, {id: res.data[i].id, recipe: JSON.parse(JSON.parse(res.data[i].recipe))}]

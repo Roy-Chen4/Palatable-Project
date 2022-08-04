@@ -23,7 +23,12 @@ import axios from 'axios';
 import { createTheme } from '@mui/material';
 import './RecipeCard.css'
 
-
+/** 
+* @summary Collation of relevant information on recipes into a card
+* that will be mapped
+* @param props
+* @return Recipe cards with recipe details
+*/
 export default function RecipeCard(props) {
      
     
@@ -32,7 +37,6 @@ export default function RecipeCard(props) {
     const [recipeOpen, setRecipeOpen] = React.useState(false);
     const [instructions, setInstructions] = React.useState([])
     const [ingredients, setIngredients] = React.useState([])
-    // console.log(props.recipe);
 
     const primaryTheme = createTheme({
         palette: {
@@ -41,11 +45,6 @@ export default function RecipeCard(props) {
           },
         },
       });
-    /* const [recipeName, setRecipeName] = useState(['']); */
-
-    /* onChange={(e, props) => {
-        setRecipeName([props.recipe.title]);
-    }} */
 
     const [open, setOpen] = React.useState(false);
     const [colour, setColour] = React.useState("rgba(0, 0, 0, 0.54)");
@@ -55,13 +54,6 @@ export default function RecipeCard(props) {
     const isLogged = useSelector((state) => state.user.value.isLogged)
     const faves= useSelector((state) => state.favourited.favourited)
 
-
-  /*   console.log(rname) */
-
-    /* function handleOnClick */ /*2 funcs and axios to call the view
-    
-    */
-
     function handleOnClick(){
         const recipeValues = {
             "title": props.recipe.title, 
@@ -70,7 +62,6 @@ export default function RecipeCard(props) {
             "ingredients": ingredients,
             "instructions": instructions,
         }
-        /* setIsSubmitting(true); */
         if (colour !== "red") {
             setText("added to")
             setOpen(true);
@@ -172,6 +163,9 @@ export default function RecipeCard(props) {
     const [price, setPrice] = React.useState()
     const [priceServing, setPriceServing] = React.useState()
 
+    /** 
+    * Retrieving price data for recipes from the Spoonacular api
+    */
     const options2 = {
         method: 'GET',
         headers: {
@@ -211,11 +205,7 @@ export default function RecipeCard(props) {
                     image={props.recipe.image}
                 />
                 <CardContent>
-                    {/* <Typography gutterBottom variant="h5" component="div">  
-                        Dietary requirements: {props.recipe.diets}
-                    </Typography> */}
                 </CardContent>
-                {/* <div className = "explore-button"> */}
                 <CardActions className = "explore-button">
                     <Button size="small" onClick={()=>{setRecipeOpen(true)}}>Explore</Button>
                 </CardActions>

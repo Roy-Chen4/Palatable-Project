@@ -11,6 +11,9 @@ import CategoryModal from "../Modal/CategoryModal";
 import './Slider.css'
 import { styled } from '@mui/material/styles';
 
+    /** 
+    * Banner list of ingredients that belong to certain categories in the carousel
+    */
 function Banner(props) {
     const totalItems = props.length ? props.length : 3;
     const mediaLength = totalItems - 1;

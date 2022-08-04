@@ -2,8 +2,9 @@ import * as React from 'react';
 import Carousel from 'react-material-ui-carousel'
 import Banner from '../../molecules/Slider/Slider';
 
-
-
+/** 
+* Carousel component
+*/
 function IngredientCarousel() {
     const ingredients = [
         {

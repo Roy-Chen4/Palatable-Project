@@ -57,6 +57,9 @@ export default function CategoryModal(props) {
     const [buttonColor, setButtonColor] = React.useState({});
     const [ingredientList, setIngredientList] = React.useState([]);
 
+    /** 
+    * Handling the ingredient addition from the carousel
+    */
     function handleClick(i, ingredient) {
         const newColor = buttonColor[i] === selected ? unselected : selected;
         const newState ={...buttonColor,[i]:newColor}
@@ -164,6 +167,4 @@ CategoryModal.propTypes = {
     onClose: PropTypes.func,
     category: PropTypes.string,
     list: PropTypes.any,
-    // ingredientList: PropTypes.any,
-    // setIngredientList: PropTypes.func,
 }
