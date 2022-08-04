@@ -40,14 +40,12 @@ const form = props => {
     const [accountError, setAccountError] = React.useState(false);
     const [errorText, setErrorText] = React.useState('');
     const [isSubmitting, setIsSubmitting] = React.useState(false);
-    /* const [twofac, setTwoFac] = React.useState(''); */
     
     /** 
     * register user calling register API
     */
     const onRegisterSubmit = () => {
         dispatch(login({ isLogged: false, email: values.email}));
-        /* setIsSubmitting(true); */
         axios.post("/register/", values)
             .then((res) => console.log(res))
             .catch((err) => {
@@ -139,7 +137,6 @@ const form = props => {
                     onClick={() => onRegisterSubmit()}
                     variant="contained"
                     disabled={isSubmitting || errors.email || errors.password1 || errors.password2 || accountError}
-                    /* disabled={errors.email || errors.password || accountError} */
                     theme={primaryTheme}
                     sx={{"&&":{
                         color:"white",
