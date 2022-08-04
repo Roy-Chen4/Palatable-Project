@@ -13,7 +13,12 @@ import CommunityModal from '../Modal/CommunityModal';
 import EditRecipeModal from '../Modal/EditRecipeModal';
 import './UserCard.css';
 
-
+/** 
+* @summary Handles the user manipulation of their created recipes which would allow them
+* to edit or delete their contributed recipes
+* @param props
+* @return My diet component in the drawer
+*/
 export default function UserCard(props) {
 
     const [recipeOpen, setRecipeOpen] = useState(false);

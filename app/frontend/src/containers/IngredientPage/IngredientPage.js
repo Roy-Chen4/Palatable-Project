@@ -3,18 +3,14 @@ import { Button, Divider, Typography } from '@mui/material';
 import * as React from 'react';
 import IngredientCarousel from '../../components/organisms/Carousel/Carousel';
 import IngredientList from '../../components/organisms/IngredientList/IngredientList';
-/* import { InputAdornment } from '@mui/material'; 
-import TextField from '@mui/material/TextField';
-import SearchIcon from '@mui/icons-material/Search'; */
 import SearchBar from '../../components/molecules/SearchBar/SearchBar';
 import './IngredientPage.css';
-/* import React, { useState, useEffect } from "react";
-import Stack from "@mui/material/Stack";
-import { Autocomplete } from "@mui/material/Autocomplete";
-import { Box } from "@mui/system"; */
 import { NavLink } from "react-router-dom";
 import SuggestionBar from '../../components/molecules/SuggestionBar/SuggestionBar';
 
+/** 
+* Ingredient page container
+*/
 function IngredientPage() {
 
   return (
@@ -45,7 +41,6 @@ function IngredientPage() {
         }}
         state= {{
           feed: false,
-          // loading: {isSubmitting},
           filter: [],
         }}
         className={"next-page-button"}
@@ -64,7 +59,6 @@ function IngredientPage() {
             bottom: "1vh",
             right: "1vw",
           }}}
-          // onClick={() => console.log()}
         >
           Search
         </Button>

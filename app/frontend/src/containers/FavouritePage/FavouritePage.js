@@ -6,22 +6,14 @@ import { useSelector } from 'react-redux';
 import RecipeCard from '../../components/molecules/RecipeCard/RecipeCard';
 import { Oval } from 'react-loader-spinner';
 
+/** 
+* Favourites page container
+*/
 function FavouritePage() {
 
     const [isLoading, setIsLoading] = React.useState(true);
 
     const favouritedRecipe = useSelector(state => state.favourited)
-
-    /* const [recipes, setRecipes] = React.useState([])
-
-    React.useEffect(() => {
-
-        if (favouritedRecipe.length > 1) {
-            setRecipes([...favouritedRecipe])
-        }
-    }, []); */
-
-    /* const isFeed = location.state.feed; */
 
     setTimeout(function() {
         setIsLoading(false);
@@ -44,7 +36,6 @@ function FavouritePage() {
                     {favouritedRecipe.favourited.map((item, index) => (
                         <Grid key={index} item>
                             <RecipeCard
-                            /* instructions={(favouritedRecipe.length === 0 || isFeed)} */
                             instructions={true}
                             recipe={item}
                             key={index}

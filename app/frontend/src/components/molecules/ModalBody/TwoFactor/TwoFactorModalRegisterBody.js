@@ -42,7 +42,6 @@ const form = props => {
     // login user calling login API
     const onTwoFactorSubmit = () => {
         setIsSubmitting(true);
-        // console.log(values)
         axios
             .post("/twofacregister/", values)
             .then((res) => {
@@ -68,20 +67,6 @@ const form = props => {
                     // account does not exist popup
                 }
         });
-        
-        // if (regValue !== '') {
-        //     axios
-        //         .post("/register/", regValue)
-        //         .then((res) => console.log(res))
-        //         .then(() => dispatch(login({ isLogged: true, email: regValue.email})))
-        //         // .then(() => props.registerClose())
-        //         .then(() => setRegValue(''))
-        //         .catch((err) => {
-        //             // setAccountError(true);
-        //             // setIsSubmitting(false)
-        //             console.log(err.request);
-        //     })
-        // }
     }
 
     return (

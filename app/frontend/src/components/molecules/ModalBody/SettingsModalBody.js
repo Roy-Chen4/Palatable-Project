@@ -17,6 +17,9 @@ import EditFieldButton from "../../atoms/EditFieldButton/EditFieldButton";
 import validationSettings from "../../../validation/settingSchema";
 import "./ModalBody.css"
 
+/** 
+* Functionality to enable users to edit the email or password
+*/
 const form = props => {
     const {
         values,

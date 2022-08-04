@@ -38,9 +38,6 @@ const form = props => {
             tags: tagValue,
             instructions: values.instructions,
         }
-        /* setTimeout(function() { 
-            setIsSubmitting(false);
-        }.bind(this), 1000) */
         // use values to Send in axios request to save the recipe in creator db
         const valuesToSend = {
             email: userEmail,
@@ -155,8 +152,6 @@ const form = props => {
                         setImageURL(e.target.value)
                     }}
                     onBlur={handleBlur}
-                    // helperText={touched.recipetitle ? errors.recipetitle : ""}
-                    // error={touched.recipetitle && Boolean(errors.recipetitle)}
                     margin="normal"
                     variant="outlined"
                     sx={{ 
@@ -165,19 +160,6 @@ const form = props => {
                         }
                     }}
                 />
-            {/* <input
-                className="image-input"
-                name={"image"}
-                type="url"
-                // accept='image/*'
-                onChange={(e)=>{
-                    // setFieldValue('image', URL.createObjectURL(e.target.files[0])); 
-                    handleChange(e)
-                    // console.log(e.target.value)
-                    setImageURL(e.target.value)
-                    // setImageURL(URL.createObjectURL(e.target.files[0]));
-                }}
-            /> */}
             </div>
             <div className='instruction-text'>
                 <Typography>

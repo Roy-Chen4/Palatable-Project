@@ -4,14 +4,13 @@ import CollapsableDrawer from '../Drawer/Drawer';
 import { Box } from '@mui/system';
 import { Toolbar } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
-// import { useDispatch } from 'react-redux';
-// import { login } from '../../../reducers/isLogged';
 import './Header.css';
 import { NavLink } from 'react-router-dom';
 
-
+/** 
+* Header component
+*/
 function Header() {
-  // const dispatch = useDispatch();
   return ( 
     <Box sx={{"&&":{ flexGrow: 1 }}}>
       <AppBar position="static" sx={{ "&&": {bgcolor: '#282c34'}}}>
@@ -25,7 +24,6 @@ function Header() {
           />
           <div 
             className='app-logo'
-            // onClick={()=> dispatch(login({ isLogged: true, email: '', diet: ''}))}
           >
             <NavLink to="/">        
                 <img src={logo} className="App-logo" alt="logo"/>

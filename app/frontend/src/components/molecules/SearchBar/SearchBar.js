@@ -12,6 +12,12 @@ import { add } from "../../../reducers/userIngredients";
 import axios from 'axios';
 import './SearchBar.css'
 
+/** 
+* @summary Search bar component that autocompletes user inputs and allows users to
+* select ingredients based on searches to be added 
+* @param props
+* @return Search bar component
+*/
 function SearchBar() {
 
     const dispatch = useDispatch();
@@ -42,7 +48,6 @@ function SearchBar() {
                 console.log(err.request);
         });
     }, [])
-    // console.log(jsonResults);
     return (
         <div className="container">
             <Stack sx = {{width:550}}>
@@ -64,10 +69,6 @@ function SearchBar() {
                     renderOption={(props, jsonResults) => (
                         <Box 
                             component="li" {...props} 
-                            // onClick={() => {
-                            //     setIngredientName(jsonResults.first_name + jsonResults.last_name);
-                                
-                            // }} 
                             key={jsonResults.id}
                         >
                             {jsonResults.name}

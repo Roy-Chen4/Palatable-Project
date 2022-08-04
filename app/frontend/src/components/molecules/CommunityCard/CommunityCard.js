@@ -17,17 +17,6 @@ export default function CommunityCard(props) {
     const [ingredients, setIngredients] = React.useState([])
     const [tags, setTags] = React.useState([])
 
-    // useEffect(() => {
-    //     axios
-    //     .get("/community/")
-    //     .then((res) => {
-    //         setRecipe([...res.data.data])
-    //     })
-    //     .catch((err) => {
-    //         console.log(err.request);
-    // });
-
-    // }, [])
 
     const primaryTheme = createTheme({
         palette: {
@@ -36,7 +25,7 @@ export default function CommunityCard(props) {
           },
         },
       });
-
+ 
     function handleOnClick(){
         const recipeValues = {
             "title": props.recipe.title, 
@@ -46,6 +35,9 @@ export default function CommunityCard(props) {
         }
     }
 
+    /** 
+    * Altering the format of instructions and ingredients 
+    */
     React.useEffect(()=> {
             setInstructions(props.recipe.instructions
                 .replace(/<[^>]+>/g, '')
@@ -64,14 +56,6 @@ export default function CommunityCard(props) {
             <Card classname="recipe-container" variant="outlined" sx={{ width: "48vw" }} >
                 <CardHeader
                     title={props.recipe.title}
-                    /* action={
-                        <IconButton 
-                        aria-label="add to favorites"
-                        onClick = {() => {handleOnClick()}}
-                        >
-                            <FavoriteIcon/>
-                        </IconButton>
-                    } */
                     sx={{textAlign: "center", }}
                 />
                 <CardContent>
@@ -81,7 +65,6 @@ export default function CommunityCard(props) {
                     image={props.recipe.image ? props.recipe.image : ''}
                 />
                 </CardContent>
-                {/* <div className = "explore-button"> */}
                 <CardActions className = "explore-button">
                     <Button size="small" onClick={()=>{setRecipeOpen(true)}} >Explore</Button>
                 </CardActions>

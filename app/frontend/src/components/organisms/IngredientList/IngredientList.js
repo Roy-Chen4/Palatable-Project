@@ -7,6 +7,9 @@ import './IngredientList.css'
 import { useDispatch } from 'react-redux';
 import { remove } from '../../../reducers/userIngredients';
 
+/** 
+* Ingredient list component
+*/
 function IngredientList() {
     const dispatch = useDispatch();
     const ingredientList = (useSelector((state) => state.ingredients.ingredients))

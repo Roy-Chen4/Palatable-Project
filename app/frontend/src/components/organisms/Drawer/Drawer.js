@@ -31,6 +31,9 @@ import PeopleIcon from '@mui/icons-material/People';
 import axios from 'axios';
 import './Drawer.css';
 
+/** 
+* Drawer component
+*/
 export default function CollapsableDrawer() {
   const dispatch = useDispatch();
 
@@ -166,23 +169,7 @@ export default function CollapsableDrawer() {
             </ListItemButton>
           </NavLink>
         </ListItem>
-        
-        {/* <ListItem 
-          disablePadding
-          sx= {{"&&":{
-            display:
-              loggedIn ? "flex" : "none",
-          }}}
-        >
-          <ListItemButton className={classes.buttonRoot}>
-            <ListItemIcon>
-              <FavoriteBorderOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Saved Recipes'} />
-          </ListItemButton>
-        </ListItem> */}
-
-          {/* <ListItem disablePadding  onClick={()=> setState(false)}> */}
+  
         <ListItem 
           disablePadding
           sx= {{"&&":{
@@ -354,7 +341,6 @@ export default function CollapsableDrawer() {
 						<MenuIcon sx={[{color:'#df7b84'}, {
               '&:hover': {
                 color: 'white',
-                // backgroundColor: 'white',
               },
             },]}/>
 					</Button>

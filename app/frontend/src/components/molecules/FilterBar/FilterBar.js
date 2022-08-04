@@ -28,6 +28,9 @@ const cuisineType = [
     'Pizza',
 ];
 
+/** 
+* Getting the the meat types of recipe
+*/
 const getMealType = () => {
     var today = new Date();
     var time = Number(today.getHours());
@@ -84,6 +87,9 @@ const getMealType = () => {
     }
 }
 
+/** 
+* Returns a meal type based on the time
+*/
 const getSuggest = () => {
     var today = new Date();
     var time = Number(today.getHours());
@@ -101,6 +107,12 @@ const getSuggest = () => {
         return []
     }
 }
+/** 
+* @summary The filter bar component is to set filters for displayed recipes based
+* on the selection of meal type, cuisine and diet
+* @param props
+* @return Filter bar component for the feed page
+*/
 
 function FilterBar (props) {
 

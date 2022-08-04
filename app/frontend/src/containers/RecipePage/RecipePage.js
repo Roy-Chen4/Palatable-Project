@@ -11,7 +11,9 @@ import FilterBar from '../../components/molecules/FilterBar/FilterBar';
 import ScrollTopButton from '../../components/atoms/Button/ScrollTopButton';
 import './RecipePage.css';
 
-
+/** 
+* Recipe page container
+*/
 function RecipePage() {
     const location = useLocation();
     const [isLoading, setIsLoading] = React.useState(true);
@@ -35,6 +37,10 @@ function RecipePage() {
         }
     } 
 
+    /** 
+    * Gets recipes from the Spoonacular api based on user inputs such as ingredients,
+    * filters or just random
+    */
     function getOptions (len) {
         if (userAddedIngredients.length === 0 || isFeed) {
             setType("feed");
@@ -90,7 +96,6 @@ function RecipePage() {
     }
 
     const [recipes, setRecipes] = React.useState([])
-    /* console.log(recipes) */
       
     React.useEffect(() => {
         getFilter()
@@ -122,10 +127,8 @@ function RecipePage() {
           return;
         }
         const len = recipes.length + 10;
-        // React.useEffect(() => {
             getOptions(len);
             getRecipes();
-        // }, []);
       };
 
     if (isLoading) {

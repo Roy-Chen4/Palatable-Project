@@ -9,6 +9,11 @@ import PropTypes from 'prop-types';
 import React from "react";
 import './Modal.css';
 
+/** 
+* @summary Handles the recipe information that will be displayed in the recipe card
+* @param props
+* @return Recipe information to be displayed
+*/
 export default function RecipeModal(props) {
 
     return (
